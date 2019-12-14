@@ -9,6 +9,7 @@ namespace CaptoApplication
         public App()
         {
             InitializeComponent();
+            String hej = "hej";
 
             MainPage = new MainPage();
         }
