@@ -16,6 +16,7 @@ namespace CaptoApplication
         public MainPage()
         {
             InitializeComponent();
+            string hej = "hej";
         }
     }
 }
