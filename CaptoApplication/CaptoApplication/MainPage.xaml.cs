@@ -51,6 +51,8 @@ namespace CaptoApplication
                 Device.BeginInvokeOnMainThread(() => {
                     Navigation.PopModalAsync();
                     DisplayAlert("Scanned Barcode", result.Text, "OK");
+                    string textresult = BarCodeManager.getBarName(result.Text);
+                    resultlbl.Text = textresult;
                 });
             };
 

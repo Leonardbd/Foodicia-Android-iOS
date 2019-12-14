@@ -13,7 +13,7 @@
 
             <StackLayout>
                 <Label Text="Korv med bröd" 
-           HorizontalOptions="Center"></Label>
+                HorizontalOptions="Center"></Label>
                 <Button Text="Hejsan" x:Name="btn" Clicked="btn_Clicked"></Button>
                 <Entry x:Name="TestEntry"></Entry>
             </StackLayout>
@@ -28,7 +28,7 @@
         <ContentPage.Content>
 
             <StackLayout>
-                <Label Text="Page Two" HorizontalOptions="Center"></Label>
+                <Label Text="Page Two" HorizontalOptions="Center" x:Name="resultlbl"></Label>
                 <Button Text="Kamera" x:Name="cameraBtn" Clicked="cameraBtn_Clicked"></Button>
             </StackLayout>
 
