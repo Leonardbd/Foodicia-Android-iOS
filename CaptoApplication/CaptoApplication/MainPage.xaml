@@ -1,24 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+
+
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="CaptoApplication.MainPage">
+    
+ <ContentPage Title="Page 1">
+    <ContentPage.Content>
 
-    <StackLayout>
-        <!-- Place new controls here -->
-        
-        <Label Text="Korv med bröd" 
+            <StackLayout>
+                <Label Text="Korv med bröd" 
            HorizontalOptions="Center"></Label>
-        <Button Text="Hejsan" x:Name="btn" Clicked="btn_Clicked"></Button>
-        <Entry x:Name="TestEntry"></Entry>
-        
+                <Button Text="Hejsan" x:Name="btn" Clicked="btn_Clicked"></Button>
+                <Entry x:Name="TestEntry"></Entry>
+            </StackLayout>
 
-           
-        
-        
-        
-    </StackLayout>
+        </ContentPage.Content>
+    </ContentPage>
 
-</ContentPage>
+
+
+
+    <ContentPage Title="Page 2">
+        <ContentPage.Content>
+
+            <StackLayout>
+                <Label Text="Page Two" 
+           HorizontalOptions="Center"></Label>
+            </StackLayout>
+
+        </ContentPage.Content>
+    </ContentPage>
+
+
+
+
+    <ContentPage Title="Page 3">
+        <ContentPage.Content>
+
+            <StackLayout>
+                <Label Text="Page 3" 
+           HorizontalOptions="Center"></Label>
+            </StackLayout>
+
+        </ContentPage.Content>
+    </ContentPage>
+
+</TabbedPage>
