@@ -8,9 +8,17 @@
 
     <StackLayout>
         <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+        
+        <Label Text="Korv med bröd" 
+           HorizontalOptions="Center"></Label>
+        <Button Text="Hejsan" x:Name="btn" Clicked="btn_Clicked"></Button>
+        <Entry x:Name="TestEntry"></Entry>
+        
+
+           
+        
+        
+        
     </StackLayout>
 
 </ContentPage>

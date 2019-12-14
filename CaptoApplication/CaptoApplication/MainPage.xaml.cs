@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using SQLite;
 
 namespace CaptoApplication
 {
@@ -13,10 +14,29 @@ namespace CaptoApplication
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
+
+        public DataBase db { get; set; }
+        public List<TestItem> testItems { get; set; }
         public MainPage()
         {
             InitializeComponent();
-            string hej = "hej";
+            db = new DataBase();
+            testItems = new List<TestItem>();
+
+            db.createDataBase();
+            testItems = db.GetTestItems();
+
+            TestEntry.Text = testItems[1].Namn;
+
+
+
+        }
+
+        private void btn_Clicked(object sender, EventArgs e)
+        {
+            
+            db.InsertIntoTable(new TestItem(1, TestEntry.Text));
+            
         }
     }
 }
