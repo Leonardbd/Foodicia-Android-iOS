@@ -28,8 +28,8 @@
         <ContentPage.Content>
 
             <StackLayout>
-                <Label Text="Page Two" 
-           HorizontalOptions="Center"></Label>
+                <Label Text="Page Two" HorizontalOptions="Center"></Label>
+                <Button Text="Kamera" x:Name="cameraBtn" Clicked="cameraBtn_Clicked"></Button>
             </StackLayout>
 
         </ContentPage.Content>

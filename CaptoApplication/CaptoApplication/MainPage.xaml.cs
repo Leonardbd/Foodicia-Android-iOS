@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using SQLite;
+using ZXing.Net.Mobile.Forms;
 
 namespace CaptoApplication
 {
@@ -17,6 +18,8 @@ namespace CaptoApplication
 
         public DataBase db { get; set; }
         public List<TestItem> testItems { get; set; }
+
+        ZXingScannerPage scanPage;
         public MainPage()
         {
             InitializeComponent();
@@ -37,6 +40,21 @@ namespace CaptoApplication
             
             db.InsertIntoTable(new TestItem(1, TestEntry.Text));
             
+        }
+
+        private async void cameraBtn_Clicked(object sender, EventArgs e)
+        {
+            scanPage = new ZXingScannerPage();
+            scanPage.OnScanResult += (result) => {
+                scanPage.IsScanning = false;
+                //Gör något med "result"
+                Device.BeginInvokeOnMainThread(() => {
+                    Navigation.PopModalAsync();
+                    DisplayAlert("Scanned Barcode", result.Text, "OK");
+                });
+            };
+
+            await Navigation.PushModalAsync(scanPage);
         }
     }
 }
