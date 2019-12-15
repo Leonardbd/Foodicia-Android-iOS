@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using SQLite;
 using ZXing.Net.Mobile.Forms;
+using System.Diagnostics;
 
 namespace CaptoApplication
 {
@@ -23,13 +24,13 @@ namespace CaptoApplication
         public MainPage()
         {
             InitializeComponent();
-            db = new DataBase();
-            testItems = new List<TestItem>();
+            //db = new DataBase();
+            //testItems = new List<TestItem>();
 
-            db.createDataBase();
-            testItems = db.GetTestItems();
+            //db.createDataBase();
+            //testItems = db.GetTestItems();
 
-            TestEntry.Text = testItems[1].Namn;
+            //TestEntry.Text = testItems[1].Namn;
 
 
 
@@ -53,6 +54,8 @@ namespace CaptoApplication
                     DisplayAlert("Scanned Barcode", result.Text, "OK");
                     string textresult = BarCodeManager.getBarName(result.Text);
                     resultlbl.Text = textresult;
+                    Debug.WriteLine(textresult);
+
                 });
             };
 
