@@ -40,6 +40,7 @@ namespace CaptoApplication
 
             catch (SQLiteException e)
             {
+                
                 return false;
             }
         }

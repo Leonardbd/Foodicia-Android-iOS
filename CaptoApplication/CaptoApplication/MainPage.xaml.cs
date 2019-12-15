@@ -32,8 +32,6 @@ namespace CaptoApplication
 
             //TestEntry.Text = testItems[1].Namn;
 
-
-
         }
 
         private void btn_Clicked(object sender, EventArgs e)
@@ -52,6 +50,7 @@ namespace CaptoApplication
                 Device.BeginInvokeOnMainThread(() => {
                     Navigation.PopModalAsync();
                     DisplayAlert("Scanned Barcode", result.Text, "OK");
+
                     string textresult = BarCodeManager.getBarName(result.Text);
                     resultlbl.Text = textresult;
                     Debug.WriteLine(textresult);
@@ -60,6 +59,14 @@ namespace CaptoApplication
             };
 
             await Navigation.PushModalAsync(scanPage);
+        }
+
+        private void findbtn_Clicked(object sender, EventArgs e)
+        {
+            string text = productEntry.Text;
+            var scraper = new RecipesScraper(text);
+            scraper.GetHtmlAsync();
+
         }
     }
 }

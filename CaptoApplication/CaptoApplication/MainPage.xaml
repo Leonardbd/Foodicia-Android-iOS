@@ -44,6 +44,8 @@
             <StackLayout>
                 <Label Text="Page 3" 
            HorizontalOptions="Center"></Label>
+                <Entry x:Name="productEntry"></Entry>
+                <Button Text="Hitta Recept" x:Name="findbtn" Clicked="findbtn_Clicked"></Button>
             </StackLayout>
 
         </ContentPage.Content>
