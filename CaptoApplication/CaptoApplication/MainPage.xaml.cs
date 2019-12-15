@@ -69,10 +69,7 @@ namespace CaptoApplication
             scraper.GetNumberOfPages();
             scraper.GetFirstPageRecipesURLsAsync();
 
-            foreach (var item in scraper.ListRecipeURL)
-            {
-                Debug.WriteLine(item);
-            }
+            
 
         }
     }
