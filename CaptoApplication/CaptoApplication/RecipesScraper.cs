@@ -20,10 +20,13 @@ namespace CaptoApplication
         public int? NumPages { get; set; }
         public List<string> ListRecipeURL { get; set; }
 
+        public List<Recipe> ListOfRecipes { get; set; }
+
         public RecipesScraper(string searchword)
         {
             Url = "https://www.coop.se/globalt-sok/?query=" + searchword;
             ListRecipeURL = new List<string>();
+            ListOfRecipes = new List<Recipe>();
             Searchword = searchword;
 
 
@@ -173,5 +176,50 @@ namespace CaptoApplication
            
         }
 
+        public async void GetRecipes(List<string> urlList)
+        {
+            foreach (var item in urlList)
+            {
+
+                using (HttpClient client = new HttpClient())
+                {
+
+                    var html = await httpclient.GetStringAsync(item);
+                    HtmlDocument htmldoc = new HtmlDocument();
+                    htmldoc.LoadHtml(html);
+
+
+                        //getTitle
+                        var list = new List<HtmlNode>();
+                        list = htmldoc.DocumentNode.Descendants("div")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Equals("u-paddingVxlg u-paddingTlg u-sm-paddingTxlg u-paddingHlg u-lg-paddingHxlg u-lg-paddingBz u-bgWhite")).ToList();
+
+                        //GetDescription
+
+                        
+
+
+
+                        //GetIngredienserToList
+
+
+                        var ingrediensLista = new List<Ingredient>();
+
+
+                    ListOfRecipes.Add(new Recipe("title", "blabla", ingrediensLista, item));
+
+
+
+
+
+
+                }
+
+
+
+            }
+
+        }
     }
 }

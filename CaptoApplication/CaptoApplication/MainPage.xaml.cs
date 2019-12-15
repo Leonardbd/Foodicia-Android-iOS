@@ -66,9 +66,9 @@ namespace CaptoApplication
             string text = productEntry.Text;
             var scraper = new RecipesScraper(text);
             //scraper.GetRecipesURLsAsync();
-            scraper.GetNumberOfPages();
+            //scraper.GetNumberOfPages();
             scraper.GetFirstPageRecipesURLsAsync();
-
+            scraper.GetRecipes(scraper.ListRecipeURL);
             
 
         }

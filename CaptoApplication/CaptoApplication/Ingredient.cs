@@ -12,6 +12,8 @@ namespace CaptoApplication
     public string Name { get; set; }
     public int Weight { get; set; }
 
+    public string Date { get; set; }
+
         public Ingredient(string name, int weight)
         {
             Name = name;

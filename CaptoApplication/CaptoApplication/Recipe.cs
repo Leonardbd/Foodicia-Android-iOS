@@ -8,14 +8,18 @@ namespace CaptoApplication
     {
 
         public string Url { get; set; }
-        public string Name { get; set; }
+        public string Title { get; set; }
 
         public string Description { get; set; }
         public List<Ingredient> Ingredients { get; set; }
 
-        public Recipe(string name, string description, List<Ingredient> ingredients, string url )
+        public string Image { get; set; }
+
+
+
+        public Recipe(string title, string description, List<Ingredient> ingredients, string url )
         {
-            Name = name;
+            Title = title;
             Description = description;
             Ingredients = ingredients;
             Url = url;
