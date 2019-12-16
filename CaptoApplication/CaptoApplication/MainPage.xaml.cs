@@ -69,8 +69,16 @@ namespace CaptoApplication
             scraper.GetFirstPageRecipesURLsAsync();
             Thread.Sleep(10);
             scraper.GetRecipes(scraper.ListRecipeURL);
-            
 
+        }
+
+        void IngredientSearchBar_SearchButtonPressed(object sender, EventArgs e)
+        {
+            var keyword = IngredientSearchBar.Text;
+
+
+            
+                
         }
     }
 }

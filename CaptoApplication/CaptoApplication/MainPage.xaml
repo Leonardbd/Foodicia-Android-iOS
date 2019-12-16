@@ -41,10 +41,24 @@
     <ContentPage Title="Page 3">
         <ContentPage.Content>
 
-            <StackLayout>
+            <StackLayout Orientation="Vertical">
+
+                <SearchBar x:Name="IngredientSearchBar"
+                           SearchButtonPressed="IngredientSearchBar_SearchButtonPressed"
+                           Placeholder="Sök ingrediens"
+                           CancelButtonColor="Orange"
+                           PlaceholderColor="Grey"
+                           TextColor="Orange"
+                           HorizontalTextAlignment="Center"
+                           FontSize="Medium"
+                           FontAttributes="Italic"/>
+
+                <ListView x:Name="RecipeListView"/>
+
+
                 <Label Text="Page 3" 
-           HorizontalOptions="Center"></Label>
-                <Entry x:Name="productEntry"></Entry>
+                       HorizontalOptions="Center"/>
+                <Entry x:Name="productEntry"/>
                 <Button Text="Hitta Recept" x:Name="findbtn" Clicked="findbtn_Clicked"></Button>
             </StackLayout>
 
