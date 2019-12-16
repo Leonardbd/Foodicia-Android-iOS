@@ -72,5 +72,12 @@ namespace CaptoApplication
             
 
         }
+
+        void IngredientSearchBar_SearchButtonPressed(object sender, EventArgs e)
+        {
+            var keyword = IngredientSearchBar.Text;
+
+
+        }
     }
 }

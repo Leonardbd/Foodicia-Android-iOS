@@ -47,7 +47,7 @@
                            SearchButtonPressed="IngredientSearchBar_SearchButtonPressed"
                            Placeholder="Sök ingrediens"
                            CancelButtonColor="Orange"
-                           PlaceholderColor="Grey"
+                           PlaceholderColor="Gray"
                            TextColor="Orange"
                            HorizontalTextAlignment="Center"
                            FontSize="Medium"
