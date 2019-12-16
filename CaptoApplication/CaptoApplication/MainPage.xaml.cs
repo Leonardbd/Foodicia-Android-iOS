@@ -38,7 +38,7 @@ namespace CaptoApplication
         private void btn_Clicked(object sender, EventArgs e)
         {
             
-            //db.InsertIntoTable(new TestItem(1, TestEntry.Text));
+            db.InsertIntoTable(new TestItem(1, TestEntry.Text));
             
         }
 
@@ -62,19 +62,24 @@ namespace CaptoApplication
             await Navigation.PushModalAsync(scanPage);
         }
 
-        private void findbtn_Clicked(object sender, EventArgs e)
-        {
-            string text = productEntry.Text;
-            var scraper = new RecipesScraper(text);
-            scraper.GetFirstPageRecipesURLsAsync();            
-            
-            
 
-        }
-
-        private void IngredientSearchBar_SearchButtonPressed(object sender, EventArgs e)
+        void IngredientSearchBar_SearchButtonPressed(object sender, EventArgs e)
         {
 
+            List<string> recipes = new List<string> { };
+
+            var keyword = IngredientSearchBar.Text;
+            var scraper = new RecipesScraper(keyword);
+            scraper.GetFirstPageRecipesURLsAsync();
+
+            foreach (Recipe recipe in scraper.ListOfRecipes)
+            {
+                recipes.Add(recipe.Title);
+                Debug.WriteLine("RECIPE \n RECIPE \n RECIPE \n" + recipe.Title);
+
+            }
+
+            RecipeListView.ItemsSource = recipes;
         }
     }
 }

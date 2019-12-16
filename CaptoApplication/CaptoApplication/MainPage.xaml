@@ -45,21 +45,16 @@
 
                 <SearchBar x:Name="IngredientSearchBar"
                            SearchButtonPressed="IngredientSearchBar_SearchButtonPressed"
-                           Placeholder="Sök ingrediens"
-                           CancelButtonColor="Orange"
-                           PlaceholderColor="Grey"
-                           TextColor="Orange"
+                           Placeholder="Sök recept"
+                           CancelButtonColor="Blue"
+                           PlaceholderColor="Gray"
+                           TextColor="Black"
                            HorizontalTextAlignment="Center"
                            FontSize="Medium"
-                           FontAttributes="Italic"/>
+                           FontAttributes="None"/>
 
                 <ListView x:Name="RecipeListView"/>
-
-
-                <Label Text="Page 3" 
-                       HorizontalOptions="Center"/>
-                <Entry x:Name="productEntry"/>
-                <Button Text="Hitta Recept" x:Name="findbtn" Clicked="findbtn_Clicked"></Button>
+                
             </StackLayout>
 
         </ContentPage.Content>
