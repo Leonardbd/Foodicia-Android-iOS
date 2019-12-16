@@ -24,5 +24,10 @@ namespace CaptoApplication
         {
             Name = name;
         }
+
+        public Ingredient()
+        {
+
+        }
     }
 }

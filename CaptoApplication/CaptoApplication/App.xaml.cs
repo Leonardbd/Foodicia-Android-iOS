@@ -12,6 +12,7 @@ namespace CaptoApplication
             
 
             MainPage = new MainPage();
+            BindingContext = new IngredientsViewModel();
         }
 
         protected override void OnStart()

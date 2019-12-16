@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace CaptoApplication
@@ -7,13 +8,14 @@ namespace CaptoApplication
     public class IngredientsViewModel
     {
 
-        public List<Ingredient> IngredientList { get; set; }
+        public ObservableCollection<Ingredient> IngredientList { get; set; }
 
         public IngredientsViewModel()
         {
-            IngredientList = new List<Ingredient>()
+            IngredientList = new ObservableCollection<Ingredient>()
             {
-                new Ingredient("Köttfärs","500 G")
+                new Ingredient(){Name ="Köttfärs", Measure ="500G" },
+                new Ingredient(){Name = "Korv", Measure = "4"}
             };
 
         }

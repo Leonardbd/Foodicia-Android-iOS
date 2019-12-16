@@ -20,11 +20,16 @@ namespace CaptoApplication
 
         public DataBase db { get; set; }
         public List<TestItem> testItems { get; set; }
+        public ListView view { get; set; }
 
         ZXingScannerPage scanPage;
         public MainPage()
         {
             InitializeComponent();
+
+            BindingContext = new IngredientsViewModel();
+
+
             //db = new DataBase();
             //testItems = new List<TestItem>();
 
@@ -38,7 +43,7 @@ namespace CaptoApplication
         private void btn_Clicked(object sender, EventArgs e)
         {
             
-            db.InsertIntoTable(new TestItem(1, TestEntry.Text));
+            //db.InsertIntoTable(new TestItem(1, TestEntry.Text));
             
         }
 

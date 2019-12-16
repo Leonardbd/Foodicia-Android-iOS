@@ -9,15 +9,50 @@
              x:Class="CaptoApplication.MainPage">
     
  <ContentPage Title="Page 1">
-    <ContentPage.Content>
-
+        <ContentPage.Content>
             <StackLayout>
-                <Label Text="Korv med bröd" 
-                HorizontalOptions="Center"></Label>
-                <Button Text="Hejsan" x:Name="btn" Clicked="btn_Clicked"></Button>
-                <Entry x:Name="TestEntry"></Entry>
-            </StackLayout>
+                <StackLayout Orientation="Horizontal">
 
+                    <Button Text="A D D" HorizontalOptions="CenterAndExpand" TextColor="White" Margin="20" BackgroundColor="Goldenrod" CornerRadius="5"></Button>
+                    <Button Text="S C A N" HorizontalOptions="CenterAndExpand" TextColor="White" Margin="20" BackgroundColor="Green" CornerRadius="5"></Button>
+                    <Button Text="R E M O V E" HorizontalOptions="CenterAndExpand" TextColor="White" Margin="20" BackgroundColor="Red" CornerRadius="5"></Button>
+                    
+                </StackLayout>
+                <ListView ItemsSource="{Binding IngredientList}" HasUnevenRows="True" CachingStrategy="RecycleElement" x:Name="lw">
+                
+                <ListView.ItemTemplate>
+
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="5">
+                                <Label Text="{Binding Name}" TextColor="Orange" FontSize="Large"/>
+                                <Label Text="{Binding Measure}" TextColor="Black" FontSize="Small"/>
+
+                                <Grid BackgroundColor="#d3d3d3">
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.7*"/>
+                                        <ColumnDefinition Width="0.3*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                </Grid>
+
+
+                            </StackLayout>
+                            
+                        </ViewCell>
+                        
+                    </DataTemplate>
+                    
+                </ListView.ItemTemplate>
+
+
+            </ListView>
+            </StackLayout>
         </ContentPage.Content>
     </ContentPage>
 
@@ -40,7 +75,7 @@
 
     <ContentPage Title="Page 3">
         <ContentPage.Content>
-
+            
             <StackLayout Orientation="Vertical">
 
                 <SearchBar x:Name="IngredientSearchBar"
@@ -56,7 +91,7 @@
                 <ListView x:Name="RecipeListView"/>
                 
             </StackLayout>
-
+            
         </ContentPage.Content>
     </ContentPage>
 
