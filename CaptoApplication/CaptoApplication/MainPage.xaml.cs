@@ -67,18 +67,10 @@ namespace CaptoApplication
             string text = productEntry.Text;
             var scraper = new RecipesScraper(text);
             scraper.GetFirstPageRecipesURLsAsync();
-            Thread.Sleep(10);
-            scraper.GetRecipes(scraper.ListRecipeURL);
-
-        }
-
-        void IngredientSearchBar_SearchButtonPressed(object sender, EventArgs e)
-        {
-            var keyword = IngredientSearchBar.Text;
-
-
             
-                
+            //scraper.GetRecipes(new List<string> { "https://www.coop.se/recept/lammbullar-med-bulgur" });
+            
+
         }
     }
 }

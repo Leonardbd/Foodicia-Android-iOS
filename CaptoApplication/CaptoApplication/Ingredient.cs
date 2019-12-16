@@ -19,5 +19,10 @@ namespace CaptoApplication
             Name = name;
             Measure = measure;
         }
+
+        public Ingredient(string name)
+        {
+            Name = name;
+        }
     }
 }

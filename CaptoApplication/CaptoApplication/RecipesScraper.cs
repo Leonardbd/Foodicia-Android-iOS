@@ -79,8 +79,74 @@ namespace CaptoApplication
 
                                 Debug.WriteLine("Found href " + m.Groups[1].Value);
 
-                                ListRecipeURL.Add("coop.se" + m.Groups[1].Value);
+                                
+
+                                    string url = "https://www.coop.se" + m.Groups[1].Value;
+
+                                ListRecipeURL.Add(url);
+
+
+
+                            using (HttpClient client = new HttpClient())
+                            {
+
+                                var html2 = await client.GetStringAsync(url);
+                                HtmlDocument htmldoc2 = new HtmlDocument();
+                                htmldoc2.LoadHtml(html2);
+
+
+                                var list = new List<HtmlNode>();
+                                list = htmldoc2.DocumentNode.Descendants("div")
+                                .Where(node => node.GetAttributeValue("class", "")
+                                .Equals("u-paddingVxlg u-paddingTlg u-sm-paddingTxlg u-paddingHlg u-lg-paddingHxlg u-lg-paddingBz u-bgWhite")).ToList();
+                                string innerhtmlH1 = list[0].InnerHtml;
+
+
+                                //getTitle
+
+                                string title = innerhtmlH1.Substring(innerhtmlH1.IndexOf(">") + 1, IndexOfSecond(innerhtmlH1, "<") - (innerhtmlH1.IndexOf(">") + 1));
+                                Debug.WriteLine("Titel: " + title);
+
+
+                                //getDescription
+
+                                string description = innerhtmlH1.Substring(innerhtmlH1.IndexOf("<p") + 47, innerhtmlH1.IndexOf("</p>") - (innerhtmlH1.IndexOf("<p") + 47));
+                                Debug.WriteLine("Beskrivning: " + description);
+
+
+                                //GetIngredienserToList
+
+                                var ingredienthtml = htmldoc2.DocumentNode.Descendants("ul")
+                                                            .Where(node => node.GetAttributeValue("class", "")
+                                                            .Equals("List List--section")).ToList();
+
+
+                                var ingredientList = ingredienthtml[0].Descendants("li")
+                                                                    .Where(node => node.GetAttributeValue("class", "")
+                                                                    .Equals("u-paddingHxsm u-textNormal u-colorBase")).ToList();
+
+                                var ingrediensLista = new List<Ingredient>();
+
+                                foreach (var ingredient in ingredientList)
+                                {
+                                    string ingredientInnerHtml = ingredient.InnerHtml;
+                                    string ingredientName = ingredientInnerHtml.Substring(ingredientInnerHtml.IndexOf("<span class=") + 32, IndexOfSecond(ingredientInnerHtml, "</span>") - (ingredientInnerHtml.IndexOf("<span class=") + 32));
+                                    string ingredientMeasure = ingredientInnerHtml.Substring(ingredientInnerHtml.IndexOf("<span>") + 6, ingredientInnerHtml.IndexOf("</span>") - (ingredientInnerHtml.IndexOf("<span>") + 6));
+
+                                    ingrediensLista.Add(new Ingredient(ingredientName, ingredientMeasure));
+
+                                    Debug.WriteLine("Ingrediens: " + ingredientName);
+
+
+                                }
+
+                                ListOfRecipes.Add(new Recipe(title, description, ingrediensLista, url));
+
+
                             }
+
+
+                        }
                             m = m.NextMatch();
                         }
                     }
@@ -186,73 +252,6 @@ namespace CaptoApplication
            
         }
 
-        public async void GetRecipes(List<string> urlList)
-        {
-            foreach (var item in urlList)
-            {
-
-                using (HttpClient client = new HttpClient())
-                {
-
-                    var html = await client.GetStringAsync(item);
-                    HtmlDocument htmldoc = new HtmlDocument();
-                    htmldoc.LoadHtml(html);
-
-
-                    var list = new List<HtmlNode>();
-                    list = htmldoc.DocumentNode.Descendants("div")
-                    .Where(node => node.GetAttributeValue("class", "")
-                    .Equals("u-paddingVxlg u-paddingTlg u-sm-paddingTxlg u-paddingHlg u-lg-paddingHxlg u-lg-paddingBz u-bgWhite")).ToList();
-                    string innerhtmlH1 = list[0].InnerHtml;
-
-
-                    //getTitle
-
-                    string title = innerhtmlH1.Substring(innerhtmlH1.IndexOf(">")+1, IndexOfSecond(innerhtmlH1, "<") - (innerhtmlH1.IndexOf(">")+1));
-                    Debug.WriteLine(title);
-
-
-                    //getDescription
-
-                    string description = innerhtmlH1.Substring(innerhtmlH1.IndexOf("<p") +47, innerhtmlH1.IndexOf("</p>") - (innerhtmlH1.IndexOf("<p") +47));
-                    Debug.WriteLine(description);
-
-
-                    //GetIngredienserToList
-
-                    var ingredienthtml = htmldoc.DocumentNode.Descendants("ul")
-                                                .Where(node => node.GetAttributeValue("class", "")
-                                                .Equals("List List--section")).ToList();
-
-
-                    var ingredientList = ingredienthtml[0].Descendants("li")
-                                                        .Where(node => node.GetAttributeValue("class", "")
-                                                        .Equals("u-paddingHxsm u-textNormal u-colorBase")).ToList();
-
-                    var ingrediensLista = new List<Ingredient>();
-
-                    foreach (var ingredient in ingredientList)
-                    {
-                        string ingredientInnerHtml = ingredient.InnerHtml;
-                        string ingredientName = ingredientInnerHtml.Substring(ingredientInnerHtml.IndexOf("<span class="), IndexOfSecond(ingredientInnerHtml,"</span>") - (ingredientInnerHtml.IndexOf("<span class=")));
-                        string ingredientMeasure = ingredientInnerHtml.Substring(ingredientInnerHtml.IndexOf("<span>") +6, ingredientInnerHtml.IndexOf("</span>") - (ingredientInnerHtml.IndexOf("<span>") +6));
-
-                        ingrediensLista.Add(new Ingredient(ingredientName, ingredientMeasure));
-                        
-                        Debug.WriteLine(ingredientName);
-
-
-                    }
-                    
-                    ListOfRecipes.Add(new Recipe(title, description, ingrediensLista, item));
-
-                                        
-                }
-
-
-
-            }
-
-        }
+     
     }
 }
