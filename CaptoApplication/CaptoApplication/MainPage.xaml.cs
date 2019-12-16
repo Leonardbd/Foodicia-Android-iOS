@@ -38,7 +38,7 @@ namespace CaptoApplication
         private void btn_Clicked(object sender, EventArgs e)
         {
             
-            db.InsertIntoTable(new TestItem(1, TestEntry.Text));
+            //db.InsertIntoTable(new TestItem(1, TestEntry.Text));
             
         }
 
@@ -66,10 +66,14 @@ namespace CaptoApplication
         {
             string text = productEntry.Text;
             var scraper = new RecipesScraper(text);
-            scraper.GetFirstPageRecipesURLsAsync();
+            scraper.GetFirstPageRecipesURLsAsync();            
             
-            //scraper.GetRecipes(new List<string> { "https://www.coop.se/recept/lammbullar-med-bulgur" });
             
+
+        }
+
+        private void IngredientSearchBar_SearchButtonPressed(object sender, EventArgs e)
+        {
 
         }
     }

@@ -39,8 +39,6 @@ namespace CaptoApplication
             ListOfRecipes = new List<Recipe>();
             Searchword = searchword;
 
-
-
         }
 
         
