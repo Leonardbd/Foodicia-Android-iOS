@@ -13,6 +13,16 @@ namespace CaptoApplication
     
     public class RecipesScraper
     {
+
+        int IndexOfSecond(string theString, string toFind)
+        {
+            int first = theString.IndexOf(toFind);
+
+            if (first == -1) return -1;
+
+            // Find the "next" occurrence by starting just past the first
+            return theString.IndexOf(toFind, first + 1);
+        }
         public string Url { get; set; }
         public HttpClient httpclient { get; set; }
 
@@ -184,36 +194,59 @@ namespace CaptoApplication
                 using (HttpClient client = new HttpClient())
                 {
 
-                    var html = await httpclient.GetStringAsync(item);
+                    var html = await client.GetStringAsync(item);
                     HtmlDocument htmldoc = new HtmlDocument();
                     htmldoc.LoadHtml(html);
 
 
-                        //getTitle
-                        var list = new List<HtmlNode>();
-                        list = htmldoc.DocumentNode.Descendants("div")
-                        .Where(node => node.GetAttributeValue("class", "")
-                        .Equals("u-paddingVxlg u-paddingTlg u-sm-paddingTxlg u-paddingHlg u-lg-paddingHxlg u-lg-paddingBz u-bgWhite")).ToList();
+                    var list = new List<HtmlNode>();
+                    list = htmldoc.DocumentNode.Descendants("div")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Equals("u-paddingVxlg u-paddingTlg u-sm-paddingTxlg u-paddingHlg u-lg-paddingHxlg u-lg-paddingBz u-bgWhite")).ToList();
+                    string innerhtmlH1 = list[0].InnerHtml;
 
-                        //GetDescription
 
+                    //getTitle
+
+                    string title = innerhtmlH1.Substring(innerhtmlH1.IndexOf(">")+1, IndexOfSecond(innerhtmlH1, "<") - (innerhtmlH1.IndexOf(">")+1));
+                    Debug.WriteLine(title);
+
+
+                    //getDescription
+
+                    string description = innerhtmlH1.Substring(innerhtmlH1.IndexOf("<p") +47, innerhtmlH1.IndexOf("</p>") - (innerhtmlH1.IndexOf("<p") +47));
+                    Debug.WriteLine(description);
+
+
+                    //GetIngredienserToList
+
+                    var ingredienthtml = htmldoc.DocumentNode.Descendants("ul")
+                                                .Where(node => node.GetAttributeValue("class", "")
+                                                .Equals("List List--section")).ToList();
+
+
+                    var ingredientList = ingredienthtml[0].Descendants("li")
+                                                        .Where(node => node.GetAttributeValue("class", "")
+                                                        .Equals("u-paddingHxsm u-textNormal u-colorBase")).ToList();
+
+                    var ingrediensLista = new List<Ingredient>();
+
+                    foreach (var ingredient in ingredientList)
+                    {
+                        string ingredientInnerHtml = ingredient.InnerHtml;
+                        string ingredientName = ingredientInnerHtml.Substring(ingredientInnerHtml.IndexOf("<span class="), IndexOfSecond(ingredientInnerHtml,"</span>") - (ingredientInnerHtml.IndexOf("<span class=")));
+                        string ingredientMeasure = ingredientInnerHtml.Substring(ingredientInnerHtml.IndexOf("<span>") +6, ingredientInnerHtml.IndexOf("</span>") - (ingredientInnerHtml.IndexOf("<span>") +6));
+
+                        ingrediensLista.Add(new Ingredient(ingredientName, ingredientMeasure));
                         
+                        Debug.WriteLine(ingredientName);
 
 
+                    }
+                    
+                    ListOfRecipes.Add(new Recipe(title, description, ingrediensLista, item));
 
-                        //GetIngredienserToList
-
-
-                        var ingrediensLista = new List<Ingredient>();
-
-
-                    ListOfRecipes.Add(new Recipe("title", "blabla", ingrediensLista, item));
-
-
-
-
-
-
+                                        
                 }
 
 

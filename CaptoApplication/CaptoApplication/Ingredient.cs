@@ -10,14 +10,14 @@ namespace CaptoApplication
     {
         
     public string Name { get; set; }
-    public int Weight { get; set; }
+    public string Measure { get; set; }
 
     public string Date { get; set; }
 
-        public Ingredient(string name, int weight)
+        public Ingredient(string name, string measure)
         {
             Name = name;
-            Weight = weight;
+            Measure = measure;
         }
     }
 }

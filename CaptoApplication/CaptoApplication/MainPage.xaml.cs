@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using SQLite;
 using ZXing.Net.Mobile.Forms;
 using System.Diagnostics;
+using System.Threading;
 
 namespace CaptoApplication
 {
@@ -65,9 +66,8 @@ namespace CaptoApplication
         {
             string text = productEntry.Text;
             var scraper = new RecipesScraper(text);
-            //scraper.GetRecipesURLsAsync();
-            //scraper.GetNumberOfPages();
             scraper.GetFirstPageRecipesURLsAsync();
+            Thread.Sleep(10);
             scraper.GetRecipes(scraper.ListRecipeURL);
             
 
