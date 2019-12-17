@@ -21,6 +21,8 @@ namespace CaptoApplication
 
         public DataBase db { get; set; }
         public List<TestItem> testItems { get; set; }
+
+        public List<Ingredient> PersonalIngredientList {get; set;}
         public ListView view { get; set; }
 
         ZXingScannerPage scanPage;
@@ -29,7 +31,7 @@ namespace CaptoApplication
             InitializeComponent();
 
             BindingContext = new IngredientsViewModel();
-
+            PersonalIngredientList = new List<Ingredient>();
 
             //db = new DataBase();
             //testItems = new List<TestItem>();
@@ -48,26 +50,7 @@ namespace CaptoApplication
             
         }
 
-        private async void cameraBtn_Clicked(object sender, EventArgs e)
-        {
-            scanPage = new ZXingScannerPage();
-            scanPage.OnScanResult += (result) => {
-                scanPage.IsScanning = false;
-                //Gör något med "result"
-                Device.BeginInvokeOnMainThread(() => {
-                    Navigation.PopModalAsync();
-                    DisplayAlert("Scanned Barcode", result.Text, "OK");
-
-                    string textresult = BarCodeManager.getBarName(result.Text);
-                    resultlbl.Text = textresult;
-                    Debug.WriteLine(textresult);
-
-                });
-            };
-
-            await Navigation.PushModalAsync(scanPage);
-        }
-
+        
 
         void IngredientSearchBar_SearchButtonPressed(object sender, EventArgs e)
         {
@@ -93,7 +76,30 @@ namespace CaptoApplication
         {
             var pop = new PopUp();
             App.Current.MainPage.Navigation.PushPopupAsync(pop, true);
-           // PushPopupAsync(pop, true);
+           
+        }
+
+        private async void btnscan_Clicked(object sender, EventArgs e)
+        {
+            scanPage = new ZXingScannerPage();
+            scanPage.OnScanResult += (result) => {
+                scanPage.IsScanning = false;
+
+                var pop = new PopUp(result.Text);
+                App.Current.MainPage.Navigation.PushPopupAsync(pop, true);
+                //Gör något med "result"
+                Device.BeginInvokeOnMainThread(() => {
+                    Navigation.PopModalAsync();
+                    //DisplayAlert("Scanned Barcode", result.Text, "OK");
+
+                    string textresult = BarCodeManager.getBarName(result.Text);
+                    
+                    Debug.WriteLine(textresult);
+
+                });
+            };
+
+            await Navigation.PushModalAsync(scanPage);
         }
     }
 }

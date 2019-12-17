@@ -11,14 +11,21 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Frame Grid.RowSpan="2" HeightRequest="225" VerticalOptions="End" CornerRadius="30" Padding="20,0" BackgroundColor="White">
-            <Grid>
+        <Frame Grid.RowSpan="2" HeightRequest="240" VerticalOptions="End" CornerRadius="30" Padding="20,0" BackgroundColor="White">
+            <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                
                 <StackLayout>
 
-                    <Entry x:Name="productEntry" Placeholder="Product name" Margin="3"></Entry>
-                    <DatePicker></DatePicker>
+                    <Entry x:Name="productEntry" Placeholder="Product name" Margin="5"></Entry>
+
+                    <Entry x:Name="measureEntry" Placeholder="Amount and measurement" ></Entry>
+
+                    <Label Text="Expiration Date" HorizontalOptions="StartAndExpand"></Label>
+                    <DatePicker x:Name="datePicker"></DatePicker>
+
                     
-                    
+
+
                 </StackLayout>
                 
                 

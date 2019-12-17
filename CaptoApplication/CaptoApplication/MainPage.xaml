@@ -14,7 +14,7 @@
                 <StackLayout Orientation="Horizontal">
 
                     <Button Text="A D D" HorizontalOptions="CenterAndExpand" TextColor="White" Margin="20" BackgroundColor="Goldenrod" CornerRadius="5" x:Name="btnadd" Clicked="btnadd_Clicked"></Button>
-                    <Button Text="S C A N" HorizontalOptions="CenterAndExpand" TextColor="White" Margin="20" BackgroundColor="Green" CornerRadius="5" x:Name="btnscan"></Button>
+                    <Button Text="S C A N" HorizontalOptions="CenterAndExpand" TextColor="White" Margin="20" BackgroundColor="Green" CornerRadius="5" x:Name="btnscan" Clicked="btnscan_Clicked"></Button>
                     <Button Text="R E M O V E" HorizontalOptions="CenterAndExpand" TextColor="White" Margin="20" BackgroundColor="Red" CornerRadius="5" x:Name="btnremove"></Button>
                     
                 </StackLayout>
@@ -64,7 +64,7 @@
 
             <StackLayout>
                 <Label Text="Page Two" HorizontalOptions="Center" x:Name="resultlbl"></Label>
-                <Button Text="Kamera" x:Name="cameraBtn" Clicked="cameraBtn_Clicked"></Button>
+                <Button Text="Kamera" x:Name="cameraBtn"></Button>
             </StackLayout>
 
         </ContentPage.Content>
