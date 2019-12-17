@@ -43,18 +43,12 @@ namespace CaptoApplication
             Model = new IngredientsViewModel(PersonalIngredientList);
 
             BindingContext = Model;
-            //TestEntry.Text = testItems[1].Namn;
+           
 
-        }
-
-        private void btn_Clicked(object sender, EventArgs e)
-        {
-            
-            //db.InsertIntoTable(new TestItem(1, TestEntry.Text));
-            
         }
 
         
+      
 
         void IngredientSearchBar_SearchButtonPressed(object sender, EventArgs e)
         {
