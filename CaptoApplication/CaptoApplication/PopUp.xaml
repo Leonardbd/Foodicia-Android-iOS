@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rg:PopupPage xmlns:rg="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="CaptoApplication.PopUp">
+
+    <Grid HeightRequest="265" VerticalOptions="End">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Frame Grid.RowSpan="2" HeightRequest="225" VerticalOptions="End" CornerRadius="30" Padding="20,0" BackgroundColor="White">
+            <Grid>
+                <StackLayout>
+
+                    <Entry x:Name="productEntry" Placeholder="Product name" Margin="3"></Entry>
+                    <DatePicker></DatePicker>
+                    
+                    
+                </StackLayout>
+                
+                
+            </Grid>
+            
+            
+        </Frame>
+        <Button Grid.Row="1" Text="OK" CornerRadius="5" TextColor="White" BackgroundColor="Green" Clicked="Button_Clicked"></Button>
+        
+        
+        
+    </Grid>
+</rg:PopupPage>

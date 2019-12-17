@@ -13,9 +13,9 @@
             <StackLayout>
                 <StackLayout Orientation="Horizontal">
 
-                    <Button Text="A D D" HorizontalOptions="CenterAndExpand" TextColor="White" Margin="20" BackgroundColor="Goldenrod" CornerRadius="5"></Button>
-                    <Button Text="S C A N" HorizontalOptions="CenterAndExpand" TextColor="White" Margin="20" BackgroundColor="Green" CornerRadius="5"></Button>
-                    <Button Text="R E M O V E" HorizontalOptions="CenterAndExpand" TextColor="White" Margin="20" BackgroundColor="Red" CornerRadius="5"></Button>
+                    <Button Text="A D D" HorizontalOptions="CenterAndExpand" TextColor="White" Margin="20" BackgroundColor="Goldenrod" CornerRadius="5" x:Name="btnadd" Clicked="btnadd_Clicked"></Button>
+                    <Button Text="S C A N" HorizontalOptions="CenterAndExpand" TextColor="White" Margin="20" BackgroundColor="Green" CornerRadius="5" x:Name="btnscan"></Button>
+                    <Button Text="R E M O V E" HorizontalOptions="CenterAndExpand" TextColor="White" Margin="20" BackgroundColor="Red" CornerRadius="5" x:Name="btnremove"></Button>
                     
                 </StackLayout>
                 <ListView ItemsSource="{Binding IngredientList}" HasUnevenRows="True" CachingStrategy="RecycleElement" x:Name="lw">

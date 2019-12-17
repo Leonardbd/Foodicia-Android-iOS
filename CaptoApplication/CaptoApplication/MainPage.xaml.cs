@@ -9,6 +9,7 @@ using SQLite;
 using ZXing.Net.Mobile.Forms;
 using System.Diagnostics;
 using System.Threading;
+using Rg.Plugins.Popup.Extensions;
 
 namespace CaptoApplication
 {
@@ -85,6 +86,14 @@ namespace CaptoApplication
             }
 
             RecipeListView.ItemsSource = recipes;
+        }
+
+
+        private void btnadd_Clicked(object sender, EventArgs e)
+        {
+            var pop = new PopUp();
+            App.Current.MainPage.Navigation.PushPopupAsync(pop, true);
+           // PushPopupAsync(pop, true);
         }
     }
 }
