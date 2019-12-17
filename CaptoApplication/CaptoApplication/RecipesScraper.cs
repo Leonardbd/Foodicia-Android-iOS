@@ -113,12 +113,14 @@ namespace CaptoApplication
                                 //getTitle
 
                                 string title = innerhtmlH1.Substring(innerhtmlH1.IndexOf(">") + 1, IndexOfSecond(innerhtmlH1, "<") - (innerhtmlH1.IndexOf(">") + 1));
+                                title = convertUTF(title);
                                 Debug.WriteLine("Titel: " + title);
 
 
                                 //getDescription
 
                                 string description = innerhtmlH1.Substring(innerhtmlH1.IndexOf("<p") + 47, innerhtmlH1.IndexOf("</p>") - (innerhtmlH1.IndexOf("<p") + 47));
+                                description = convertUTF(description);
                                 Debug.WriteLine("Beskrivning: " + description);
 
 
@@ -143,11 +145,12 @@ namespace CaptoApplication
                                 var ingrediensLista = new List<Ingredient>();
                                 int counter = 0;
                                   foreach (var ingredient in ingredientList2)
-                                    {                                    
+                                    {
 
-                                    ingrediensLista.Add(new Ingredient(ingredient.InnerHtml));
+                                    string ingredientString = convertUTF(ingredient.InnerHtml);
+                                    ingrediensLista.Add(new Ingredient(ingredientString));
                                     
-                                    Debug.WriteLine("Ingrediens: " + ingredient.InnerHtml);
+                                    Debug.WriteLine("Ingrediens: " + ingredientString);
                                     counter++;
                                     if(counter == ingredientList.Count)
                                     {
@@ -176,6 +179,49 @@ namespace CaptoApplication
                 }
             return ListOfRecipes;
 
+        }
+
+        private string convertUTF(string text)
+        {
+
+            if (text.Contains("&#246;"))
+            {
+                text = text.Replace("&#246;", "ö");
+            }
+            if (text.Contains("&#228;"))
+            {
+                text = text.Replace("&#228;", "ä");
+            }
+            if (text.Contains("&#229;"))
+            {
+                text = text.Replace("&#229;", "å");
+            }
+            if (text.Contains("&#214;"))
+            {
+                text = text.Replace("&#214;", "Ö");
+            }
+            if (text.Contains("&#196;"))
+            {
+                text = text.Replace("&#196;", "Ä");
+            }
+            if (text.Contains("&#197;"))
+            {
+                text = text.Replace("&#197;", "Å");
+            }
+            if (text.Contains("&#233;"))
+            {
+                text = text.Replace("&#233;", "é");
+            }
+            if (text.Contains("&#176;"))
+            {
+                text = text.Replace("&#176;", "°");
+            }
+            if (text.Contains("&#224;"))
+            {
+                text = text.Replace("&#224;", "à");
+            }
+
+            return text;
         }
 
         public void SetRecipeMatches(Recipe recipe)
