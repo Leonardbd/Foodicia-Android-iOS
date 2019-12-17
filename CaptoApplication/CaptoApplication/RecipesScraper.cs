@@ -123,17 +123,24 @@ namespace CaptoApplication
                                                                     .Where(node => node.GetAttributeValue("class", "")
                                                                     .Equals("u-paddingHxsm u-textNormal u-colorBase")).ToList();
 
+                                var ingredientList2 = new List<HtmlNode>();
+
+                                foreach (HtmlNode nod in ingredientList)
+                                {
+                                    ingredientList2.Add(nod.SelectSingleNode("span[@class='u-textWeightBold ']"));
+                                }
+
                                 var ingrediensLista = new List<Ingredient>();
                                 int counter = 0;
-                                  foreach (var ingredient in ingredientList)
+                                  foreach (var ingredient in ingredientList2)
                                     {
-                                    string ingredientInnerHtml = ingredient.InnerHtml;
-                                    string ingredientName = ingredientInnerHtml.Substring(ingredientInnerHtml.IndexOf("<span class=") + 32, IndexOfSecond(ingredientInnerHtml, "</span>") - (ingredientInnerHtml.IndexOf("<span class=") + 32));
-                                    string ingredientMeasure = ingredientInnerHtml.Substring(ingredientInnerHtml.IndexOf("<span>") + 6, ingredientInnerHtml.IndexOf("</span>") - (ingredientInnerHtml.IndexOf("<span>") + 6));
+                                    //string ingredientInnerHtml = ingredient.InnerHtml;
+                                    //string ingredientName = ingredientInnerHtml.Substring(ingredientInnerHtml.IndexOf("<span class=") + 32, IndexOfSecond(ingredientInnerHtml, "</span>") - (ingredientInnerHtml.IndexOf("<span class=") + 32));
+                                    //string ingredientMeasure = ingredientInnerHtml.Substring(ingredientInnerHtml.IndexOf("<span>") + 6, ingredientInnerHtml.IndexOf("</span>") - (ingredientInnerHtml.IndexOf("<span>") + 6));
 
-                                    ingrediensLista.Add(new Ingredient(ingredientName, ingredientMeasure));
+                                    ingrediensLista.Add(new Ingredient(ingredient.InnerHtml));
                                     
-                                    Debug.WriteLine("Ingrediens: " + ingredientName);
+                                    Debug.WriteLine("Ingrediens: " + ingredient);
                                     counter++;
                                     if(counter == ingredientList.Count)
                                     {

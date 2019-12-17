@@ -46,23 +46,24 @@ namespace CaptoApplication
             
         }
 
-       
-      
 
         void IngredientSearchBar_SearchButtonPressed(object sender, EventArgs e)
         {
 
             List<string> recipes = new List<string> { };
-            
+
             var keyword = IngredientSearchBar.Text;
             var scraper = new RecipesScraper(keyword);
             scraper.GetFirstPageRecipesURLsAsync();
 
+            //Thread a = new Thread(new ThreadStart(scraper.GetFirstPageRecipesURLsAsync));
+            //a.Start();
+            //a.Join();
+            Thread.Sleep(7000);
+
             foreach (Recipe recipe in scraper.ListOfRecipes)
             {
                 recipes.Add(recipe.Title);
-                Debug.WriteLine("RECIPE \n RECIPE \n RECIPE \n" + recipe.Title);
-
             }
 
             RecipeListView.ItemsSource = recipes;
@@ -76,9 +77,8 @@ namespace CaptoApplication
             pop.OnDialogClosed += (s, arg) =>
             {
                 string productname = arg.ProductName;
-                string measure = arg.Measurement;
                 string date = arg.ExpirationDate;
-                var ingredient = new Ingredient(productname, measure, date);
+                var ingredient = new Ingredient(productname, date);
                 db.InsertIntoTable(ingredient);
                 PersonalIngredientList.Add(ingredient);
                 Model.IngredientList.Add(ingredient);               
@@ -93,16 +93,15 @@ namespace CaptoApplication
             scanPage.OnScanResult += (result) => {
                 scanPage.IsScanning = false;
 
-                var pop = new PopUp(result.Text);
+                var pop = new PopUp(BarCodeManager.getBarName(result.Text));
                 
                 App.Current.MainPage.Navigation.PushPopupAsync(pop, true);
 
                 pop.OnDialogClosed += (s, arg) =>
                 {
                     string productname = arg.ProductName;
-                    string measure = arg.Measurement;
                     string date = arg.ExpirationDate;
-                    var ingredient = new Ingredient(productname, measure, date);
+                    var ingredient = new Ingredient(productname, date);
                     db.InsertIntoTable(ingredient);
                     PersonalIngredientList.Add(ingredient);
                     Model.IngredientList.Add(ingredient);
