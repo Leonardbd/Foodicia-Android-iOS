@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace CaptoApplication
 {
@@ -30,21 +31,22 @@ namespace CaptoApplication
         public int? NumPages { get; set; }
         public List<string> ListRecipeURL { get; set; }
 
-        public List<Recipe> ListOfRecipes { get; set; }
+        //public List<Recipe> ListOfRecipes { get; set; }
 
         public RecipesScraper(string searchword)
         {
             Url = "https://www.coop.se/globalt-sok/?query=" + searchword;
             ListRecipeURL = new List<string>();
-            ListOfRecipes = new List<Recipe>();
+            //ListOfRecipes = new List<Recipe>();
             Searchword = searchword;
 
         }
 
         
-        public async void GetFirstPageRecipesURLsAsync()
+        public async Task<List<Recipe>> GetFirstPageRecipesURLsAsync()
         {
-            
+                List<Recipe> ListOfRecipes = new List<Recipe>();
+
                 httpclient = new HttpClient();
                 var html = await httpclient.GetStringAsync(Url);
 
@@ -101,13 +103,12 @@ namespace CaptoApplication
 
                                 //getImage
                                 var htmlList= new List<HtmlNode>();
-                                htmlList = htmldoc.DocumentNode.Descendants("div")
+                                htmlList = htmldoc2.DocumentNode.Descendants("img")
                                     .Where(node => node.GetAttributeValue("class", "")
-                                    .Equals("js-childLayoutContainer")).ToList();
+                                    .Equals("u-hiddenVisually")).ToList();
 
-                                //var image = htmlList[0].SelectSingleNode("//div[1]");
-                                string img = htmlList[0].InnerHtml;
-                                string ima = img.Substring(img.IndexOf("//res.cloudinary.com/coopsverige/image/upload",img.IndexOf(".jpg") - img.IndexOf("//res.cloudinary.com/coopsverige/image/upload")));
+                                string image = htmlList[0].Attributes[2].Value;
+                                Debug.WriteLine("Image: " + image);
 
                                 //getTitle
 
@@ -150,7 +151,7 @@ namespace CaptoApplication
                                     counter++;
                                     if(counter == ingredientList.Count)
                                     {
-                                        var recipe = new Recipe(title, description, ingrediensLista, url, ingredientList.Count);
+                                        var recipe = new Recipe(title, description, ingrediensLista, url, ingredientList.Count, image);
 
                                         ListOfRecipes.Add(recipe);
                                         SetRecipeMatches(recipe);
@@ -166,13 +167,14 @@ namespace CaptoApplication
                             m = m.NextMatch();
                         }
                     }
+                    
 
                 }
                 catch (RegexMatchTimeoutException)
                 {
                     Console.WriteLine("The matching operation timed out.");
                 }
-            
+            return ListOfRecipes;
 
         }
 

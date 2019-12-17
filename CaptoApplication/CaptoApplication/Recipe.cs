@@ -20,7 +20,7 @@ namespace CaptoApplication
         public string Image { get; set; }
 
 
-        public Recipe(string title, string description, List<Ingredient> ingredients, string url, int num )
+        public Recipe(string title, string description, List<Ingredient> ingredients, string url, int num, string image)
         {
             Title = title;
             Description = description;

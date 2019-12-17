@@ -46,22 +46,17 @@ namespace CaptoApplication
             
         }
 
-
-        void IngredientSearchBar_SearchButtonPressed(object sender, EventArgs e)
+        
+        async void IngredientSearchBar_SearchButtonPressed(object sender, EventArgs e)
         {
 
             List<string> recipes = new List<string> { };
 
             var keyword = IngredientSearchBar.Text;
             var scraper = new RecipesScraper(keyword);
-            scraper.GetFirstPageRecipesURLsAsync();
+            var recipeList = await scraper.GetFirstPageRecipesURLsAsync();
 
-            //Thread a = new Thread(new ThreadStart(scraper.GetFirstPageRecipesURLsAsync));
-            //a.Start();
-            //a.Join();
-            
-
-            foreach (Recipe recipe in scraper.ListOfRecipes)
+            foreach (Recipe recipe in recipeList)
             {
                 recipes.Add(recipe.Title);
             }
