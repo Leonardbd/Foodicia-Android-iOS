@@ -127,7 +127,19 @@ namespace CaptoApplication
 
         private void btnremove_Clicked(object sender, EventArgs e)
         {
+           
+        }
+
+        private void removeitembtn_Clicked(object sender, EventArgs e)
+        {
+            var button = sender as ImageButton;
+
+           var ingredient = button?.BindingContext as Ingredient;
             
+            var vm = BindingContext as IngredientsViewModel;
+
+            db.DeleteIngredientItem(ingredient);
+            vm?.RemoveCommand.Execute(ingredient);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace CaptoApplication
             try
             {
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "DemoDB.db")))
-                    {
+                    {    
                     connection.CreateTable<Ingredient>();
                     return true;
                     }
@@ -72,7 +72,7 @@ namespace CaptoApplication
             {
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "DemoDB.db")))
                 {
-                    connection.Delete(ingredient);
+                    connection.Table<Ingredient>().Delete(x => x.ID == ingredient.ID);
                     return true;
 
 
