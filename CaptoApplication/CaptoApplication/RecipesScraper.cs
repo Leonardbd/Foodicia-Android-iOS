@@ -124,7 +124,7 @@ namespace CaptoApplication
                                                                     .Equals("u-paddingHxsm u-textNormal u-colorBase")).ToList();
 
                                 var ingrediensLista = new List<Ingredient>();
-                                
+                                int counter = 0;
                                   foreach (var ingredient in ingredientList)
                                     {
                                     string ingredientInnerHtml = ingredient.InnerHtml;
@@ -134,13 +134,17 @@ namespace CaptoApplication
                                     ingrediensLista.Add(new Ingredient(ingredientName, ingredientMeasure));
                                     
                                     Debug.WriteLine("Ingrediens: " + ingredientName);
+                                    counter++;
+                                    if(counter == ingredientList.Count)
+                                    {
+                                        var recipe = new Recipe(title, description, ingrediensLista, url, ingredientList.Count);
 
+                                        ListOfRecipes.Add(recipe);
+                                        SetRecipeMatches(recipe);
+                                    }
 
                                     }
-                                var recipe = new Recipe(title, description, ingrediensLista, url, ingredientList.Count);
-
-                                ListOfRecipes.Add(recipe);
-                                SetRecipeMatches(recipe);
+                                
 
 
                             }
