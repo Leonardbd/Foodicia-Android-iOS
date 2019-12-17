@@ -99,6 +99,15 @@ namespace CaptoApplication
                                 .Equals("u-paddingVxlg u-paddingTlg u-sm-paddingTxlg u-paddingHlg u-lg-paddingHxlg u-lg-paddingBz u-bgWhite")).ToList();
                                 string innerhtmlH1 = list[0].InnerHtml;
 
+                                //getImage
+                                var htmlList= new List<HtmlNode>();
+                                htmlList = htmldoc.DocumentNode.Descendants("div")
+                                    .Where(node => node.GetAttributeValue("class", "")
+                                    .Equals("js-childLayoutContainer")).ToList();
+
+                                //var image = htmlList[0].SelectSingleNode("//div[1]");
+                                string img = htmlList[0].InnerHtml;
+                                string ima = img.Substring(img.IndexOf("//res.cloudinary.com/coopsverige/image/upload",img.IndexOf(".jpg") - img.IndexOf("//res.cloudinary.com/coopsverige/image/upload")));
 
                                 //getTitle
 
@@ -133,14 +142,11 @@ namespace CaptoApplication
                                 var ingrediensLista = new List<Ingredient>();
                                 int counter = 0;
                                   foreach (var ingredient in ingredientList2)
-                                    {
-                                    //string ingredientInnerHtml = ingredient.InnerHtml;
-                                    //string ingredientName = ingredientInnerHtml.Substring(ingredientInnerHtml.IndexOf("<span class=") + 32, IndexOfSecond(ingredientInnerHtml, "</span>") - (ingredientInnerHtml.IndexOf("<span class=") + 32));
-                                    //string ingredientMeasure = ingredientInnerHtml.Substring(ingredientInnerHtml.IndexOf("<span>") + 6, ingredientInnerHtml.IndexOf("</span>") - (ingredientInnerHtml.IndexOf("<span>") + 6));
+                                    {                                    
 
                                     ingrediensLista.Add(new Ingredient(ingredient.InnerHtml));
                                     
-                                    Debug.WriteLine("Ingrediens: " + ingredient);
+                                    Debug.WriteLine("Ingrediens: " + ingredient.InnerHtml);
                                     counter++;
                                     if(counter == ingredientList.Count)
                                     {
@@ -152,7 +158,6 @@ namespace CaptoApplication
 
                                     }
                                 
-
 
                             }
 

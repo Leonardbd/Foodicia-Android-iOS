@@ -59,7 +59,7 @@ namespace CaptoApplication
             //Thread a = new Thread(new ThreadStart(scraper.GetFirstPageRecipesURLsAsync));
             //a.Start();
             //a.Join();
-            Thread.Sleep(7000);
+            
 
             foreach (Recipe recipe in scraper.ListOfRecipes)
             {
