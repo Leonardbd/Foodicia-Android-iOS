@@ -26,9 +26,11 @@
                         <ViewCell>
                             <StackLayout Padding="5">
                                 <Label Text="{Binding Name}" TextColor="Orange" FontSize="Large"/>
-                                <Label Text="{Binding Measure}" TextColor="Black" FontSize="Small"/>
+                                    <Label Text="{Binding Date}" TextColor="Black" FontSize="Medium"/>
+                                    <Label Text="{Binding Measure}" TextColor="Black" FontSize="Small"/>
+                                    
 
-                                <Grid BackgroundColor="#d3d3d3">
+                                    <Grid BackgroundColor="#d3d3d3">
 
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>

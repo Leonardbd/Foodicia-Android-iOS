@@ -12,16 +12,15 @@ namespace CaptoApplication
 
         public IngredientsViewModel()
         {
-            IngredientList = new ObservableCollection<Ingredient>()
-            {
-                new Ingredient("Korv med bröd","2","20-12-2019")
-            };
+            IngredientList = new ObservableCollection<Ingredient>();
 
         }
-
-        public IngredientsViewModel(Ingredient ingredient)
+        public IngredientsViewModel(List<Ingredient> list)
         {
+            IngredientList = new ObservableCollection<Ingredient>(list);
 
         }
+
+
     }
 }

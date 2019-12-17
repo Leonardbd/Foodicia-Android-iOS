@@ -21,30 +21,28 @@ namespace CaptoApplication
     {
 
         public DataBase db { get; set; }
-        public List<TestItem> testItems { get; set; }
+        
 
         public List<Ingredient> PersonalIngredientList {get; set;}
 
         public IngredientsViewModel Model { get; set; }
-        public ListView view { get; set; }
+        
 
         ZXingScannerPage scanPage;
         public MainPage()
         {
             InitializeComponent();
-            Model = new IngredientsViewModel();
-            BindingContext = Model;
-            PersonalIngredientList = new List<Ingredient>();
-
             
-           
+            PersonalIngredientList = new List<Ingredient>();         
 
-            //db = new DataBase();
-            //testItems = new List<TestItem>();
+            db = new DataBase();
+            
+            db.createDataBase();
+            PersonalIngredientList = db.GetIngredientsItems();
 
-            //db.createDataBase();
-            //testItems = db.GetTestItems();
+            Model = new IngredientsViewModel(PersonalIngredientList);
 
+            BindingContext = Model;
             //TestEntry.Text = testItems[1].Namn;
 
         }
@@ -88,8 +86,9 @@ namespace CaptoApplication
                 string measure = arg.Measurement;
                 string date = arg.ExpirationDate;
                 var ingredient = new Ingredient(productname, measure, date);
-                Model.IngredientList.Add(ingredient);
-                
+                db.InsertIntoTable(ingredient);
+                PersonalIngredientList.Add(ingredient);
+                Model.IngredientList.Add(ingredient);               
 
             };
 
@@ -111,6 +110,8 @@ namespace CaptoApplication
                     string measure = arg.Measurement;
                     string date = arg.ExpirationDate;
                     var ingredient = new Ingredient(productname, measure, date);
+                    db.InsertIntoTable(ingredient);
+                    PersonalIngredientList.Add(ingredient);
                     Model.IngredientList.Add(ingredient);
 
                 };

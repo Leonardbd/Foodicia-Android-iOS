@@ -31,5 +31,10 @@ namespace CaptoApplication
             Measure = measure;
             Date = date;
         }
+
+        public Ingredient()
+        {
+
+        }
     }
 }

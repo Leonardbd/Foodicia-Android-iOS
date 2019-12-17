@@ -16,7 +16,7 @@ namespace CaptoApplication
             {
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "DemoDB.db")))
                     {
-                    connection.CreateTable<TestItem>();
+                    connection.CreateTable<Ingredient>();
                     return true;
                     }
             }
@@ -29,7 +29,7 @@ namespace CaptoApplication
             
         }
 
-        public bool InsertIntoTable(TestItem item)
+        public bool InsertIntoTable(Ingredient item)
         {
             try
             {
@@ -47,13 +47,13 @@ namespace CaptoApplication
             }
         }
 
-        public List<TestItem> GetTestItems()
+        public List<Ingredient> GetIngredientsItems()
         {
             try
             {
                 using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "DemoDB.db")))
                 {
-                   return connection.Table<TestItem>().ToList();
+                   return connection.Table<Ingredient>().ToList();
                     
                     
                 }
