@@ -10,6 +10,7 @@ using ZXing.Net.Mobile.Forms;
 using System.Diagnostics;
 using System.Threading;
 using Rg.Plugins.Popup.Extensions;
+using System.Collections.ObjectModel;
 
 namespace CaptoApplication
 {
@@ -23,15 +24,20 @@ namespace CaptoApplication
         public List<TestItem> testItems { get; set; }
 
         public List<Ingredient> PersonalIngredientList {get; set;}
+
+        public IngredientsViewModel Model { get; set; }
         public ListView view { get; set; }
 
         ZXingScannerPage scanPage;
         public MainPage()
         {
             InitializeComponent();
-
-            BindingContext = new IngredientsViewModel();
+            Model = new IngredientsViewModel();
+            BindingContext = Model;
             PersonalIngredientList = new List<Ingredient>();
+
+            
+           
 
             //db = new DataBase();
             //testItems = new List<TestItem>();
@@ -76,7 +82,17 @@ namespace CaptoApplication
         {
             var pop = new PopUp();
             App.Current.MainPage.Navigation.PushPopupAsync(pop, true);
-           
+            pop.OnDialogClosed += (s, arg) =>
+            {
+                string productname = arg.ProductName;
+                string measure = arg.Measurement;
+                string date = arg.ExpirationDate;
+                var ingredient = new Ingredient(productname, measure, date);
+                Model.IngredientList.Add(ingredient);
+                
+
+            };
+
         }
 
         private async void btnscan_Clicked(object sender, EventArgs e)
@@ -86,7 +102,19 @@ namespace CaptoApplication
                 scanPage.IsScanning = false;
 
                 var pop = new PopUp(result.Text);
+                
                 App.Current.MainPage.Navigation.PushPopupAsync(pop, true);
+
+                pop.OnDialogClosed += (s, arg) =>
+                {
+                    string productname = arg.ProductName;
+                    string measure = arg.Measurement;
+                    string date = arg.ExpirationDate;
+                    var ingredient = new Ingredient(productname, measure, date);
+                    Model.IngredientList.Add(ingredient);
+
+                };
+
                 //Gör något med "result"
                 Device.BeginInvokeOnMainThread(() => {
                     Navigation.PopModalAsync();

@@ -29,12 +29,12 @@ namespace CaptoApplication
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            //OnDialogClosed?.Invoke(this,new DialogResult { ProductName = })
+            OnDialogClosed?.Invoke(this, new DialogResult { ProductName = productEntry.Text, Measurement = measureEntry.Text, ExpirationDate = datePicker.Date.ToString("MM/dd/yyyy") });
             App.Current.MainPage.Navigation.PopPopupAsync(true);
-            string name = productEntry.Text;
-            string measure = measureEntry.Text;
-            string date = datePicker.Date.ToString("MM/dd/yyyy");
-            Ingredient = new Ingredient() { Name = name, Measure = measure, Date = date };
+            //string name = productEntry.Text;
+            //string measure = measureEntry.Text;
+            //string date = datePicker.Date.ToString("MM/dd/yyyy");
+            //Ingredient = new Ingredient() { Name = name, Measure = measure, Date = date };
            
         }
 

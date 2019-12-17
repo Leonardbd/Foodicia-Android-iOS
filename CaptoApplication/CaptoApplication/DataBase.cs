@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using SQLite;
 
@@ -22,6 +23,7 @@ namespace CaptoApplication
 
             catch(SQLiteException e)
             {
+                Debug.WriteLine(e.Message);
                 return false;
             }
             

@@ -14,9 +14,13 @@ namespace CaptoApplication
         {
             IngredientList = new ObservableCollection<Ingredient>()
             {
-                new Ingredient(){Name ="Köttfärs", Measure ="500G" },
-                new Ingredient(){Name = "Korv", Measure = "4"}
+                new Ingredient("Korv med bröd","2","20-12-2019")
             };
+
+        }
+
+        public IngredientsViewModel(Ingredient ingredient)
+        {
 
         }
     }
