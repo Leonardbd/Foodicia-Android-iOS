@@ -13,15 +13,20 @@ namespace CaptoApplication
         public string Description { get; set; }
         public List<Ingredient> Ingredients { get; set; }
 
+        public int NumIngredients { get; set; }
+
+        public int NumInRecipe { get; set; }
+
         public string Image { get; set; }
 
 
-        public Recipe(string title, string description, List<Ingredient> ingredients, string url )
+        public Recipe(string title, string description, List<Ingredient> ingredients, string url, int num )
         {
             Title = title;
             Description = description;
             Ingredients = ingredients;
             Url = url;
+            NumInRecipe = num;
 
         }
     }

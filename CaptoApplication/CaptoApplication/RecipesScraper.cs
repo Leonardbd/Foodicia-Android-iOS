@@ -124,21 +124,23 @@ namespace CaptoApplication
                                                                     .Equals("u-paddingHxsm u-textNormal u-colorBase")).ToList();
 
                                 var ingrediensLista = new List<Ingredient>();
-
-                                foreach (var ingredient in ingredientList)
-                                {
+                                
+                                  foreach (var ingredient in ingredientList)
+                                    {
                                     string ingredientInnerHtml = ingredient.InnerHtml;
                                     string ingredientName = ingredientInnerHtml.Substring(ingredientInnerHtml.IndexOf("<span class=") + 32, IndexOfSecond(ingredientInnerHtml, "</span>") - (ingredientInnerHtml.IndexOf("<span class=") + 32));
                                     string ingredientMeasure = ingredientInnerHtml.Substring(ingredientInnerHtml.IndexOf("<span>") + 6, ingredientInnerHtml.IndexOf("</span>") - (ingredientInnerHtml.IndexOf("<span>") + 6));
 
                                     ingrediensLista.Add(new Ingredient(ingredientName, ingredientMeasure));
-
+                                    
                                     Debug.WriteLine("Ingrediens: " + ingredientName);
 
 
-                                }
+                                    }
+                                var recipe = new Recipe(title, description, ingrediensLista, url, ingredientList.Count);
 
-                                ListOfRecipes.Add(new Recipe(title, description, ingrediensLista, url));
+                                ListOfRecipes.Add(recipe);
+                                SetRecipeMatches(recipe);
 
 
                             }
@@ -157,6 +159,31 @@ namespace CaptoApplication
             
 
         }
+
+        public void SetRecipeMatches(Recipe recipe)
+        {
+            int numMatches = 0;
+            var db = new DataBase();
+            var list = new List<Ingredient>();
+            list = db.GetIngredientsItems();
+
+            
+                foreach (var ingredient in recipe.Ingredients)
+                {
+                    foreach (var item in list)
+                    {
+                        if(ingredient.Name.ToLower().Contains(item.Name.ToLower()))
+                        {
+                            numMatches++;
+                            recipe.NumIngredients = numMatches;
+                            Debug.WriteLine(numMatches + " AV " + recipe.NumInRecipe);
+                        }
+                    }
+                }
+            }
+           
+
+        
         public async void GetNumberOfPages()
         {
             httpclient = new HttpClient();
@@ -250,6 +277,6 @@ namespace CaptoApplication
            
         }
 
-     
+        
     }
 }

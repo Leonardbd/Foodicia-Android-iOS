@@ -97,7 +97,9 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\minus.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CaptoApplication\CaptoApplication.csproj">
       <Project>{A7996A8E-0C33-4777-9B82-1B81E5056E0B}</Project>

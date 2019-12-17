@@ -22,7 +22,6 @@ namespace CaptoApplication
 
         public DataBase db { get; set; }
         
-
         public List<Ingredient> PersonalIngredientList {get; set;}
 
         public IngredientsViewModel Model { get; set; }
@@ -43,18 +42,18 @@ namespace CaptoApplication
             Model = new IngredientsViewModel(PersonalIngredientList);
 
             BindingContext = Model;
-           
 
+            
         }
 
-        
+       
       
 
         void IngredientSearchBar_SearchButtonPressed(object sender, EventArgs e)
         {
 
             List<string> recipes = new List<string> { };
-
+            
             var keyword = IngredientSearchBar.Text;
             var scraper = new RecipesScraper(keyword);
             scraper.GetFirstPageRecipesURLsAsync();
@@ -118,11 +117,17 @@ namespace CaptoApplication
                     string textresult = BarCodeManager.getBarName(result.Text);
                     
                     Debug.WriteLine(textresult);
+                    
 
                 });
             };
 
             await Navigation.PushModalAsync(scanPage);
+        }
+
+        private void btnremove_Clicked(object sender, EventArgs e)
+        {
+            
         }
     }
 }

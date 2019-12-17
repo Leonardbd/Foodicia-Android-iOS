@@ -42,7 +42,7 @@ namespace CaptoApplication
 
             catch (SQLiteException e)
             {
-                
+                Debug.WriteLine(e.Message);
                 return false;
             }
         }
@@ -61,7 +61,28 @@ namespace CaptoApplication
 
             catch (SQLiteException e)
             {
+                Debug.WriteLine(e.Message);
                 return null;
+            }
+        }
+
+        public bool DeleteIngredientItem(Ingredient ingredient)
+        {
+            try
+            {
+                using (var connection = new SQLiteConnection(System.IO.Path.Combine(folder, "DemoDB.db")))
+                {
+                    connection.Delete(ingredient);
+                    return true;
+
+
+                }
+            }
+
+            catch (SQLiteException e)
+            {
+                Debug.WriteLine(e.Message);
+                return false;
             }
         }
     }

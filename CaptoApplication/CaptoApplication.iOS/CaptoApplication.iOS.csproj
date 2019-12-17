@@ -138,4 +138,7 @@
       <Name>CaptoApplication</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\minus.png" />
+  </ItemGroup>
 </Project>
