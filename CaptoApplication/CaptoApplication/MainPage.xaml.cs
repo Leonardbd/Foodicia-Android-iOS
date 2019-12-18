@@ -49,7 +49,6 @@ namespace CaptoApplication
 
             BindingContext = Model;
 
-            
         }
 
         
@@ -58,19 +57,15 @@ namespace CaptoApplication
             RModel.RecipeList.Clear();
             RecipeListView.BindingContext = RModel;
 
-            List<string> recipes = new List<string> { };
-
             var keyword = IngredientSearchBar.Text;
             var scraper = new RecipesScraper(keyword);
             var recipeList = await scraper.GetFirstPageRecipesURLsAsync();
 
             foreach (Recipe recipe in recipeList)
             {
-                recipes.Add(recipe.Title);
                 RModel.RecipeList.Add(recipe);
             }
 
-            
         }
 
 
@@ -147,7 +142,27 @@ namespace CaptoApplication
 
         private void RecipeListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            Debug.WriteLine("HEJ");
+            //if (e.Item == null)
+            //{
+            //    Debug.WriteLine(e.Item);
+            //    return;
+            //}
+
+
+
+            if (sender is ListView lv)
+            {
+           
+                Recipe recipe = (Recipe) lv.SelectedItem;
+
+                Debug.WriteLine("Url: " + recipe.Url);
+
+                Browser.OpenAsync(recipe.Url, BrowserLaunchMode.SystemPreferred);
+
+                lv.SelectedItem = null;
+
+            }
+
         }
     }
     
