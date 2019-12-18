@@ -8,7 +8,7 @@
              mc:Ignorable="d"
              x:Class="CaptoApplication.MainPage"
             BarBackgroundColor="#FF295F"
-            >
+            x:Name="tp">
     
  <ContentPage Title="Mina varor">
         <ContentPage.Content>
@@ -30,7 +30,7 @@
                     <Button Text="SCANNA" TextColor="White" Margin="10" BackgroundColor="Green" CornerRadius="5" x:Name="btnscan" Clicked="btnscan_Clicked"
                             Grid.Row="0"
                             Grid.Column="1"/>
-                    <Button Text="SÖK RECEPT" TextColor="White" Margin="10" BackgroundColor="Blue" CornerRadius="5" x:Name="btnsearch" IsVisible="True"
+                    <Button Text="SÖK RECEPT" TextColor="White" Margin="10" BackgroundColor="Blue" CornerRadius="5" x:Name="btnsearch" Clicked="btnsearch_Clicked"
                             Grid.Row="0"
                             Grid.Column="2"/>
 

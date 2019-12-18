@@ -55,6 +55,7 @@ namespace CaptoApplication
         
         async void IngredientSearchBar_SearchButtonPressed(object sender, EventArgs e)
         {
+
             progbar.IsVisible = true;
             progbar.Progress = 0;            
             
@@ -179,25 +180,83 @@ namespace CaptoApplication
             Debug.WriteLine("HEJ");
         }
 
-        private void SwipeItem_Invoked(object sender, EventArgs e)
-        {
-            var button = sender as ImageButton;
-
-            var ingredient = button?.BindingContext as Ingredient;
-
-            var vm = BindingContext as IngredientsViewModel;
-
-            db.DeleteIngredientItem(ingredient);
-            vm?.RemoveCommand.Execute(ingredient);
-        }
 
         private void checkBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
-            if (e.Value == true)
+
+            var button = sender as CheckBox;
+
+            var ingredient = button?.BindingContext as Ingredient;
+            
+                if (ingredient.selectedItem == true)
+                {
+                    ingredient.selectedItem = false;
+                }
+                else
+                {
+                    ingredient.selectedItem = true;
+                }
+                              
+
+            
+        }
+
+        private async void btnsearch_Clicked(object sender, EventArgs e)
+        {
+            List<string> listan = new List<string>();
+            foreach (var item in PersonalIngredientList)
             {
-                btnsearch.IsVisible = true;
+                if(item.selectedItem)
+                {
+                    listan.Add(item.Name);
+                }
             }
-            else btnsearch.IsVisible = false;
+
+            string searchword = "";
+
+            foreach (var ord in listan)
+            {
+                searchword += " " + ord;
+            }
+            
+            tp.CurrentPage = tp.Children[2];
+            IngredientSearchBar.Text = searchword;
+
+
+            progbar.IsVisible = true;
+            progbar.Progress = 0;
+
+            RModel.RecipeList.Clear();
+
+
+            RecipeListView.BindingContext = RModel;
+            progbar.ProgressTo(0.65, 2300, Easing.Linear);
+            List<string> recipes = new List<string> { };
+
+
+            var keyword = IngredientSearchBar.Text;
+            var scraper = new RecipesScraper(keyword);
+
+            var recipeList = await scraper.GetFirstPageRecipesURLsAsync();
+
+            if (recipeList.Count == 0)
+            {
+                IngredientSearchBar.Text = "Hittade inga recept";
+            }
+            else
+            {
+                foreach (Recipe recipe in recipeList)
+                {
+                    recipes.Add(recipe.Title);
+                    RModel.RecipeList.Add(recipe);
+                }
+
+
+
+            }
+            await progbar.ProgressTo(1, 600, Easing.Linear);
+            progbar.IsVisible = false;
+
         }
     }
     

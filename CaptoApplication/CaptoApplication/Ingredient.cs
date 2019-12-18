@@ -15,11 +15,12 @@ namespace CaptoApplication
     public string Name { get; set; }
     public string Date { get; set; }
 
-    public string selectedItem { get; set; }
+    public bool selectedItem { get; set; }
 
         public Ingredient(string name)
         {
             Name = name;
+            selectedItem = false;
             
         }
 
@@ -27,6 +28,7 @@ namespace CaptoApplication
         {
             Name = name;
             Date = date;
+            selectedItem = false;
         }
 
         public Ingredient()
