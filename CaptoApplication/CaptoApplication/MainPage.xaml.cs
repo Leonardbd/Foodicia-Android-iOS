@@ -11,7 +11,7 @@ using System.Diagnostics;
 using System.Threading;
 using Rg.Plugins.Popup.Extensions;
 using System.Collections.ObjectModel;
-
+using Xamarin.Essentials;
 namespace CaptoApplication
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
@@ -71,7 +71,6 @@ namespace CaptoApplication
             }
 
             
-           // RecipeListView.ItemsSource = recipes;
         }
 
 
@@ -145,5 +144,11 @@ namespace CaptoApplication
             db.DeleteIngredientItem(ingredient);
             vm?.RemoveCommand.Execute(ingredient);
         }
+
+        private void RecipeListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            Debug.WriteLine("HEJ");
+        }
     }
+    
 }

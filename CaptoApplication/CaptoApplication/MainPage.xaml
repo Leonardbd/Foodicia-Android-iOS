@@ -6,7 +6,9 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="CaptoApplication.MainPage">
+             x:Class="CaptoApplication.MainPage"
+            BarBackgroundColor="#FF295F"
+            >
     
  <ContentPage Title="Page 1">
         <ContentPage.Content>
@@ -90,7 +92,7 @@
                            FontSize="Medium"
                            FontAttributes="None"/>
 
-                <ListView ItemsSource="{Binding RecipeList}" HasUnevenRows="True" CachingStrategy="RecycleElement" x:Name="RecipeListView">
+                <ListView ItemsSource="{Binding RecipeList}" HasUnevenRows="True" CachingStrategy="RecycleElement" x:Name="RecipeListView" ItemTapped="RecipeListView_ItemTapped">
 
                     <ListView.ItemTemplate >
 
