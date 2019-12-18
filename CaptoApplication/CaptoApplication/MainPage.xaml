@@ -90,8 +90,8 @@
                            HorizontalTextAlignment="Center"
                            FontSize="Medium"
                            FontAttributes="None"/>
-
-                <ListView ItemsSource="{Binding RecipeList}" HasUnevenRows="True" CachingStrategy="RecycleElement" x:Name="RecipeListView" ItemTapped="RecipeListView_ItemTapped" >
+                <ProgressBar x:Name="progbar" Progress="0" WidthRequest="300" HeightRequest="20" VerticalOptions="Center" HorizontalOptions="Center" IsVisible="False"></ProgressBar>
+                <ListView ItemsSource="{Binding RecipeList}" HasUnevenRows="True" CachingStrategy="RecycleElement" x:Name="RecipeListView" ItemTapped="RecipeListView_ItemTapped">
 
                     <ListView.ItemTemplate >
 
