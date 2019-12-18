@@ -44,6 +44,8 @@ namespace CaptoApplication
         
         public async Task<List<Recipe>> GetFirstPageRecipesURLsAsync()
         {
+            try
+            {
                 List<Recipe> ListOfRecipes = new List<Recipe>();
 
                 httpclient = new HttpClient();
@@ -63,6 +65,8 @@ namespace CaptoApplication
                 Match m;
                 string HRefPattern = @"href\s*=\s*(?:[""'](?<1>[^""']*)[""']|(?<1>\S+))";
 
+
+
                 try
                 {
                     foreach (var item in finalList)
@@ -78,105 +82,111 @@ namespace CaptoApplication
 
                                 Debug.WriteLine("Found href " + m.Groups[1].Value);
 
-                                
 
-                                    string url = "https://www.coop.se" + m.Groups[1].Value;
+
+                                string url = "https://www.coop.se" + m.Groups[1].Value;
 
                                 ListRecipeURL.Add(url);
 
 
 
-                            using (HttpClient client = new HttpClient())
-                            {
-
-                                var html2 = await client.GetStringAsync(url);
-                                HtmlDocument htmldoc2 = new HtmlDocument();
-                                htmldoc2.LoadHtml(html2);
-
-
-                                var list = new List<HtmlNode>();
-                                list = htmldoc2.DocumentNode.Descendants("div")
-                                .Where(node => node.GetAttributeValue("class", "")
-                                .Equals("u-paddingVxlg u-paddingTlg u-sm-paddingTxlg u-paddingHlg u-lg-paddingHxlg u-lg-paddingBz u-bgWhite")).ToList();
-                                string innerhtmlH1 = list[0].InnerHtml;
-
-                                //getImage
-                                var htmlList= new List<HtmlNode>();
-                                htmlList = htmldoc2.DocumentNode.Descendants("img")
-                                    .Where(node => node.GetAttributeValue("class", "")
-                                    .Equals("u-hiddenVisually")).ToList();
-
-                                string image = "https:"+ htmlList[0].Attributes[2].Value;
-                                Debug.WriteLine("Image: " + image);
-
-                                //getTitle
-
-                                string title = innerhtmlH1.Substring(innerhtmlH1.IndexOf(">") + 1, IndexOfSecond(innerhtmlH1, "<") - (innerhtmlH1.IndexOf(">") + 1));
-                                title = convertUTF(title);
-                                Debug.WriteLine("Titel: " + title);
-
-
-                                //getDescription
-
-                                string description = innerhtmlH1.Substring(innerhtmlH1.IndexOf("<p") + 47, innerhtmlH1.IndexOf("</p>") - (innerhtmlH1.IndexOf("<p") + 47));
-                                description = convertUTF(description);
-                                Debug.WriteLine("Beskrivning: " + description);
-
-
-                                //GetIngredienserToList
-
-                                var ingredienthtml = htmldoc2.DocumentNode.Descendants("ul")
-                                                            .Where(node => node.GetAttributeValue("class", "")
-                                                            .Equals("List List--section")).ToList();
-
-
-                                var ingredientList = ingredienthtml[0].Descendants("li")
-                                                                    .Where(node => node.GetAttributeValue("class", "")
-                                                                    .Equals("u-paddingHxsm u-textNormal u-colorBase")).ToList();
-
-                                var ingredientList2 = new List<HtmlNode>();
-
-                                foreach (HtmlNode nod in ingredientList)
+                                using (HttpClient client = new HttpClient())
                                 {
-                                    ingredientList2.Add(nod.SelectSingleNode("span[@class='u-textWeightBold ']"));
+
+                                    var html2 = await client.GetStringAsync(url);
+                                    HtmlDocument htmldoc2 = new HtmlDocument();
+                                    htmldoc2.LoadHtml(html2);
+
+
+                                    var list = new List<HtmlNode>();
+                                    list = htmldoc2.DocumentNode.Descendants("div")
+                                    .Where(node => node.GetAttributeValue("class", "")
+                                    .Equals("u-paddingVxlg u-paddingTlg u-sm-paddingTxlg u-paddingHlg u-lg-paddingHxlg u-lg-paddingBz u-bgWhite")).ToList();
+                                    string innerhtmlH1 = list[0].InnerHtml;
+
+                                    //getImage
+                                    var htmlList = new List<HtmlNode>();
+                                    htmlList = htmldoc2.DocumentNode.Descendants("img")
+                                        .Where(node => node.GetAttributeValue("class", "")
+                                        .Equals("u-hiddenVisually")).ToList();
+
+                                    string image = "https:" + htmlList[0].Attributes[2].Value;
+                                    Debug.WriteLine("Image: " + image);
+
+                                    //getTitle
+
+                                    string title = innerhtmlH1.Substring(innerhtmlH1.IndexOf(">") + 1, IndexOfSecond(innerhtmlH1, "<") - (innerhtmlH1.IndexOf(">") + 1));
+                                    title = convertUTF(title);
+                                    Debug.WriteLine("Titel: " + title);
+
+
+                                    //getDescription
+
+                                    string description = innerhtmlH1.Substring(innerhtmlH1.IndexOf("<p") + 47, innerhtmlH1.IndexOf("</p>") - (innerhtmlH1.IndexOf("<p") + 47));
+                                    description = convertUTF(description);
+                                    Debug.WriteLine("Beskrivning: " + description);
+
+
+                                    //GetIngredienserToList
+
+                                    var ingredienthtml = htmldoc2.DocumentNode.Descendants("ul")
+                                                                .Where(node => node.GetAttributeValue("class", "")
+                                                                .Equals("List List--section")).ToList();
+
+
+                                    var ingredientList = ingredienthtml[0].Descendants("li")
+                                                                        .Where(node => node.GetAttributeValue("class", "")
+                                                                        .Equals("u-paddingHxsm u-textNormal u-colorBase")).ToList();
+
+                                    var ingredientList2 = new List<HtmlNode>();
+
+                                    foreach (HtmlNode nod in ingredientList)
+                                    {
+                                        ingredientList2.Add(nod.SelectSingleNode("span[@class='u-textWeightBold ']"));
+                                    }
+
+                                    var ingrediensLista = new List<Ingredient>();
+                                    int counter = 0;
+                                    foreach (var ingredient in ingredientList2)
+                                    {
+
+                                        string ingredientString = convertUTF(ingredient.InnerHtml);
+                                        ingrediensLista.Add(new Ingredient(ingredientString));
+
+                                        Debug.WriteLine("Ingrediens: " + ingredientString);
+                                        counter++;
+                                        if (counter == ingredientList.Count)
+                                        {
+                                            var recipe = new Recipe(title, description, ingrediensLista, url, ingredientList.Count, image);
+
+                                            ListOfRecipes.Add(recipe);
+                                            SetRecipeMatches(recipe);
+                                        }
+
+                                    }
+
+
                                 }
 
-                                var ingrediensLista = new List<Ingredient>();
-                                int counter = 0;
-                                  foreach (var ingredient in ingredientList2)
-                                    {
-
-                                    string ingredientString = convertUTF(ingredient.InnerHtml);
-                                    ingrediensLista.Add(new Ingredient(ingredientString));
-                                    
-                                    Debug.WriteLine("Ingrediens: " + ingredientString);
-                                    counter++;
-                                    if(counter == ingredientList.Count)
-                                    {
-                                        var recipe = new Recipe(title, description, ingrediensLista, url, ingredientList.Count, image);
-
-                                        ListOfRecipes.Add(recipe);
-                                        SetRecipeMatches(recipe);
-                                    }
-
-                                    }
-                                
 
                             }
-
-
-                        }
                             m = m.NextMatch();
                         }
                     }
-                    
+
 
                 }
                 catch (RegexMatchTimeoutException)
                 {
                     Console.WriteLine("The matching operation timed out.");
+                    return new List<Recipe>();
                 }
-            return ListSorter(ListOfRecipes);
+                return ListSorter(ListOfRecipes);
+            }
+            catch(Exception e)
+            {
+                return new List<Recipe>();
+            }
 
         }
 

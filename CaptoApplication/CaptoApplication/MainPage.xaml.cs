@@ -70,15 +70,23 @@ namespace CaptoApplication
             var scraper = new RecipesScraper(keyword);
             
             var recipeList = await scraper.GetFirstPageRecipesURLsAsync();
-            
 
-            foreach (Recipe recipe in recipeList)
+            if (recipeList.Count == 0)
             {
-                recipes.Add(recipe.Title);
-                RModel.RecipeList.Add(recipe);
+                IngredientSearchBar.Text = "Hittade inga recept";
+            }
+            else
+            {
+                foreach (Recipe recipe in recipeList)
+                {
+                    recipes.Add(recipe.Title);
+                    RModel.RecipeList.Add(recipe);
+                }
+                
+
+                
             }
             await progbar.ProgressTo(1, 600, Easing.Linear);
-
             progbar.IsVisible = false;
 
 
