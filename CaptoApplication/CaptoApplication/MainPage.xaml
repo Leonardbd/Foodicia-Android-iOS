@@ -66,7 +66,7 @@
         <ContentPage.Content>
 
             <StackLayout>
-                <Image Source="//res.cloudinary.com/coopsverige/image/upload/w_800,h_800/v1452586498/125157.jpg" ScaleX="50" ScaleY="50"></Image>
+                <Image  Source="https://res.cloudinary.com/coopsverige/image/upload/w_800,h_800/v1452586498/125157.jpg" ScaleX="0.4" ScaleY="0.4"></Image>
             </StackLayout>
 
         </ContentPage.Content>
@@ -97,7 +97,9 @@
                         <DataTemplate>
                             <ViewCell>
                                 <StackLayout Padding="5">
-                                    <Image ScaleX="50" ScaleY="50" Source="{Binding Image}"></Image>
+                                    <StackLayout Orientation="Vertical">
+                                        <Image ScaleX="0.4" ScaleY="0.4" Source="{Binding Image}"></Image>
+                                    </StackLayout>
                                     <Label Text="{Binding Title}" TextColor="Orange" FontSize="Large"/>
                                     <Label Text="{Binding Description}" TextColor="Black" FontSize="Medium"/>
                                     

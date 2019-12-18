@@ -27,6 +27,7 @@ namespace CaptoApplication
             Ingredients = ingredients;
             Url = url;
             NumInRecipe = num;
+            Image = image;
 
         }
     }

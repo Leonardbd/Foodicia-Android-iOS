@@ -107,7 +107,7 @@ namespace CaptoApplication
                                     .Where(node => node.GetAttributeValue("class", "")
                                     .Equals("u-hiddenVisually")).ToList();
 
-                                string image = htmlList[0].Attributes[2].Value;
+                                string image = "https:"+ htmlList[0].Attributes[2].Value;
                                 Debug.WriteLine("Image: " + image);
 
                                 //getTitle
