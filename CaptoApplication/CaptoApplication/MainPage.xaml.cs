@@ -212,50 +212,61 @@ namespace CaptoApplication
                 }
             }
 
+           
             string searchword = "";
 
             foreach (var ord in listan)
             {
                 searchword += " " + ord;
             }
-            
-            tp.CurrentPage = tp.Children[2];
-            IngredientSearchBar.Text = searchword;
 
-
-            progbar.IsVisible = true;
-            progbar.Progress = 0;
-
-            RModel.RecipeList.Clear();
-
-
-            RecipeListView.BindingContext = RModel;
-            progbar.ProgressTo(0.65, 2300, Easing.Linear);
-            List<string> recipes = new List<string> { };
-
-
-            var keyword = IngredientSearchBar.Text;
-            var scraper = new RecipesScraper(keyword);
-
-            var recipeList = await scraper.GetFirstPageRecipesURLsAsync();
-
-            if (recipeList.Count == 0)
+            if (searchword.Equals(""))
             {
-                IngredientSearchBar.Text = "Hittade inga recept";
+                await DisplayAlert("", "Var vänlig och välj minst en produkt", "OK");
             }
             else
             {
-                foreach (Recipe recipe in recipeList)
+
+
+                tp.CurrentPage = tp.Children[2];
+
+
+
+                progbar.IsVisible = true;
+                progbar.Progress = 0;
+
+                RModel.RecipeList.Clear();
+
+
+                RecipeListView.BindingContext = RModel;
+                progbar.ProgressTo(0.65, 2300, Easing.Linear);
+                List<string> recipes = new List<string> { };
+
+
+
+
+                var scraper = new RecipesScraper(searchword);
+
+                var recipeList = await scraper.GetFirstPageRecipesURLsAsync();
+
+                if (recipeList.Count == 0)
                 {
-                    recipes.Add(recipe.Title);
-                    RModel.RecipeList.Add(recipe);
+                    IngredientSearchBar.Text = "Hittade inga recept";
                 }
+                else
+                {
+                    foreach (Recipe recipe in recipeList)
+                    {
+                        recipes.Add(recipe.Title);
+                        RModel.RecipeList.Add(recipe);
+                    }
 
 
 
+                }
+                await progbar.ProgressTo(1, 600, Easing.Linear);
+                progbar.IsVisible = false;
             }
-            await progbar.ProgressTo(1, 600, Easing.Linear);
-            progbar.IsVisible = false;
 
         }
     }
