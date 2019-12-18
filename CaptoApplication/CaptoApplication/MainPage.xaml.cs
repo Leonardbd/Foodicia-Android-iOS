@@ -55,22 +55,41 @@ namespace CaptoApplication
         
         async void IngredientSearchBar_SearchButtonPressed(object sender, EventArgs e)
         {
+            progbar.IsVisible = true;
+            progbar.Progress = 0;            
+            
             RModel.RecipeList.Clear();
+            
+            
             RecipeListView.BindingContext = RModel;
-
+            progbar.ProgressTo(0.65, 2300, Easing.Linear);
             List<string> recipes = new List<string> { };
+            
 
             var keyword = IngredientSearchBar.Text;
             var scraper = new RecipesScraper(keyword);
+            
             var recipeList = await scraper.GetFirstPageRecipesURLsAsync();
+            
 
             foreach (Recipe recipe in recipeList)
             {
                 recipes.Add(recipe.Title);
                 RModel.RecipeList.Add(recipe);
             }
+            await progbar.ProgressTo(1, 600, Easing.Linear);
 
+            progbar.IsVisible = false;
             
+            
+
+
+
+
+
+
+
+
         }
 
 
