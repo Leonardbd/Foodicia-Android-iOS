@@ -97,12 +97,21 @@
                         <DataTemplate>
                             <ViewCell>
                                 <StackLayout Padding="5">
-                                    <StackLayout Orientation="Vertical">
-                                        <Image ScaleX="0.4" ScaleY="0.4" Source="{Binding Image}"></Image>
+                                    <StackLayout >
+                                        <Image ScaleX="1" ScaleY="0.6" Source="{Binding Image}"></Image>
                                     </StackLayout>
-                                    <Label Text="{Binding Title}" TextColor="Orange" FontSize="Large"/>
+                                    <StackLayout>
+                                        <Label Text="{Binding Title}" TextColor="#FF295F" FontSize="Large"/>
                                     <Label Text="{Binding Description}" TextColor="Black" FontSize="Medium"/>
-                                    
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Du har: "/>
+                                            <Label Text="{Binding NumIngredients}"></Label>
+                                            <Label Text="av "></Label>
+                                            <Label Text="{Binding NumInRecipe}"></Label>
+                                            <Label Text=" ingredienser i receptet"></Label>
+                                        </StackLayout>
+                                    </StackLayout>
+
 
                                     <Grid BackgroundColor="#d3d3d3">
 
