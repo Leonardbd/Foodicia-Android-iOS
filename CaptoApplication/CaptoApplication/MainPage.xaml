@@ -19,36 +19,36 @@
                     <Button Text="S C A N N A" HorizontalOptions="CenterAndExpand" TextColor="White" Margin="20" BackgroundColor="Green" CornerRadius="5" x:Name="btnscan" Clicked="btnscan_Clicked"></Button>
                                        
                 </StackLayout>
-                <ListView ItemsSource="{Binding IngredientList}" HasUnevenRows="True" CachingStrategy="RecycleElement" x:Name="lw">
+                <ListView ItemsSource="{Binding IngredientList}" HasUnevenRows="True" CachingStrategy="RecycleElement" x:Name="lw" SelectionMode="None">
                 
                 <ListView.ItemTemplate >
 
                     <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Padding="5">
-                                    <Label Text="{Binding Name}" TextColor="Orange" FontSize="Large"/>
-                                    <Label Text="{Binding Date}" TextColor="Black" FontSize="Medium"/>
-                                    <StackLayout Orientation="Vertical" HorizontalOptions="EndAndExpand">
-                                        <ImageButton x:Name="removeitembtn" Source="minus.png" WidthRequest="48" HeightRequest="48" HorizontalOptions="EndAndExpand" CornerRadius="10" BackgroundColor="White" IsVisible="True" Clicked="removeitembtn_Clicked"></ImageButton>
+                            <ViewCell>
+                                <StackLayout Padding="5">
+                                        <Label Text="{Binding Name}" TextColor="Orange" FontSize="Large"/>
+                                        <Label Text="{Binding Date}" TextColor="Black" FontSize="Medium"/>
+                                        <StackLayout Orientation="Vertical" HorizontalOptions="EndAndExpand">
+                                            <ImageButton x:Name="removeitembtn" Source="minus.png" WidthRequest="48" HeightRequest="48" HorizontalOptions="EndAndExpand" CornerRadius="10" BackgroundColor="White" IsVisible="True" Clicked="removeitembtn_Clicked"></ImageButton>
+                                        </StackLayout>
+
+
+                                        <Grid BackgroundColor="#d3d3d3">
+
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="0.7*"/>
+                                                <ColumnDefinition Width="0.3*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                        </Grid>
+
                                     </StackLayout>
-
-                                    <Grid BackgroundColor="#d3d3d3">
-
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="0.7*"/>
-                                        <ColumnDefinition Width="0.3*"/>
-                                    </Grid.ColumnDefinitions>
-
-                                </Grid>
-
-
-                            </StackLayout>
-                            
-                        </ViewCell>
+             
+                            </ViewCell>
                         
                     </DataTemplate>
                     

@@ -148,7 +148,7 @@ namespace CaptoApplication
         {
             var button = sender as ImageButton;
 
-           var ingredient = button?.BindingContext as Ingredient;
+            var ingredient = button?.BindingContext as Ingredient;
             
             var vm = BindingContext as IngredientsViewModel;
 
@@ -169,6 +169,18 @@ namespace CaptoApplication
             }
 
             Debug.WriteLine("HEJ");
+        }
+
+        private void SwipeItem_Invoked(object sender, EventArgs e)
+        {
+            var button = sender as ImageButton;
+
+            var ingredient = button?.BindingContext as Ingredient;
+
+            var vm = BindingContext as IngredientsViewModel;
+
+            db.DeleteIngredientItem(ingredient);
+            vm?.RemoveCommand.Execute(ingredient);
         }
     }
     
