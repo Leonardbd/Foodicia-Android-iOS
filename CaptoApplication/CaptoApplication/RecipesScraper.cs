@@ -177,7 +177,7 @@ namespace CaptoApplication
                 {
                     Console.WriteLine("The matching operation timed out.");
                 }
-            return ListOfRecipes;
+            return ListSorter(ListOfRecipes);
 
         }
 
@@ -247,7 +247,19 @@ namespace CaptoApplication
             }
            
 
-        
+        public List<Recipe> ListSorter(List<Recipe> recipes)
+        {
+            List<Recipe> list = new List<Recipe>();
+            foreach (var item in recipes)
+            {
+                item.Percentage = (decimal)item.NumIngredients / (decimal) item.NumInRecipe;
+                list.Add(item);
+
+            }
+
+            return list.OrderByDescending(x => x.Percentage).ThenBy(i => i.NumInRecipe).ToList();
+
+        }
         public async void GetNumberOfPages()
         {
             httpclient = new HttpClient();

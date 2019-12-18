@@ -17,6 +17,8 @@ namespace CaptoApplication
 
         public int NumInRecipe { get; set; }
 
+        public decimal Percentage { get; set; }
+
         public string Image { get; set; }
 
 

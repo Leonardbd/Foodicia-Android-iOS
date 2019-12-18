@@ -16,8 +16,8 @@
                 
                 <StackLayout>
 
-                    <Entry x:Name="productEntry" Placeholder="Product name" Margin="10"></Entry>
-                    <Label Text="Expiration Date" HorizontalOptions="StartAndExpand"></Label>
+                    <Entry x:Name="productEntry" Placeholder="Produktnamn" Margin="10"></Entry>
+                    <Label Text="Utgångsdatum" HorizontalOptions="StartAndExpand"></Label>
                     <DatePicker x:Name="datePicker"></DatePicker>
 
                    
