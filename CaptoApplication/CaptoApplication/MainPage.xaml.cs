@@ -80,14 +80,6 @@ namespace CaptoApplication
             await progbar.ProgressTo(1, 600, Easing.Linear);
 
             progbar.IsVisible = false;
-            
-            
-
-
-
-
-
-
 
 
         }
@@ -166,6 +158,17 @@ namespace CaptoApplication
 
         private void RecipeListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
+
+            //Recipe recipe2 = (Recipe) e.Item;
+            //Browser.OpenAsync(recipe2.Url, BrowserLaunchMode.SystemPreferred);
+
+
+            if (sender is ListView lv) 
+            {
+                Recipe recipe = (Recipe) lv.SelectedItem;
+                Browser.OpenAsync(recipe.Url, BrowserLaunchMode.SystemPreferred);
+
+            }
             Debug.WriteLine("HEJ");
         }
     }
