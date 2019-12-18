@@ -159,16 +159,15 @@ namespace CaptoApplication
         private void RecipeListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
 
-            //Recipe recipe2 = (Recipe) e.Item;
-            //Browser.OpenAsync(recipe2.Url, BrowserLaunchMode.SystemPreferred);
-
-
             if (sender is ListView lv) 
             {
                 Recipe recipe = (Recipe) lv.SelectedItem;
+                lv.SelectedItem = null;
+            
                 Browser.OpenAsync(recipe.Url, BrowserLaunchMode.SystemPreferred);
 
             }
+
             Debug.WriteLine("HEJ");
         }
     }

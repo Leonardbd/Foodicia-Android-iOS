@@ -220,6 +220,11 @@ namespace CaptoApplication
             {
                 text = text.Replace("&#224;", "à");
             }
+            if (text.Contains("&#243;"))
+            {
+                text = text.Replace("&#243;", "ó");
+            }
+
 
             return text;
         }
