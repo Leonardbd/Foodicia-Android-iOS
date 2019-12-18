@@ -66,8 +66,7 @@
         <ContentPage.Content>
 
             <StackLayout>
-                <Label Text="Page Two" HorizontalOptions="Center" x:Name="resultlbl"></Label>
-                <Button Text="Kamera" x:Name="cameraBtn"></Button>
+                <Image Source="//res.cloudinary.com/coopsverige/image/upload/w_800,h_800/v1452586498/125157.jpg" ScaleX="50" ScaleY="50"></Image>
             </StackLayout>
 
         </ContentPage.Content>
@@ -91,8 +90,43 @@
                            FontSize="Medium"
                            FontAttributes="None"/>
 
-                <ListView x:Name="RecipeListView"/>
-                
+                <ListView ItemsSource="{Binding RecipeList}" HasUnevenRows="True" CachingStrategy="RecycleElement" x:Name="RecipeListView">
+
+                    <ListView.ItemTemplate >
+
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Padding="5">
+                                    <Image ScaleX="50" ScaleY="50" Source="{Binding Image}"></Image>
+                                    <Label Text="{Binding Title}" TextColor="Orange" FontSize="Large"/>
+                                    <Label Text="{Binding Description}" TextColor="Black" FontSize="Medium"/>
+                                    
+
+                                    <Grid BackgroundColor="#d3d3d3">
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.7*"/>
+                                            <ColumnDefinition Width="0.3*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                    </Grid>
+
+
+                                </StackLayout>
+
+                            </ViewCell>
+
+                        </DataTemplate>
+
+                    </ListView.ItemTemplate>
+
+
+                </ListView>
+
             </StackLayout>
             
         </ContentPage.Content>

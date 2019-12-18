@@ -29,7 +29,7 @@ namespace CaptoApplication
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            OnDialogClosed?.Invoke(this, new DialogResult { ProductName = productEntry.Text, Measurement = measureEntry.Text, ExpirationDate = datePicker.Date.ToString("MM/dd/yyyy") });
+            OnDialogClosed?.Invoke(this, new DialogResult { ProductName = productEntry.Text,  ExpirationDate = datePicker.Date.ToString("MM/dd/yyyy") });
             App.Current.MainPage.Navigation.PopPopupAsync(true);
             //string name = productEntry.Text;
             //string measure = measureEntry.Text;

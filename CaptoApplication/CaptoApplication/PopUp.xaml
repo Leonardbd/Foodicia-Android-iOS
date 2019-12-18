@@ -16,15 +16,11 @@
                 
                 <StackLayout>
 
-                    <Entry x:Name="productEntry" Placeholder="Product name" Margin="5"></Entry>
-
-                    <Entry x:Name="measureEntry" Placeholder="Amount and measurement" ></Entry>
-
+                    <Entry x:Name="productEntry" Placeholder="Product name" Margin="10"></Entry>
                     <Label Text="Expiration Date" HorizontalOptions="StartAndExpand"></Label>
                     <DatePicker x:Name="datePicker"></DatePicker>
 
-                    
-
+                   
 
                 </StackLayout>
                 

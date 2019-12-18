@@ -24,7 +24,11 @@ namespace CaptoApplication
         
         public List<Ingredient> PersonalIngredientList {get; set;}
 
+        public List<Recipe> RecipeList { get; set; }
+
         public IngredientsViewModel Model { get; set; }
+
+        public RecipeViewModel RModel { get; set; }
         
 
         ZXingScannerPage scanPage;
@@ -32,7 +36,8 @@ namespace CaptoApplication
         {
             InitializeComponent();
             
-            PersonalIngredientList = new List<Ingredient>();         
+            PersonalIngredientList = new List<Ingredient>();
+            RecipeList = new List<Recipe>();
 
             db = new DataBase();
             
@@ -40,6 +45,7 @@ namespace CaptoApplication
             PersonalIngredientList = db.GetIngredientsItems();
 
             Model = new IngredientsViewModel(PersonalIngredientList);
+            RModel = new RecipeViewModel();
 
             BindingContext = Model;
 
@@ -49,6 +55,8 @@ namespace CaptoApplication
         
         async void IngredientSearchBar_SearchButtonPressed(object sender, EventArgs e)
         {
+            RModel.RecipeList.Clear();
+            RecipeListView.BindingContext = RModel;
 
             List<string> recipes = new List<string> { };
 
@@ -59,9 +67,11 @@ namespace CaptoApplication
             foreach (Recipe recipe in recipeList)
             {
                 recipes.Add(recipe.Title);
+                RModel.RecipeList.Add(recipe);
             }
 
-            RecipeListView.ItemsSource = recipes;
+            
+           // RecipeListView.ItemsSource = recipes;
         }
 
 
