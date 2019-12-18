@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 namespace CaptoApplication
 {
 
-    
     public class RecipesScraper
     {
 

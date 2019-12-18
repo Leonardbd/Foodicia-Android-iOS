@@ -182,6 +182,15 @@ namespace CaptoApplication
             db.DeleteIngredientItem(ingredient);
             vm?.RemoveCommand.Execute(ingredient);
         }
+
+        private void checkBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        {
+            if (e.Value == true)
+            {
+                btnsearch.IsVisible = true;
+            }
+            else btnsearch.IsVisible = false;
+        }
     }
     
 }
