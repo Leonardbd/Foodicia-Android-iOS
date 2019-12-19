@@ -39,18 +39,38 @@ namespace CaptoApplication
             PersonalIngredientList = new List<Ingredient>();
             RecipeList = new List<Recipe>();
 
-            db = new DataBase();
-            
+            db = new DataBase();        
             db.createDataBase();
             PersonalIngredientList = db.GetIngredientsItems();
+            //PersonalIngredientList.OrderBy(x => x.Date.Day);
+            PersonalIngredientList.Sort((a, b) => a.Date.CompareTo(b.Date));
+            Model = new IngredientsViewModel(GreenOrRed(PersonalIngredientList));
 
-            Model = new IngredientsViewModel(PersonalIngredientList);
             RModel = new RecipeViewModel();
 
             BindingContext = Model;
 
             
         }
+
+        private List<Ingredient> GreenOrRed(List<Ingredient> ingredients)
+        {
+            foreach (var item in ingredients)
+            {
+                if ((item.Date - DateTime.Today).TotalDays < 3)
+                {
+                    item.Color = "Red";
+                }
+                else
+                {
+                    item.Color = "Green";
+                }
+            }
+
+            return ingredients;
+        }
+
+         
 
         
         async void IngredientSearchBar_SearchButtonPressed(object sender, EventArgs e)
@@ -101,11 +121,13 @@ namespace CaptoApplication
             pop.OnDialogClosed += (s, arg) =>
             {
                 string productname = arg.ProductName;
-                string date = arg.ExpirationDate;
+                DateTime date = arg.ExpirationDate;
                 var ingredient = new Ingredient(productname, date);
                 db.InsertIntoTable(ingredient);
                 PersonalIngredientList.Add(ingredient);
-                Model.IngredientList.Add(ingredient);               
+                PersonalIngredientList.Sort((a, b) => a.Date.CompareTo(b.Date));
+                Model = new IngredientsViewModel(PersonalIngredientList);               
+                BindingContext = Model;
 
             };
 
@@ -124,11 +146,14 @@ namespace CaptoApplication
                 pop.OnDialogClosed += (s, arg) =>
                 {
                     string productname = arg.ProductName;
-                    string date = arg.ExpirationDate;
+                    DateTime date = arg.ExpirationDate;
                     var ingredient = new Ingredient(productname, date);
                     db.InsertIntoTable(ingredient);
-                    PersonalIngredientList.Add(ingredient);
+                    PersonalIngredientList.Add(ingredient);                    
                     Model.IngredientList.Add(ingredient);
+                    PersonalIngredientList.Sort((a, b) => a.Date.CompareTo(b.Date));
+                    Model = new IngredientsViewModel(PersonalIngredientList);
+                    BindingContext = Model;
 
                 };
 
@@ -161,6 +186,7 @@ namespace CaptoApplication
             
             var vm = BindingContext as IngredientsViewModel;
 
+            PersonalIngredientList.Remove(ingredient);
             db.DeleteIngredientItem(ingredient);
             vm?.RemoveCommand.Execute(ingredient);
         }

@@ -68,8 +68,8 @@
                                             Grid.ColumnSpan="3"
                                             Margin="0,3,0,0"/>
                                     
-                                    <Label Text="{Binding Date}"
-                                            TextColor="DarkOliveGreen" 
+                                    <Label Text="{Binding Date2}"
+                                            TextColor="{Binding Color}" 
                                             FontSize="Medium"
                                             Grid.Row="1"
                                             Grid.Column="1"

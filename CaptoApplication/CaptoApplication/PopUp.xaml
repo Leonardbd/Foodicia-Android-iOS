@@ -18,7 +18,7 @@
 
                     <Entry x:Name="productEntry" Placeholder="Produktnamn" Margin="10"></Entry>
                     <Label Text="Utgångsdatum" HorizontalOptions="StartAndExpand"></Label>
-                    <DatePicker x:Name="datePicker"></DatePicker>
+                    <DatePicker x:Name="datePicker" Format="yyyy/MM/dd"></DatePicker>
 
                    
 

@@ -13,8 +13,10 @@ namespace CaptoApplication
     [PrimaryKey, AutoIncrement, Column("ID")]
     public int ID { get; set; }
     public string Name { get; set; }
-    public string Date { get; set; }
-
+    public DateTime Date { get; set; }
+    
+    public string Color { get; set; }
+    public string Date2 { get; set; }
     public bool selectedItem { get; set; }
 
         public Ingredient(string name)
@@ -24,16 +26,26 @@ namespace CaptoApplication
             
         }
 
-        public Ingredient(string name, string date)
+        public Ingredient(string name, DateTime date)
         {
             Name = name;
             Date = date;
             selectedItem = false;
+            Date2 = date.ToString("dd/MM/yyyy");
+
+            if((date - DateTime.Today).TotalDays < 3)
+            {
+                Color = "Red";
+            }
+            else
+            {
+                Color = "Green";
+            }
         }
 
         public Ingredient()
         {
-
+            
         }
     }
 }
