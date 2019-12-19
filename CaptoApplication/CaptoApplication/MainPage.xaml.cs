@@ -85,13 +85,21 @@ namespace CaptoApplication
             
 
             var keyword = IngredientSearchBar.Text;
+            
             var scraper = new RecipesScraper(keyword);
+            IngredientSearchBar.Text = null;
+            DateTime date = DateTime.Now;
+            
+            int timme = date.Hour;
+
+            IngredientSearchBar.Placeholder = RandomFunctionality.WhatMeal(timme);
             
             var recipeList = await scraper.GetFirstPageRecipesURLsAsync();
 
             if (recipeList.Count == 0)
             {
-                IngredientSearchBar.Text = "Hittade inga recept";
+                IngredientSearchBar.Placeholder = "Hittade inga recept";
+                
             }
             else
             {
@@ -100,8 +108,10 @@ namespace CaptoApplication
                     recipes.Add(recipe.Title);
                     RModel.RecipeList.Add(recipe);
                 }
-               
+               IngredientSearchBar.Text = null;
+                IngredientSearchBar.Placeholder = "Sök recept";
             }
+            
             await progbar.ProgressTo(1, 600, Easing.Linear);
             progbar.IsVisible = false;
 
@@ -166,12 +176,7 @@ namespace CaptoApplication
 
             await Navigation.PushModalAsync(scanPage);
         }
-
-        private void btnremove_Clicked(object sender, EventArgs e)
-        {
-           
-        }
-
+       
         private void removeitembtn_Clicked(object sender, EventArgs e)
         {
             var button = sender as ImageButton;
@@ -221,6 +226,11 @@ namespace CaptoApplication
 
         private async void btnsearch_Clicked(object sender, EventArgs e)
         {
+            DateTime date = DateTime.Now;
+            int timme = date.Hour;
+
+            IngredientSearchBar.Placeholder = RandomFunctionality.WhatMeal(timme);
+
             List<string> listan = new List<string>();
             foreach (var item in PersonalIngredientList)
             {
@@ -263,7 +273,8 @@ namespace CaptoApplication
 
                 if (recipeList.Count == 0)
                 {
-                    IngredientSearchBar.Text = "Hittade inga recept";
+                    IngredientSearchBar.Placeholder = "Hittade inga recept";
+                    
                 }
                 else
                 {
@@ -272,8 +283,9 @@ namespace CaptoApplication
                         recipes.Add(recipe.Title);
                         RModel.RecipeList.Add(recipe);
                     }
-
+                    IngredientSearchBar.Placeholder = "Sök recept";
                 }
+                
                 await progbar.ProgressTo(1, 600, Easing.Linear);
                 progbar.IsVisible = false;
             }
