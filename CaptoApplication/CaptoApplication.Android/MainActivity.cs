@@ -19,6 +19,8 @@ namespace CaptoApplication.Droid
 
             base.OnCreate(savedInstanceState);
 
+            RequestedOrientation = ScreenOrientation.Portrait;
+
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);

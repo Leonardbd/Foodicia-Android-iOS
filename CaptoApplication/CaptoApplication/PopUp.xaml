@@ -16,11 +16,9 @@
                 
                 <StackLayout>
 
-                    <Entry x:Name="productEntry" Placeholder="Produktnamn" Margin="10"></Entry>
+                    <Entry x:Name="productEntry" Placeholder="Produktnamn" Margin="10" MaxLength="27"></Entry>
                     <Label Text="Utgångsdatum" HorizontalOptions="StartAndExpand"></Label>
                     <DatePicker x:Name="datePicker" Format="yyyy/MM/dd"></DatePicker>
-
-                   
 
                 </StackLayout>
                 

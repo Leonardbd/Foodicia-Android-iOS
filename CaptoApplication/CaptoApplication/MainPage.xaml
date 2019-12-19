@@ -24,13 +24,13 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Text="LÄGG  TILL"  TextColor="White" Margin="10" BackgroundColor="Goldenrod" CornerRadius="5" x:Name="btnadd" Clicked="btnadd_Clicked"
+                    <Button Text="LÄGG  TILL"  TextColor="DarkCyan" HeightRequest="55" Margin="10" BackgroundColor="White" BorderColor="DarkCyan" BorderWidth="2" CornerRadius="10" x:Name="btnadd" Clicked="btnadd_Clicked" 
                             Grid.Row="0"
                             Grid.Column="0"/>
-                    <Button Text="SCANNA" TextColor="White" Margin="10" BackgroundColor="Green" CornerRadius="5" x:Name="btnscan" Clicked="btnscan_Clicked"
+                    <Button Text="SCANNA" TextColor="DarkCyan" HeightRequest="55" Margin="10" BackgroundColor="White" BorderColor="DarkCyan" BorderWidth="2" CornerRadius="10" x:Name="btnscan" Clicked="btnscan_Clicked"
                             Grid.Row="0"
                             Grid.Column="1"/>
-                    <Button Text="SÖK RECEPT" TextColor="White" Margin="10" BackgroundColor="Blue" CornerRadius="5" x:Name="btnsearch" Clicked="btnsearch_Clicked"
+                    <Button Text="SÖK RECEPT" TextColor="DarkCyan" HeightRequest="55" Margin="10" BackgroundColor="White" BorderColor="DarkCyan" BorderWidth="2" CornerRadius="10" x:Name="btnsearch" Clicked="btnsearch_Clicked"
                             Grid.Row="0"
                             Grid.Column="2"/>
 
@@ -45,49 +45,84 @@
 
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="32"/>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="0.7*"/>
-                                        <ColumnDefinition Width="0.3*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        
                                     </Grid.ColumnDefinitions>
-                                    
+
+                                    <BoxView    Grid.Row="0"
+                                                Grid.ColumnSpan="6"
+                                                HeightRequest="0.6"
+                                                BackgroundColor="DarkCyan"/>
+
                                     <CheckBox x:Name="checkBox"
                                               CheckedChanged="checkBox_CheckedChanged"
                                               Color="Blue"
-                                              Grid.Row="0"
+                                              Grid.Row="1"
                                               Grid.Column="0"
-                                              />
+                                              Margin="0,14,0,17"
+                                              Grid.RowSpan="2"/>
 
                                     <Label  Text="{Binding Name}" 
                                             TextColor="Black" 
                                             FontSize="Large"
-                                            Grid.Row="0"
-                                            Grid.Column="1"
-                                            Grid.RowSpan="1"
-                                            Grid.ColumnSpan="3"
-                                            Margin="0,3,0,0"/>
-                                    
-                                    <Label Text="{Binding Date2}"
-                                            TextColor="{Binding Color}" 
-                                            FontSize="Medium"
+                                            FontAttributes="None"
                                             Grid.Row="1"
                                             Grid.Column="1"
-                                            Grid.ColumnSpan="3"/>
+                                            Grid.RowSpan="1"
+                                            Grid.ColumnSpan="4"
+                                            Margin="0,0,0,0">
+
+                                        <!-- <Label.FontFamily>
+                                                <OnPlatform x:TypeArguments="x:String">
+                                                <On Platform="iOS" Value="MarkerFelt-Thin" />
+                                                <On Platform="Android" Value="Lobster-Regular.ttf#Lobster-Regular" />
+                                                </OnPlatform>
+                                        </Label.FontFamily> -->
+                                    </Label>
+
+                                    <Label  Text="Utgångsdatum"
+                                            TextColor="Gray" 
+                                            FontSize="Default"
+                                            Grid.Row="2"
+                                            Grid.Column="1"
+                                            Grid.RowSpan="1"
+                                            Grid.ColumnSpan="1"
+                                            Margin="0,0,0,3">
+
+                                    </Label>
+
+                                    <Label Text="{Binding Date2}"
+                                            TextColor="{Binding Color}" 
+                                            FontSize="Default"
+                                            Grid.Row="2"
+                                            Grid.Column="2"
+                                            Grid.ColumnSpan="1"/>
 
                                     <ImageButton x:Name="removeitembtn" 
                                                     Source="minus.png" 
-                                                    WidthRequest="48" 
-                                                    HeightRequest="48" 
+                                                    WidthRequest="33" 
+                                                    HeightRequest="33" 
                                                     HorizontalOptions="EndAndExpand" 
                                                     CornerRadius="10" 
                                                     BackgroundColor="White" 
                                                     IsVisible="True" 
                                                     Clicked="removeitembtn_Clicked"
-                                                    Grid.Row="0"
-                                                    Grid.Column="4"/>
+                                                    Grid.Row="1"
+                                                    Grid.Column="5"
+                                                    Grid.RowSpan="2"/>
+
+                                    
                                 </Grid>
-             
+                                
                             </ViewCell>
                         
                     </DataTemplate>
@@ -137,38 +172,71 @@
 
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout Padding="5">
-                                    <StackLayout >
-                                        <Image ScaleX="1" ScaleY="0.6" Source="{Binding Image}"></Image>
-                                    </StackLayout>
-                                    <StackLayout>
-                                        <Label Text="{Binding Title}" TextColor="#FF295F" FontSize="Large"/>
-                                    <Label Text="{Binding Description}" TextColor="Black" FontSize="Medium"/>
-                                        <StackLayout Orientation="Horizontal">
-                                            <Label Text="Du har: "/>
-                                            <Label Text="{Binding NumIngredients}"></Label>
-                                            <Label Text="av "></Label>
-                                            <Label Text="{Binding NumInRecipe}"></Label>
-                                            <Label Text=" ingredienser"></Label>
-                                        </StackLayout>
-                                    </StackLayout>
+                                <Grid>
 
-                                    <Grid BackgroundColor="#d3d3d3">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
 
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="0.7*"/>
-                                            <ColumnDefinition Width="0.3*"/>
-                                        </Grid.ColumnDefinitions>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
 
-                                    </Grid>
+                                    </Grid.ColumnDefinitions>
+
+                                    <BoxView    Grid.Row="0"
+                                                Grid.Column="0"
+                                                Grid.ColumnSpan="10"
+                                                HeightRequest="0.6"
+                                                BackgroundColor="DarkCyan"/>
+
+                                    <Image ScaleX="1" ScaleY="1" HeightRequest="140" WidthRequest="140" Source="{Binding Image}"
+                                           Grid.Column="0"
+                                           Grid.Row="1"
+                                           Grid.RowSpan="3"
+                                           Margin="5,10,0,10"/>
+                                    
+                                    <Label Text="{Binding Title}" TextColor="#FF295F" FontSize="Large" LineBreakMode="WordWrap"
+                                           Grid.Column="1"
+                                           Grid.Row="1"
+                                           Grid.ColumnSpan="8"/>
+                                    
+                                    <Label Text="{Binding Description}" TextColor="Black" FontSize="Body" LineBreakMode="WordWrap"
+                                           Grid.Column="1"
+                                           Grid.Row="2"
+                                           Grid.ColumnSpan="8"/>
+
+                                    <Label Text="Du har" FontSize="Small"
+                                           Grid.Column="1"
+                                           Grid.Row="3"/>
+
+                                    <Label Text="{Binding NumIngredients}" FontSize="Small"
+                                           Grid.Column="2"
+                                           Grid.Row="3"/>
+
+                                    <Label Text="av" FontSize="Small"
+                                           Grid.Column="3"
+                                           Grid.Row="3"/>
+
+                                    <Label Text="{Binding NumInRecipe}" FontSize="Small"
+                                           Grid.Column="4"
+                                           Grid.Row="3"/>
+
+                                    <Label Text=" ingredienser" FontSize="Small"
+                                           Grid.Column="5"
+                                           Grid.Row="3"/>
 
 
-                                </StackLayout>
 
+                                </Grid>
                             </ViewCell>
 
                         </DataTemplate>

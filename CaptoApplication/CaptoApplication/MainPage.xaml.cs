@@ -49,7 +49,6 @@ namespace CaptoApplication
             RModel = new RecipeViewModel();
 
             BindingContext = Model;
-
             
         }
 
@@ -71,8 +70,6 @@ namespace CaptoApplication
         }
 
          
-
-        
         async void IngredientSearchBar_SearchButtonPressed(object sender, EventArgs e)
         {
 
@@ -103,16 +100,13 @@ namespace CaptoApplication
                     recipes.Add(recipe.Title);
                     RModel.RecipeList.Add(recipe);
                 }
-                
-
-                
+               
             }
             await progbar.ProgressTo(1, 600, Easing.Linear);
             progbar.IsVisible = false;
 
 
         }
-
 
         private void btnadd_Clicked(object sender, EventArgs e)
         {
@@ -222,9 +216,7 @@ namespace CaptoApplication
                 {
                     ingredient.selectedItem = true;
                 }
-                              
-
-            
+                             
         }
 
         private async void btnsearch_Clicked(object sender, EventArgs e)
@@ -248,15 +240,12 @@ namespace CaptoApplication
 
             if (searchword.Equals(""))
             {
-                await DisplayAlert("", "Var vänlig och välj minst en produkt", "OK");
+                await DisplayAlert("", "Var vänlig och välj minst en vara", "OK");
             }
             else
             {
 
-
                 tp.CurrentPage = tp.Children[2];
-
-
 
                 progbar.IsVisible = true;
                 progbar.Progress = 0;
@@ -267,9 +256,6 @@ namespace CaptoApplication
                 RecipeListView.BindingContext = RModel;
                 progbar.ProgressTo(0.65, 2300, Easing.Linear);
                 List<string> recipes = new List<string> { };
-
-
-
 
                 var scraper = new RecipesScraper(searchword);
 
@@ -286,8 +272,6 @@ namespace CaptoApplication
                         recipes.Add(recipe.Title);
                         RModel.RecipeList.Add(recipe);
                     }
-
-
 
                 }
                 await progbar.ProgressTo(1, 600, Easing.Linear);
