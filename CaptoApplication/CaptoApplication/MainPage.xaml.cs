@@ -51,6 +51,7 @@ namespace CaptoApplication
             RModel = new RecipeViewModel();
 
             BindingContext = Model;
+            categoryPicker.SelectedIndex = 0;
 
             
         }
@@ -89,15 +90,15 @@ namespace CaptoApplication
 
             var keyword = IngredientSearchBar.Text;
             
-            var scraper = new RecipesScraper(keyword);
+            var scraper = new RecipesScraper();
             IngredientSearchBar.Text = null;
             DateTime date = DateTime.Now;
             
             int timme = date.Hour;
 
-            IngredientSearchBar.Placeholder = RandomFunctionality.WhatMeal(timme);
+            IngredientSearchBar.Placeholder = RandomFunctionality.WhatMeal(selectedCategory);
             
-            var recipeList = await scraper.GetFirstPageRecipesURLsAsync();
+            var recipeList = await scraper.GetFirstPageRecipesURLsAsync(keyword);
 
             if (recipeList.Count == 0)
             {
@@ -246,10 +247,9 @@ namespace CaptoApplication
 
         private async void btnsearch_Clicked(object sender, EventArgs e)
         {
-            DateTime date = DateTime.Now;
-            int timme = date.Hour;
+            
 
-            IngredientSearchBar.Placeholder = RandomFunctionality.WhatMeal(timme);
+            IngredientSearchBar.Placeholder = RandomFunctionality.WhatMeal(selectedCategory);
 
             List<string> listan = new List<string>();
             foreach (var item in PersonalIngredientList)
@@ -260,8 +260,12 @@ namespace CaptoApplication
                 }
             }
 
-           
-            string searchword = "";
+
+            string searchword = selectedCategory;
+            if(selectedCategory.Equals("Alla recept"))
+            {
+                searchword = "";
+            }
 
             foreach (var ord in listan)
             {
@@ -287,9 +291,9 @@ namespace CaptoApplication
                 progbar.ProgressTo(0.65, 2300, Easing.Linear);
                 List<string> recipes = new List<string> { };
 
-                var scraper = new RecipesScraper(searchword);
+                var scraper = new RecipesScraper();
 
-                var recipeList = await scraper.GetFirstPageRecipesURLsAsync();
+                var recipeList = await scraper.GetFirstPageRecipesURLsAsync(searchword);
 
                 if (recipeList.Count == 0)
                 {

@@ -32,24 +32,26 @@ namespace CaptoApplication
 
         //public List<Recipe> ListOfRecipes { get; set; }
 
-        public RecipesScraper(string searchword)
+        public RecipesScraper()
         {
-            Url = "https://www.coop.se/globalt-sok/?query=" + searchword;
+            
             ListRecipeURL = new List<string>();
             //ListOfRecipes = new List<Recipe>();
-            Searchword = searchword;
+            
 
         }
 
         
-        public async Task<List<Recipe>> GetFirstPageRecipesURLsAsync()
+        public async Task<List<Recipe>> GetFirstPageRecipesURLsAsync(string sokning)
         {
             try
             {
+
+                string searchword = "https://www.coop.se/globalt-sok/?query=" + sokning;
                 List<Recipe> ListOfRecipes = new List<Recipe>();
 
                 httpclient = new HttpClient();
-                var html = await httpclient.GetStringAsync(Url);
+                var html = await httpclient.GetStringAsync(searchword);
 
                 var htmldoc = new HtmlDocument();
                 htmldoc.LoadHtml(html);

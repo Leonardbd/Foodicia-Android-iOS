@@ -8,24 +8,24 @@ namespace CaptoApplication
     public static class RandomFunctionality
     {
 
-        public static string WhatMeal(int hour)
+        public static string WhatMeal(string meal)
         {
             string message = "";
-            if (hour > 4 && hour < 10)
+            if(meal.Equals("Alla recept"))
+            {
+                message = "Söker efter recept...";
+            }
+            else if (meal.Equals("Frukost"))
             {
                 message = "Söker efter frukost...";
             }
-            else if (hour > 10 && hour < 15)
+            else if (meal.Equals("Lunch"))
             {
                 message = "Söker efter lunch...";
             }
-            else if (hour > 15 && hour < 22)
+            else if (meal.Equals("Middag"))
             {
                 message = "Söker efter middag...";
-            }
-            else
-            {
-                message = "Söker efter kvällssnacks...";
             }
 
             return message;
