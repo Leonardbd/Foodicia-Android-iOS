@@ -186,6 +186,12 @@ namespace CaptoApplication
             
             var vm = BindingContext as IngredientsViewModel;
 
+            if (ingredient.selectedItem)
+            {
+                DisplayAlert("", "Du kan inte ta bort en markerad vara", "OK");
+                return;
+            }
+
             PersonalIngredientList.Remove(ingredient);
             db.DeleteIngredientItem(ingredient);
             vm?.RemoveCommand.Execute(ingredient);
