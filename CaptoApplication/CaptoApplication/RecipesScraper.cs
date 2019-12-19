@@ -30,14 +30,15 @@ namespace CaptoApplication
         public int? NumPages { get; set; }
         public List<string> ListRecipeURL { get; set; }
 
-        //public List<Recipe> ListOfRecipes { get; set; }
+        public List<string> ListRecipeURLICA { get; set; }
+
+        public List<Recipe> ListOfRecipes { get; set; }
 
         public RecipesScraper()
         {
-            
+            ListOfRecipes = new List<Recipe>();
             ListRecipeURL = new List<string>();
-            //ListOfRecipes = new List<Recipe>();
-            
+            ListRecipeURLICA = new List<string>();
 
         }
 
@@ -48,7 +49,7 @@ namespace CaptoApplication
             {
 
                 string searchword = "https://www.coop.se/globalt-sok/?query=" + sokning;
-                List<Recipe> ListOfRecipes = new List<Recipe>();
+                
 
                 httpclient = new HttpClient();
                 var html = await httpclient.GetStringAsync(searchword);
@@ -186,6 +187,134 @@ namespace CaptoApplication
                 return ListSorter(ListOfRecipes);
             }
             catch(Exception e)
+            {
+                return new List<Recipe>();
+            }
+
+        }
+
+        public async Task<List<Recipe>> GetFirstPageRecipesURLsAsync2(string sokning)
+        {
+
+            // RÄTT FUNKTION ATT REDIGERA!!!!!!!!!!!!!!!!!!!
+
+
+            try
+            {
+
+                string searchword = "https://www.ica.se/recept/#:search=" + sokning;
+
+                httpclient = new HttpClient();
+                var html = await httpclient.GetStringAsync(searchword);
+
+                var htmldoc = new HtmlDocument();
+                htmldoc.LoadHtml(html);
+
+                var ReceptLista = new List<HtmlNode>();
+                ReceptLista = htmldoc.DocumentNode.Descendants("div")
+                    .Where(node => node.GetAttributeValue("id", "")
+                    .Equals("recipes")).ToList();
+
+                var finalList = new List<HtmlNode>();
+                finalList = ReceptLista[0].Descendants("article").ToList();
+
+                //Match m;
+                //string HRefPattern = @"href\s*=\s*(?:[""'](?<1>[^""']*)[""']|(?<1>\S+))";
+
+
+
+                try
+                {
+                    foreach (var item in finalList)
+                    {
+
+                        string url = item.SelectSingleNode("/div[2]/header/h2/a").Attributes[1].Value;
+
+                        ListRecipeURLICA.Add(url);
+
+
+                        using (HttpClient client = new HttpClient())
+                        {
+
+                            var html2 = await client.GetStringAsync(url);
+                            HtmlDocument htmldoc2 = new HtmlDocument();
+                            htmldoc2.LoadHtml(html2);
+
+
+                            var list = new List<HtmlNode>();
+                            list = htmldoc2.DocumentNode.Descendants("div")
+                            .Where(node => node.GetAttributeValue("class", "")
+                            .Equals("page page-mod-fullwidth pl recipepage recipepage--small")).ToList();
+                            string innerhtmlH1 = list[0].InnerHtml;
+
+                            //getImage
+
+                            string attributeValue = list[0].SelectSingleNode("/div[1]/div[1]/div[1]").Attributes[1].Value;
+                            string imageURL = attributeValue.Replace("background-image: url('", "").Replace("')", "");
+
+                            Debug.WriteLine("Image: " + imageURL);
+
+                            //getTitle
+
+                            var listForText = new List<HtmlNode>();
+                            listForText = htmldoc2.DocumentNode.Descendants("h1")
+                                .Where(node => node.GetAttributeValue("class", "")
+                                .Equals("col-12 col-md-6")).ToList();
+
+                            string title = listForText[0].SelectSingleNode("/div[2]/div[1]/h1[@class='recipepage__headline']").InnerHtml;
+                            title = convertUTF(title);
+
+                            Debug.WriteLine("Titel: " + title);
+
+
+                            //getDescription
+
+                            string description = listForText[0].SelectSingleNode("/p").InnerHtml;
+
+                            description = convertUTF(description);
+                            Debug.WriteLine("Beskrivning: " + description);
+
+
+                            //GetIngredientsToList
+
+                            var ingredientHtml = htmldoc2.DocumentNode.Descendants("li")
+                                                        .Where(node => node.GetAttributeValue("class", "")
+                                                        .Equals("ingredients__list__item")).ToList();
+
+
+                            var ingredientList = new List<Ingredient>();
+                            int counter = 0;
+                            foreach (HtmlNode node in ingredientHtml)
+                            {
+                                string ingredient = convertUTF(node.InnerHtml);
+                                ingredientList.Add(new Ingredient(ingredient));
+
+                                Debug.WriteLine("Ingrediens: " + ingredient);
+                                counter++;
+
+                                if (counter == ingredientList.Count)
+                                {
+                                    var recipe = new Recipe(title, description, ingredientList, url, ingredientList.Count, imageURL);
+
+                                    ListOfRecipes.Add(recipe);
+                                    SetRecipeMatches(recipe);
+                                }
+
+                            }
+
+                        }
+                    }
+
+
+                }
+                catch (RegexMatchTimeoutException)
+                {
+                    Console.WriteLine("The matching operation timed out.");
+                    return new List<Recipe>();
+                }
+                return ListSorter(ListOfRecipes);
+            }
+            catch (Exception e)
             {
                 return new List<Recipe>();
             }

@@ -31,13 +31,12 @@ namespace CaptoApplication
         public RecipeViewModel RModel { get; set; }
 
         public string selectedCategory { get; set; }
-        
 
         ZXingScannerPage scanPage;
         public MainPage()
         {
             InitializeComponent();
-            
+
             PersonalIngredientList = new List<Ingredient>();
             RecipeList = new List<Recipe>();
 
@@ -138,7 +137,6 @@ namespace CaptoApplication
                 BindingContext = Model;
 
             };
-
         }
 
         private async void btnscan_Clicked(object sender, EventArgs e)
