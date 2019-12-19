@@ -31,7 +31,10 @@ namespace CaptoApplication
         public RecipeViewModel RModel { get; set; }
 
         public string selectedCategory { get; set; }
+
         
+
+
 
         ZXingScannerPage scanPage;
         public MainPage()
@@ -52,6 +55,7 @@ namespace CaptoApplication
 
             BindingContext = Model;
             categoryPicker.SelectedIndex = 0;
+            
 
             
         }
