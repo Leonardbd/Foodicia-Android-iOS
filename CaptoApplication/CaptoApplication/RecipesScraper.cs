@@ -376,7 +376,7 @@ namespace CaptoApplication
                 {
                     foreach (var item in list)
                     {
-                        if(ingredient.Name.ToLower().Contains(item.Name.ToLower()))
+                        if(item.Name.ToLower().Contains(ingredient.Name.ToLower()))
                         {
                             numMatches++;
                             recipe.NumIngredients = numMatches;

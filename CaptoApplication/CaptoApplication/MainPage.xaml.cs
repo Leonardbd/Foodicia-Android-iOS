@@ -75,48 +75,49 @@ namespace CaptoApplication
          
         async void IngredientSearchBar_SearchButtonPressed(object sender, EventArgs e)
         {
-
-            progbar.IsVisible = true;
-            progbar.Progress = 0;            
-            
-            RModel.RecipeList.Clear();
-            
-            
-            RecipeListView.BindingContext = RModel;
-            progbar.ProgressTo(0.65, 2300, Easing.Linear);
-            List<string> recipes = new List<string> { };
-            
-
-            var keyword = IngredientSearchBar.Text;
-            
-            var scraper = new RecipesScraper();
-            IngredientSearchBar.Text = null;
-            DateTime date = DateTime.Now;
-            
-            int timme = date.Hour;
-
-            IngredientSearchBar.Placeholder = RandomFunctionality.WhatMeal(selectedCategory);
-            
-            var recipeList = await scraper.GetFirstPageRecipesURLsAsync(keyword);
-
-            if (recipeList.Count == 0)
+            if (IngredientSearchBar.Placeholder == "Sök recept" || IngredientSearchBar.Placeholder == "Hittade inga recept")
             {
-                IngredientSearchBar.Placeholder = "Hittade inga recept";
-                
-            }
-            else
-            {
-                foreach (Recipe recipe in recipeList)
+                progbar.IsVisible = true;
+                progbar.Progress = 0;
+
+                RModel.RecipeList.Clear();
+
+
+                RecipeListView.BindingContext = RModel;
+                progbar.ProgressTo(0.65, 2300, Easing.Linear);
+                List<string> recipes = new List<string> { };
+
+
+                var keyword = IngredientSearchBar.Text;
+
+                var scraper = new RecipesScraper();
+                IngredientSearchBar.Text = null;
+                DateTime date = DateTime.Now;
+
+                int timme = date.Hour;
+
+                IngredientSearchBar.Placeholder = RandomFunctionality.WhatMeal(selectedCategory);
+
+                var recipeList = await scraper.GetFirstPageRecipesURLsAsync(keyword);
+
+                if (recipeList.Count == 0)
                 {
-                    recipes.Add(recipe.Title);
-                    RModel.RecipeList.Add(recipe);
-                }
-               
-            }
-            
-            await progbar.ProgressTo(1, 600, Easing.Linear);
-            progbar.IsVisible = false;
+                    IngredientSearchBar.Placeholder = "Hittade inga recept";
 
+                }
+                else
+                {
+                    foreach (Recipe recipe in recipeList)
+                    {
+                        recipes.Add(recipe.Title);
+                        RModel.RecipeList.Add(recipe);
+                    }
+                    IngredientSearchBar.Placeholder = "Sök recept";
+                }
+                
+                await progbar.ProgressTo(1, 600, Easing.Linear);
+                progbar.IsVisible = false;
+            }
 
         }
 
@@ -127,13 +128,16 @@ namespace CaptoApplication
             pop.OnDialogClosed += (s, arg) =>
             {
                 string productname = arg.ProductName;
-                DateTime date = arg.ExpirationDate;
-                var ingredient = new Ingredient(productname, date);
-                db.InsertIntoTable(ingredient);
-                PersonalIngredientList.Add(ingredient);
-                PersonalIngredientList.Sort((a, b) => a.Date.CompareTo(b.Date));
-                Model = new IngredientsViewModel(PersonalIngredientList);               
-                BindingContext = Model;
+                if (!string.IsNullOrWhiteSpace(productname) && !productname.Equals(""))
+                {
+                    DateTime date = arg.ExpirationDate;
+                    var ingredient = new Ingredient(productname, date);
+                    db.InsertIntoTable(ingredient);
+                    PersonalIngredientList.Add(ingredient);
+                    PersonalIngredientList.Sort((a, b) => a.Date.CompareTo(b.Date));
+                    Model = new IngredientsViewModel(PersonalIngredientList);
+                    BindingContext = Model;
+                }
 
             };
         }
@@ -151,14 +155,17 @@ namespace CaptoApplication
                 pop.OnDialogClosed += (s, arg) =>
                 {
                     string productname = arg.ProductName;
-                    DateTime date = arg.ExpirationDate;
-                    var ingredient = new Ingredient(productname, date);
-                    db.InsertIntoTable(ingredient);
-                    PersonalIngredientList.Add(ingredient);                    
-                    Model.IngredientList.Add(ingredient);
-                    PersonalIngredientList.Sort((a, b) => a.Date.CompareTo(b.Date));
-                    Model = new IngredientsViewModel(PersonalIngredientList);
-                    BindingContext = Model;
+                    if (!string.IsNullOrWhiteSpace(productname) && !productname.Equals(""))
+                    {
+                        DateTime date = arg.ExpirationDate;
+                        var ingredient = new Ingredient(productname, date);
+                        db.InsertIntoTable(ingredient);
+                        PersonalIngredientList.Add(ingredient);
+                        Model.IngredientList.Add(ingredient);
+                        PersonalIngredientList.Sort((a, b) => a.Date.CompareTo(b.Date));
+                        Model = new IngredientsViewModel(PersonalIngredientList);
+                        BindingContext = Model;
+                    }
 
                 };
 
@@ -250,71 +257,73 @@ namespace CaptoApplication
 
         private async void btnsearch_Clicked(object sender, EventArgs e)
         {
-            
 
-            IngredientSearchBar.Placeholder = RandomFunctionality.WhatMeal(selectedCategory);
-
-            List<string> listan = new List<string>();
-            foreach (var item in PersonalIngredientList)
+            if (IngredientSearchBar.Placeholder == "Sök recept" || IngredientSearchBar.Placeholder == "Hittade inga recept")
             {
-                if(item.selectedItem)
+                IngredientSearchBar.Placeholder = RandomFunctionality.WhatMeal(selectedCategory);
+
+                List<string> listan = new List<string>();
+                foreach (var item in PersonalIngredientList)
                 {
-                    listan.Add(item.Name);
+                    if (item.selectedItem)
+                    {
+                        listan.Add(item.Name);
+                    }
                 }
-            }
 
 
-            string searchword = selectedCategory;
-            if(selectedCategory.Equals("Alla recept"))
-            {
-                searchword = "";
-            }
-
-            foreach (var ord in listan)
-            {
-                searchword += " " + ord;
-            }
-
-            if (searchword.Equals(""))
-            {
-                await DisplayAlert("", "Var vänlig och välj minst en vara", "OK");
-            }
-            else
-            {
-
-                tp.CurrentPage = tp.Children[1];
-
-                progbar.IsVisible = true;
-                progbar.Progress = 0;
-
-                RModel.RecipeList.Clear();
-
-
-                RecipeListView.BindingContext = RModel;
-                progbar.ProgressTo(0.65, 2300, Easing.Linear);
-                List<string> recipes = new List<string> { };
-
-                var scraper = new RecipesScraper();
-
-                var recipeList = await scraper.GetFirstPageRecipesURLsAsync(searchword);
-
-                if (recipeList.Count == 0)
+                string searchword = selectedCategory;
+                if (selectedCategory.Equals("Alla recept"))
                 {
-                    IngredientSearchBar.Placeholder = "Hittade inga recept";
-                    
+                    searchword = "";
+                }
+
+                foreach (var ord in listan)
+                {
+                    searchword += " " + ord;
+                }
+
+                if (searchword.Equals(""))
+                {
+                    await DisplayAlert("", "Var vänlig och välj minst en vara", "OK");
                 }
                 else
                 {
-                    foreach (Recipe recipe in recipeList)
+
+                    tp.CurrentPage = tp.Children[1];
+
+                    progbar.IsVisible = true;
+                    progbar.Progress = 0;
+
+                    RModel.RecipeList.Clear();
+
+
+                    RecipeListView.BindingContext = RModel;
+                    progbar.ProgressTo(0.65, 2300, Easing.Linear);
+                    List<string> recipes = new List<string> { };
+
+                    var scraper = new RecipesScraper();
+
+                    var recipeList = await scraper.GetFirstPageRecipesURLsAsync(searchword);
+
+                    if (recipeList.Count == 0)
                     {
-                        recipes.Add(recipe.Title);
-                        RModel.RecipeList.Add(recipe);
+                        IngredientSearchBar.Placeholder = "Hittade inga recept";
+
                     }
-                    IngredientSearchBar.Placeholder = "Sök recept";
+                    else
+                    {
+                        foreach (Recipe recipe in recipeList)
+                        {
+                            recipes.Add(recipe.Title);
+                            RModel.RecipeList.Add(recipe);
+                        }
+                        IngredientSearchBar.Placeholder = "Sök recept";
+                    }
+
+                    await progbar.ProgressTo(1, 600, Easing.Linear);
+                    progbar.IsVisible = false;
                 }
-                
-                await progbar.ProgressTo(1, 600, Easing.Linear);
-                progbar.IsVisible = false;
             }
 
         }
