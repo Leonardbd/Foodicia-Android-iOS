@@ -111,8 +111,7 @@ namespace CaptoApplication
                     recipes.Add(recipe.Title);
                     RModel.RecipeList.Add(recipe);
                 }
-               IngredientSearchBar.Text = null;
-                IngredientSearchBar.Placeholder = "Sök recept";
+               
             }
             
             await progbar.ProgressTo(1, 600, Easing.Linear);
@@ -277,7 +276,7 @@ namespace CaptoApplication
             else
             {
 
-                tp.CurrentPage = tp.Children[2];
+                tp.CurrentPage = tp.Children[1];
 
                 progbar.IsVisible = true;
                 progbar.Progress = 0;

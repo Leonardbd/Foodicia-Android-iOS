@@ -196,7 +196,7 @@ namespace CaptoApplication
         public async Task<List<Recipe>> GetFirstPageRecipesURLsAsync2(string sokning)
         {
 
-            // RÄTT FUNKTION ATT REDIGERA!!!!!!!!!!!!!!!!!!!
+            // ICA WEB SCRAPER!!!
 
 
             try
@@ -213,15 +213,10 @@ namespace CaptoApplication
                 var ReceptLista = new List<HtmlNode>();
                 ReceptLista = htmldoc.DocumentNode.Descendants("div")
                     .Where(node => node.GetAttributeValue("id", "")
-                    .Equals("recipes")).ToList();
+                    .Equals("page-wrapper")).ToList();
 
                 var finalList = new List<HtmlNode>();
                 finalList = ReceptLista[0].Descendants("article").ToList();
-
-                //Match m;
-                //string HRefPattern = @"href\s*=\s*(?:[""'](?<1>[^""']*)[""']|(?<1>\S+))";
-
-
 
                 try
                 {

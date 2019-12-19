@@ -36,6 +36,7 @@ namespace CaptoApplication
             if((date - DateTime.Today).TotalDays < 3)
             {
                 Color = "Red";
+
             }
             else
             {
