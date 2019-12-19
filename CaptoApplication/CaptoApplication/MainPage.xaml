@@ -17,22 +17,50 @@
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        
                     </Grid.ColumnDefinitions>
 
-                    <Button Text="LÄGG  TILL"  TextColor="DarkCyan" HeightRequest="55" Margin="10" BackgroundColor="White" BorderColor="DarkCyan" BorderWidth="2" CornerRadius="10" x:Name="btnadd" Clicked="btnadd_Clicked" 
+                    <Button Text="LÄGG  TILL"  TextColor="DarkCyan" WidthRequest="100" HeightRequest="42" Margin="10" BackgroundColor="White" BorderColor="DarkCyan" BorderWidth="2" CornerRadius="10" x:Name="btnadd" Clicked="btnadd_Clicked" 
                             Grid.Row="0"
-                            Grid.Column="0"/>
-                    <Button Text="SCANNA" TextColor="DarkCyan" HeightRequest="55" Margin="10" BackgroundColor="White" BorderColor="DarkCyan" BorderWidth="2" CornerRadius="10" x:Name="btnscan" Clicked="btnscan_Clicked"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="4"/>
+                    <Button Text="SCANNA" TextColor="DarkCyan" WidthRequest="100" HeightRequest="42" Margin="10" BackgroundColor="White" BorderColor="DarkCyan" BorderWidth="2" CornerRadius="10" x:Name="btnscan" Clicked="btnscan_Clicked"
                             Grid.Row="0"
-                            Grid.Column="1"/>
-                    <Button Text="SÖK RECEPT" TextColor="DarkCyan" HeightRequest="55" Margin="10" BackgroundColor="White" BorderColor="DarkCyan" BorderWidth="2" CornerRadius="10" x:Name="btnsearch" Clicked="btnsearch_Clicked"
-                            Grid.Row="0"
-                            Grid.Column="2"/>
+                            Grid.Column="4"
+                            Grid.ColumnSpan="4"/>
+
+                    <Picker x:Name="categoryPicker" Title="Kategori" WidthRequest="120" HeightRequest="42" SelectedIndexChanged="categoryPicker_SelectedIndexChanged" IsVisible="False"
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="5"
+                            Margin="10,0,0,0">
+                        
+                        <Picker.Items>
+                            <x:String>Alla recept</x:String>
+                            <x:String>Frukost</x:String>
+                            <x:String>Lunch</x:String>
+                            <x:String>Middag</x:String>
+                            
+                        </Picker.Items>
+                        
+                    </Picker>
+
+                    <Button Text="SÖK" TextColor="DarkCyan" WidthRequest="90" HeightRequest="42" Margin="10" BackgroundColor="White" BorderColor="DarkCyan" BorderWidth="2" CornerRadius="10" x:Name="btnsearch" Clicked="btnsearch_Clicked"
+                            IsVisible="False"
+                            Grid.Row="1"
+                            Grid.Column="6"
+                            Grid.ColumnSpan="2"/>
 
                 </Grid>
                 <ListView ItemsSource="{Binding IngredientList}" HasUnevenRows="True" CachingStrategy="RecycleElement" x:Name="lw" SelectionMode="None">

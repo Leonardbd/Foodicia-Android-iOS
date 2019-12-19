@@ -29,6 +29,8 @@ namespace CaptoApplication
         public IngredientsViewModel Model { get; set; }
 
         public RecipeViewModel RModel { get; set; }
+
+        public string selectedCategory { get; set; }
         
 
         ZXingScannerPage scanPage;
@@ -49,6 +51,7 @@ namespace CaptoApplication
             RModel = new RecipeViewModel();
 
             BindingContext = Model;
+
             
         }
 
@@ -213,14 +216,31 @@ namespace CaptoApplication
 
             var ingredient = button?.BindingContext as Ingredient;
             
-                if (ingredient.selectedItem == true)
+            if (ingredient.selectedItem == true)
+            {
+                ingredient.selectedItem = false;
+            }
+            else
+            {
+                ingredient.selectedItem = true;
+            }
+
+            foreach (Ingredient ingredient1 in PersonalIngredientList)
+            {
+                if (ingredient1.selectedItem)
                 {
-                    ingredient.selectedItem = false;
+                    categoryPicker.IsVisible = true;
+                    btnsearch.IsVisible = true;
+                    return;
                 }
                 else
                 {
-                    ingredient.selectedItem = true;
+                    categoryPicker.IsVisible = false;
+                    btnsearch.IsVisible = false;
                 }
+               
+            }
+
                              
         }
 
@@ -290,6 +310,14 @@ namespace CaptoApplication
                 progbar.IsVisible = false;
             }
 
+        }
+
+        private void categoryPicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Picker picker = sender as Picker;
+            var category = picker.SelectedItem;
+            selectedCategory = category.ToString();
+            Debug.WriteLine(selectedCategory);
         }
     }
     
