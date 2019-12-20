@@ -187,21 +187,31 @@ namespace CaptoApplication
        
         private void removeitembtn_Clicked(object sender, EventArgs e)
         {
-            var button = sender as ImageButton;
+            bool marked = false;
 
-            var ingredient = button?.BindingContext as Ingredient;
-            
-            var vm = BindingContext as IngredientsViewModel;
-
-            if (ingredient.selectedItem)
+            foreach (var item in PersonalIngredientList)
             {
-                DisplayAlert("", "Du kan inte ta bort en markerad vara", "OK");
-                return;
+                if(item.selectedItem)
+                {
+                    marked = true;
+                    DisplayAlert("", "Du kan inte ta bort varor medans du har något markerat", "OK");
+                    break;
+                }
+            }
+            if (!marked)
+            {
+                var button = sender as ImageButton;
+
+                var ingredient = button?.BindingContext as Ingredient;
+
+                var vm = BindingContext as IngredientsViewModel;
+                                                                   
+                PersonalIngredientList.Remove(ingredient);
+                db.DeleteIngredientItem(ingredient);
+                vm?.RemoveCommand.Execute(ingredient);
             }
 
-            PersonalIngredientList.Remove(ingredient);
-            db.DeleteIngredientItem(ingredient);
-            vm?.RemoveCommand.Execute(ingredient);
+            
         }
 
         private void RecipeListView_ItemTapped(object sender, ItemTappedEventArgs e)
