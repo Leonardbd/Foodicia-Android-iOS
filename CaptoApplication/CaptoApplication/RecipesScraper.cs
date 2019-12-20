@@ -68,8 +68,6 @@ namespace CaptoApplication
                 Match m;
                 string HRefPattern = @"href\s*=\s*(?:[""'](?<1>[^""']*)[""']|(?<1>\S+))";
 
-
-
                 try
                 {
                     foreach (var item in finalList)
@@ -129,6 +127,28 @@ namespace CaptoApplication
                                     description = convertUTF(description);
                                     Debug.WriteLine("Beskrivning: " + description);
 
+                                    int characterLength = (title + description).Length;
+                                    int limit = 160;
+
+                                    if (title.Length > 15)
+                                    {
+                                        limit = 140;
+                                        if (title.Length > 30)
+                                        {
+                                            limit = 120;
+
+                                            if (title.Length > 40)
+                                            {
+                                                limit = 110;
+                                            }
+                                        }
+                                    }
+
+                                    if (characterLength > limit)
+                                    {
+                                        int lengthRemove = characterLength - limit;
+                                        description = description.Substring(0, description.Length - lengthRemove) + "...";
+                                    }
 
                                     //GetIngredienserToList
 

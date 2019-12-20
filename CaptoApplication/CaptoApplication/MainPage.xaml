@@ -94,8 +94,10 @@
                                               Color="#FF295F"
                                               Grid.Row="1"
                                               Grid.Column="0"
-                                              Margin="0,14,0,17"
-                                              Grid.RowSpan="2"/>
+                                              Margin="3,14,0,17"
+                                              Grid.RowSpan="2"
+                                              ScaleX="1.3"
+                                              ScaleY="1.3"/>
 
                                     <Label  Text="{Binding Name}" 
                                             TextColor="Black" 
@@ -186,71 +188,46 @@
                         <DataTemplate>
                             <ViewCell>
                                 <Frame Margin = "0,7,0,7" Padding="5" HasShadow="True" CornerRadius="20">
-                                    <Grid>
+                                    
+                                    <StackLayout>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="160"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
 
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
+                                            <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.RowSpan="1" Margin="3,0,4,4">
 
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-
-                                    </Grid.ColumnDefinitions>
-
-                                        <StackLayout>
-                                            <StackLayout Orientation="Horizontal">
-
-                                                <Image ScaleX="1" ScaleY="1" HeightRequest="140" WidthRequest="140" Source="{Binding Image}"
-                                                        Grid.Column="0"
-                                                        Grid.Row="0"
-                                                        Grid.RowSpan="2"
-                                                        Margin="5,10,10,10"/>
+                                                <Image ScaleX="1" ScaleY="1" HeightRequest="140" WidthRequest="140" Source="{Binding Image}"/>
                                                 
-                                                <StackLayout Orientation="Vertical">
-                                    <Label Text="{Binding Title}" TextColor="#FF295F" FontSize="Large" LineBreakMode="WordWrap"
-                                           Grid.Column="1"
-                                           Grid.Row="0"
-                                           Grid.ColumnSpan="10"/>
-
-                                                <Label Text="{Binding Description}" TextColor="Black" FontSize="Body" LineBreakMode="WordWrap"
-                                           Grid.Column="1"
-                                           Grid.Row="1"
-                                           Grid.ColumnSpan="10"/>
                                             </StackLayout>
-                                        </StackLayout>
-                                        <StackLayout Orientation="Horizontal" Margin="4,0,0,0">
 
-                                            <Label Text="Du har" FontSize="Small"
-                                           Grid.Column="1"
-                                           Grid.Row="2"/>
+                                            <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="1" Grid.RowSpan="1" Margin="0,0,3,0">
+                                                <Label Text="{Binding Title}" TextColor="#FF295F" FontSize="Large" LineBreakMode="WordWrap"/>
 
-                                            <Label Text="{Binding NumIngredients}" FontSize="Small"
-                                           Grid.Column="2"
-                                           Grid.Row="2"/>
+                                                <Label Text="{Binding Description}" TextColor="Black" FontSize="Body" LineBreakMode="WordWrap"/>
+                                            </StackLayout>
 
-                                            <Label Text="av" FontSize="Small"
-                                           Grid.Column="3"
-                                           Grid.Row="2"/>
+                                            <StackLayout Orientation="Horizontal" Margin="4,2,0,4" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
 
-                                            <Label Text="{Binding NumInRecipe}" FontSize="Small"
-                                           Grid.Column="4"
-                                           Grid.Row="2"/>
+                                                <Label Text="Du har" FontSize="Small"/>
 
-                                            <Label Text=" ingredienser" FontSize="Small"
-                                           Grid.Column="5"
-                                           Grid.Row="2"/>
-                                        </StackLayout>
-                                        </StackLayout>
+                                                <Label Text="{Binding NumIngredients}" FontSize="Small"/>
 
-                                    </Grid>
+                                                <Label Text="av" FontSize="Small"/>
+
+                                                <Label Text="{Binding NumInRecipe}" FontSize="Small"/>
+
+                                                <Label Text=" ingredienser" FontSize="Small"/>
+                                            </StackLayout>
+                                        </Grid>
+                                    </StackLayout>
+
+                                    
                                 </Frame>
                             </ViewCell>
 
