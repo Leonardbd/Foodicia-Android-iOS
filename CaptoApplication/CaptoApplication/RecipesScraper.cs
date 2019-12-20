@@ -133,13 +133,18 @@ namespace CaptoApplication
                                     if (title.Length > 15)
                                     {
                                         limit = 140;
-                                        if (title.Length > 30)
+                                        if (title.Length > 22)
                                         {
-                                            limit = 120;
+                                            limit = 132;
 
-                                            if (title.Length > 40)
+                                            if (title.Length > 34)
                                             {
-                                                limit = 110;
+                                                limit = 120;
+
+                                                if (title.Length > 50)
+                                                {
+                                                    limit = 97;
+                                                }
                                             }
                                         }
                                     }
