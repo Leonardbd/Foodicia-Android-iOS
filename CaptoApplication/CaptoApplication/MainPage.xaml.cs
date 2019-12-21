@@ -138,6 +138,10 @@ namespace CaptoApplication
                     Model = new IngredientsViewModel(PersonalIngredientList);
                     BindingContext = Model;
                 }
+                else
+                {
+                    DisplayAlert("", "Du måste skriva in en vara", "OK");
+                }
 
             };
         }
@@ -175,10 +179,7 @@ namespace CaptoApplication
                     //DisplayAlert("Scanned Barcode", result.Text, "OK");
 
                     string textresult = BarCodeManager.getBarName(result.Text);
-                    
-                    Debug.WriteLine(textresult);
-                    
-
+                                        
                 });
             };
 
@@ -194,7 +195,7 @@ namespace CaptoApplication
                 if(item.selectedItem)
                 {
                     marked = true;
-                    DisplayAlert("", "Du kan inte ta bort varor medans du har något markerat", "OK");
+                    DisplayAlert("", "Du kan inte ta bort varor medan du har något markerat", "OK");
                     break;
                 }
             }
@@ -226,7 +227,6 @@ namespace CaptoApplication
 
             }
 
-            Debug.WriteLine("HEJ");
         }
 
 
@@ -343,7 +343,6 @@ namespace CaptoApplication
             Picker picker = sender as Picker;
             var category = picker.SelectedItem;
             selectedCategory = category.ToString();
-            Debug.WriteLine(selectedCategory);
         }
     }
     

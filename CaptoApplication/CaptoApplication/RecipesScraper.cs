@@ -42,7 +42,6 @@ namespace CaptoApplication
 
         }
 
-        
         public async Task<List<Recipe>> GetFirstPageRecipesURLsAsync(string sokning)
         {
             try
@@ -81,15 +80,9 @@ namespace CaptoApplication
                             if (m.Groups[1].Index == 75)
                             {
 
-                                Debug.WriteLine("Found href " + m.Groups[1].Value);
-
-
-
                                 string url = "https://www.coop.se" + m.Groups[1].Value;
 
                                 ListRecipeURL.Add(url);
-
-
 
                                 using (HttpClient client = new HttpClient())
                                 {
@@ -112,20 +105,16 @@ namespace CaptoApplication
                                         .Equals("u-hiddenVisually")).ToList();
 
                                     string image = "https:" + htmlList[0].Attributes[2].Value;
-                                    Debug.WriteLine("Image: " + image);
 
                                     //getTitle
 
                                     string title = innerhtmlH1.Substring(innerhtmlH1.IndexOf(">") + 1, IndexOfSecond(innerhtmlH1, "<") - (innerhtmlH1.IndexOf(">") + 1));
                                     title = convertUTF(title);
-                                    Debug.WriteLine("Titel: " + title);
-
 
                                     //getDescription
 
                                     string description = innerhtmlH1.Substring(innerhtmlH1.IndexOf("<p") + 47, innerhtmlH1.IndexOf("</p>") - (innerhtmlH1.IndexOf("<p") + 47));
                                     description = convertUTF(description);
-                                    Debug.WriteLine("Beskrivning: " + description);
 
                                     int characterLength = (title + description).Length;
                                     int limit = 160;
@@ -143,7 +132,12 @@ namespace CaptoApplication
 
                                                 if (title.Length > 50)
                                                 {
-                                                    limit = 97;
+                                                    limit = 105;
+
+                                                    if (title.Length > 60)
+                                                    {
+                                                        limit = 97;
+                                                    }
                                                 }
                                             }
                                         }
@@ -181,7 +175,6 @@ namespace CaptoApplication
                                         string ingredientString = convertUTF(ingredient.InnerHtml);
                                         ingrediensLista.Add(new Ingredient(ingredientString));
 
-                                        Debug.WriteLine("Ingrediens: " + ingredientString);
                                         counter++;
                                         if (counter == ingredientList.Count)
                                         {
@@ -190,18 +183,12 @@ namespace CaptoApplication
                                             ListOfRecipes.Add(recipe);
                                             SetRecipeMatches(recipe);
                                         }
-
                                     }
-
-
                                 }
-
-
                             }
                             m = m.NextMatch();
                         }
                     }
-
 
                 }
                 catch (RegexMatchTimeoutException)
@@ -384,7 +371,10 @@ namespace CaptoApplication
             {
                 text = text.Replace("&#243;", "ó");
             }
-
+            if (text.Contains("&#232;"))
+            {
+                text = text.Replace("&#232;", "è");
+            }
 
             return text;
         }

@@ -13,19 +13,32 @@
         </Grid.RowDefinitions>
         <Frame Grid.RowSpan="2" HeightRequest="240" VerticalOptions="End" CornerRadius="30" Padding="20,0" BackgroundColor="White">
             <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                
+
                 <StackLayout>
 
-                    <Entry x:Name="productEntry" Placeholder="Produktnamn" Margin="10" MaxLength="27"></Entry>
-                    <Label Text="Utgångsdatum" HorizontalOptions="StartAndExpand"></Label>
-                    <DatePicker x:Name="datePicker" Format="yyyy/MM/dd"></DatePicker>
-
+                    <Entry x:Name="productEntry" Placeholder="Namn på vara" Margin="10" MaxLength="27" FontSize="Large">
+                        <Entry.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android" Value="SourceSansPro-Regular.otf#SourceSans"/>
+                            </OnPlatform>
+                        </Entry.FontFamily>
+                    </Entry>
+                    <Label Text="Utgångsdatum" HorizontalOptions="StartAndExpand" FontSize="Body">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android" Value="SourceSansPro-Regular.otf#SourceSans"/>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <DatePicker x:Name="datePicker" Format="dd/MM/yyyy" FontSize="Large">
+                        <DatePicker.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android" Value="SourceSansPro-Regular.otf#SourceSans"/>
+                            </OnPlatform>
+                        </DatePicker.FontFamily>
+                    </DatePicker>
                 </StackLayout>
-                
-                
             </Grid>
-            
-            
         </Frame>
         <Button Grid.Row="1" Text="OK" CornerRadius="5" TextColor="White" BackgroundColor="Green" Clicked="Button_Clicked"></Button>
         
