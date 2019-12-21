@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "923276656196",
+    "firebase_url": "https://foodicia.firebaseio.com",
+    "project_id": "foodicia",
+    "storage_bucket": "foodicia.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:923276656196:android:1f281ac33c5f541d46c611",
+        "android_client_info": {
+          "package_name": "com.companyname.captoapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "923276656196-a6r4e7umbhplvkn52hmhgk4jm637emef.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzmQJsLwUmyJqpI3rbvwbWxrx0Ixco-FA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "923276656196-a6r4e7umbhplvkn52hmhgk4jm637emef.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
