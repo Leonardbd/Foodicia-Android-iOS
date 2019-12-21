@@ -6082,7 +6082,7 @@ namespace CaptoApplication.Droid
 			public const int foodicia5 = 2131165302;
 			
 			// aapt resource value: 0x7F070077
-			public const int foodicia5_splash = 2131165303;
+			public const int foodicia5_splash2 = 2131165303;
 			
 			// aapt resource value: 0x7F070078
 			public const int googleg_disabled_color_18 = 2131165304;
