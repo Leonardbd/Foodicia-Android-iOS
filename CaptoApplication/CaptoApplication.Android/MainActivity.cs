@@ -6,10 +6,11 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Plugin.LocalNotifications;
 
 namespace CaptoApplication.Droid
 {
-    [Activity(Label = "Foodicia", Icon = "@drawable/foodicia2", Theme = "@style/splashscreen", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Foodicia", Icon = "@drawable/foodicia5", Theme = "@style/splashscreen", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -18,6 +19,7 @@ namespace CaptoApplication.Droid
 
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
+            LocalNotificationsImplementation.NotificationIconId = Resource.Drawable.foodicia5;
 
             base.OnCreate(savedInstanceState);
 
