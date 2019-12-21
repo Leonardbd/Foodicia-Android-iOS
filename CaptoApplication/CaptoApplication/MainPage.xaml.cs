@@ -12,6 +12,8 @@ using System.Threading;
 using Rg.Plugins.Popup.Extensions;
 using System.Collections.ObjectModel;
 using Xamarin.Essentials;
+using Plugin.LocalNotifications;
+
 namespace CaptoApplication
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
@@ -61,11 +63,11 @@ namespace CaptoApplication
             {
                 if ((item.Date - DateTime.Today).TotalDays < 3)
                 {
-                    item.Color = "Red";
+                    item.Color = "#a40021";
                 }
                 else
                 {
-                    item.Color = "Green";
+                    item.Color = "DarkCyan";
                 }
             }
 
@@ -137,6 +139,9 @@ namespace CaptoApplication
                     PersonalIngredientList.Sort((a, b) => a.Date.CompareTo(b.Date));
                     Model = new IngredientsViewModel(PersonalIngredientList);
                     BindingContext = Model;
+
+                    CrossLocalNotifications.Current.Show("Utgående vara", "Din vara '" + ingredient.Name + "' håller på att gå ut. Använd vår sökfunktion för att hitta passande recept!", ingredient.ID, DateTime.Now.AddSeconds(4));
+                  
                 }
                 else
                 {
@@ -206,6 +211,8 @@ namespace CaptoApplication
                 var ingredient = button?.BindingContext as Ingredient;
 
                 var vm = BindingContext as IngredientsViewModel;
+
+                CrossLocalNotifications.Current.Cancel(ingredient.ID);
                                                                    
                 PersonalIngredientList.Remove(ingredient);
                 db.DeleteIngredientItem(ingredient);

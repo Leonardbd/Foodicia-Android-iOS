@@ -49,7 +49,6 @@ namespace CaptoApplication
 
                 string searchword = "https://www.coop.se/globalt-sok/?query=" + sokning;
                 
-
                 httpclient = new HttpClient();
                 var html = await httpclient.GetStringAsync(searchword);
 
@@ -375,6 +374,10 @@ namespace CaptoApplication
             {
                 text = text.Replace("&#232;", "è");
             }
+            if (text.Contains("&#244;"))
+            {
+                text = text.Replace("&#244;", "ô");
+            }
 
             return text;
         }
@@ -395,7 +398,7 @@ namespace CaptoApplication
                         {
                             numMatches++;
                             recipe.NumIngredients = numMatches;
-                            Debug.WriteLine(numMatches + " AV " + recipe.NumInRecipe);
+             
                         }
                     }
                 }
