@@ -58,7 +58,7 @@
 
                     </Button>
 
-                    <Picker x:Name="categoryPicker" SelectedIndex="0" WidthRequest="120" HeightRequest="42" SelectedIndexChanged="categoryPicker_SelectedIndexChanged" IsVisible="False"
+                    <Picker x:Name="categoryPicker" SelectedIndex="0" WidthRequest="120" HeightRequest="42" SelectedIndexChanged="categoryPicker_SelectedIndexChanged" IsVisible="False" 
                             Grid.Row="1"
                             Grid.Column="0"
                             Grid.ColumnSpan="5"
