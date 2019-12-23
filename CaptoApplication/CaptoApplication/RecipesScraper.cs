@@ -502,7 +502,6 @@ namespace CaptoApplication
             return text;
         }
         
-        //ÄNDRA MATCHES SENARE
         public void SetRecipeMatches(Recipe recipe)
         {
             int numMatches = 0;

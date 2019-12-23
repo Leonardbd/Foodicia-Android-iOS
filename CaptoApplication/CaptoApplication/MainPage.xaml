@@ -7,11 +7,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="CaptoApplication.MainPage"
-            BarBackgroundColor="#a40021"
-            x:Name="tp">
+             BarBackgroundColor="#a40021"
+             x:Name="tp"
+             NavigationPage.HasNavigationBar="False">
     
     <ContentPage Title="Mina varor">
-
+       
         <ContentPage.Content>
             
         <StackLayout BackgroundColor="AntiqueWhite">
