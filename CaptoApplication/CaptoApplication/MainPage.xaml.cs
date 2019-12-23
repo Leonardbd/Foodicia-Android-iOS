@@ -77,28 +77,32 @@ namespace CaptoApplication
         {
             if (IngredientSearchBar.Placeholder == "Sök recept" || IngredientSearchBar.Placeholder == "Hittade inga recept")
             {
+                var keyword = IngredientSearchBar.Text;
+
+                IngredientSearchBar.Text = null;
+
+                IngredientSearchBar.Placeholder = RandomFunctionality.WhatMeal("Alla recept");
+
                 progbar.IsVisible = true;
                 progbar.Progress = 0;
 
+                progbar.ProgressTo(0.65, 2300, Easing.Linear);
+
                 RModel.RecipeList.Clear();
 
-
                 RecipeListView.BindingContext = RModel;
-                progbar.ProgressTo(0.65, 2300, Easing.Linear);
+                
                 List<string> recipes = new List<string> { };
-
-
-                var keyword = IngredientSearchBar.Text;
-
+               
                 var scraper = new RecipesScraper();
-                IngredientSearchBar.Text = null;
-                DateTime date = DateTime.Now;
 
-                int timme = date.Hour;
+                await Task.WhenAll(scraper.GetRecipesTasteline(keyword, "1"),
+                                       scraper.GetRecipesTasteline(keyword, "2"),
+                                       scraper.GetRecipesTasteline(keyword, "3"),
+                                       scraper.GetRecipesMittkok(keyword),
+                                       scraper.GetRecipesCoop(keyword));
 
-                IngredientSearchBar.Placeholder = RandomFunctionality.WhatMeal(selectedCategory);
-
-                var recipeList = await scraper.GetRecipesCoop(keyword);
+                var recipeList = scraper.ListSorter(scraper.ListOfRecipes);
 
                 if (recipeList.Count == 0)
                 {
@@ -282,7 +286,6 @@ namespace CaptoApplication
                         listan.Add(item.Name);
                     }
                 }
-
 
                 string searchword = selectedCategory;
                 if (selectedCategory.Equals("Alla recept"))
