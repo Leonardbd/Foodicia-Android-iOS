@@ -316,10 +316,10 @@ namespace CaptoApplication
                 var scraper = new RecipesScraper();
 
                 await Task.WhenAll(scraper.GetRecipesTasteline(searchword, "1"),
-                                    scraper.GetRecipesTasteline(searchword, "2"),
-                                    scraper.GetRecipesTasteline(searchword, "3"),
-                                    scraper.GetRecipesMittkok(searchword), 
-                                    scraper.GetRecipesCoop(searchword));
+                                   scraper.GetRecipesTasteline(searchword, "2"),
+                                   scraper.GetRecipesTasteline(searchword, "3"),
+                                   scraper.GetRecipesMittkok(searchword),
+                                   scraper.GetRecipesCoop(searchword));
 
                 var recipeList = scraper.ListSorter(scraper.ListOfRecipes);
 

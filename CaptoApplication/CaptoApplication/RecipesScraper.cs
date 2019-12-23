@@ -60,10 +60,10 @@ namespace CaptoApplication
                 var finalList = new List<HtmlNode>();
                 finalList = receptLista[0].Descendants("article").ToList();
 
-                if (finalList.Count > 6)
+                if (finalList.Count > 8)
                 {
-                    int limit = finalList.Count - 6;
-                    finalList.RemoveRange(5, limit);
+                    int limit = finalList.Count - 8;
+                    finalList.RemoveRange(7, limit);
                 }
 
                 foreach (var item in finalList)
@@ -239,10 +239,10 @@ namespace CaptoApplication
                     .Where(node => node.GetAttributeValue("class", "")
                     .Equals("tile-item tile-item--recipe")).ToList();
 
-                if (receptLista.Count > 7)
+                if (receptLista.Count > 10)
                 {
-                    int limit = receptLista.Count - 7;
-                    receptLista.RemoveRange(6, limit);
+                    int limit = receptLista.Count - 10;
+                    receptLista.RemoveRange(9, limit);
                 }
  
                 foreach (var item in receptLista)
