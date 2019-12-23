@@ -73,7 +73,7 @@ namespace CaptoApplication
             return ingredients;
         }
 
-         
+        
         async void IngredientSearchBar_SearchButtonPressed(object sender, EventArgs e)
         {
             if (IngredientSearchBar.Placeholder == "Sök recept" || IngredientSearchBar.Placeholder == "Hittade inga recept")
