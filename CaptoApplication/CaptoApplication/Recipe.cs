@@ -6,11 +6,12 @@ namespace CaptoApplication
 {
     public class Recipe
     {
-
         public string Url { get; set; }
+
         public string Title { get; set; }
-        
+
         public string Description { get; set; }
+
         public List<Ingredient> Ingredients { get; set; }
 
         public int NumIngredients { get; set; }

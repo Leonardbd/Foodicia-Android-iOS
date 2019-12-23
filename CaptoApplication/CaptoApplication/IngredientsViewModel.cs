@@ -18,7 +18,6 @@ namespace CaptoApplication
                 {
                     IngredientList.Remove(ingredient);
                     
-
                 });
             }
 

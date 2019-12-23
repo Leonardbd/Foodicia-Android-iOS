@@ -23,193 +23,298 @@ namespace CaptoApplication
             // Find the "next" occurrence by starting just past the first
             return theString.IndexOf(toFind, first + 1);
         }
+
         public string Url { get; set; }
+
         public HttpClient httpclient { get; set; }
 
         public string Searchword { get; set; }
-        public int? NumPages { get; set; }
-        public List<string> ListRecipeURL { get; set; }
 
-        public List<string> ListRecipeURLICA { get; set; }
+        public int? NumPages { get; set; }
 
         public List<Recipe> ListOfRecipes { get; set; }
 
         public RecipesScraper()
         {
             ListOfRecipes = new List<Recipe>();
-            ListRecipeURL = new List<string>();
-            ListRecipeURLICA = new List<string>();
 
         }
 
-        public async Task<List<Recipe>> GetFirstPageRecipesURLsAsync(string sokning)
+        public async Task<List<Recipe>> GetRecipesCoop(string searchword)
         {
             try
             {
-
-                string searchword = "https://www.coop.se/globalt-sok/?query=" + sokning;
+                string search = "https://www.coop.se/globalt-sok/?query=" + searchword;
                 
                 httpclient = new HttpClient();
-                var html = await httpclient.GetStringAsync(searchword);
+                var html = await httpclient.GetStringAsync(search);
 
                 var htmldoc = new HtmlDocument();
                 htmldoc.LoadHtml(html);
 
-                var ReceptLista = new List<HtmlNode>();
-                ReceptLista = htmldoc.DocumentNode.Descendants("div")
+                var receptLista = new List<HtmlNode>();
+                receptLista = htmldoc.DocumentNode.Descendants("div")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Equals("Grid Grid--recipe Grid--gutterAxsm js-recipesSearchResultList u-lg-marginTz")).ToList();
 
                 var finalList = new List<HtmlNode>();
-                finalList = ReceptLista[0].Descendants("article").ToList();
+                finalList = receptLista[0].Descendants("article").ToList();
 
-                Match m;
-                string HRefPattern = @"href\s*=\s*(?:[""'](?<1>[^""']*)[""']|(?<1>\S+))";
-
-                try
+                if (finalList.Count > 6)
                 {
-                    foreach (var item in finalList)
+                    int limit = finalList.Count - 6;
+                    finalList.RemoveRange(5, limit);
+                }
+
+                foreach (var item in finalList)
+                {
+          
+                    string url = "https://www.coop.se" + item.SelectSingleNode("div[1]/a").GetAttributeValue("href", "");
+
+                    using (HttpClient client = new HttpClient())
                     {
-                        m = Regex.Match(item.InnerHtml, HRefPattern,
-                                        RegexOptions.IgnoreCase | RegexOptions.Compiled,
-                                        TimeSpan.FromSeconds(1));
-                        while (m.Success)
+
+                        var html2 = await client.GetStringAsync(url);
+                        HtmlDocument htmldoc2 = new HtmlDocument();
+                        htmldoc2.LoadHtml(html2);
+
+                        var root = new List<HtmlNode>();
+                        root = htmldoc2.DocumentNode.Descendants("div")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Equals("u-lg-hidden")).ToList();
+
+                        //getImage
+                       
+                        string image = "https:" + root[0].SelectSingleNode("div[1]/img").GetAttributeValue("src", "");
+
+                        //getTitle
+
+                        string title = root[0].SelectSingleNode("div[2]/div[1]/h1").InnerHtml;
+                        title = convertUTF(title);
+
+                        //getDescription
+
+                        string description = root[0].SelectSingleNode("div[2]/div[1]/p").InnerHtml;
+                        description = convertUTF(description);
+
+                        description = limitDescription(title, description);
+
+                        title = limitTitle(title);
+
+                        //GetIngredienserToList
+
+                        var ingredientRoot = root[0].Descendants("li")
+                                                    .Where(node => node.GetAttributeValue("class", "")
+                                                    .Equals("u-paddingHxsm u-textNormal u-colorBase")).ToList();
+
+                        var ingredientList = new List<Ingredient>();
+
+                        foreach (HtmlNode nod in ingredientRoot)
                         {
-
-                            if (m.Groups[1].Index == 75)
-                            {
-
-                                string url = "https://www.coop.se" + m.Groups[1].Value;
-
-                                ListRecipeURL.Add(url);
-
-                                using (HttpClient client = new HttpClient())
-                                {
-
-                                    var html2 = await client.GetStringAsync(url);
-                                    HtmlDocument htmldoc2 = new HtmlDocument();
-                                    htmldoc2.LoadHtml(html2);
-
-
-                                    var list = new List<HtmlNode>();
-                                    list = htmldoc2.DocumentNode.Descendants("div")
-                                    .Where(node => node.GetAttributeValue("class", "")
-                                    .Equals("u-paddingVxlg u-paddingTlg u-sm-paddingTxlg u-paddingHlg u-lg-paddingHxlg u-lg-paddingBz u-bgWhite")).ToList();
-                                    string innerhtmlH1 = list[0].InnerHtml;
-
-                                    //getImage
-                                    var htmlList = new List<HtmlNode>();
-                                    htmlList = htmldoc2.DocumentNode.Descendants("img")
-                                        .Where(node => node.GetAttributeValue("class", "")
-                                        .Equals("u-hiddenVisually")).ToList();
-
-                                    string image = "https:" + htmlList[0].Attributes[2].Value;
-
-                                    //getTitle
-
-                                    string title = innerhtmlH1.Substring(innerhtmlH1.IndexOf(">") + 1, IndexOfSecond(innerhtmlH1, "<") - (innerhtmlH1.IndexOf(">") + 1));
-                                    title = convertUTF(title);
-
-                                    //getDescription
-
-                                    string description = innerhtmlH1.Substring(innerhtmlH1.IndexOf("<p") + 47, innerhtmlH1.IndexOf("</p>") - (innerhtmlH1.IndexOf("<p") + 47));
-                                    description = convertUTF(description);
-
-                                    int characterLength = (title + description).Length;
-                                    int limit = 160;
-
-                                    if (title.Length > 15)
-                                    {
-                                        limit = 140;
-                                        if (title.Length > 22)
-                                        {
-                                            limit = 132;
-
-                                            if (title.Length > 34)
-                                            {
-                                                limit = 120;
-
-                                                if (title.Length > 50)
-                                                {
-                                                    limit = 105;
-
-                                                    if (title.Length > 60)
-                                                    {
-                                                        limit = 97;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                    if (characterLength > limit)
-                                    {
-                                        int lengthRemove = characterLength - limit;
-                                        description = description.Substring(0, description.Length - lengthRemove) + "...";
-                                    }
-
-                                    //GetIngredienserToList
-
-                                    var ingredienthtml = htmldoc2.DocumentNode.Descendants("ul")
-                                                                .Where(node => node.GetAttributeValue("class", "")
-                                                                .Equals("List List--section")).ToList();
-
-
-                                    var ingredientList = ingredienthtml[0].Descendants("li")
-                                                                        .Where(node => node.GetAttributeValue("class", "")
-                                                                        .Equals("u-paddingHxsm u-textNormal u-colorBase")).ToList();
-
-                                    var ingredientList2 = new List<HtmlNode>();
-
-                                    foreach (HtmlNode nod in ingredientList)
-                                    {
-                                        ingredientList2.Add(nod.SelectSingleNode("span[@class='u-textWeightBold ']"));
-                                    }
-
-                                    var ingrediensLista = new List<Ingredient>();
-                                    int counter = 0;
-                                    foreach (var ingredient in ingredientList2)
-                                    {
-
-                                        string ingredientString = convertUTF(ingredient.InnerHtml);
-                                        ingrediensLista.Add(new Ingredient(ingredientString));
-
-                                        counter++;
-                                        if (counter == ingredientList.Count)
-                                        {
-                                            var recipe = new Recipe(title, description, ingrediensLista, url, ingredientList.Count, image);
-
-                                            ListOfRecipes.Add(recipe);
-                                            SetRecipeMatches(recipe);
-                                        }
-                                    }
-                                }
-                            }
-                            m = m.NextMatch();
+                            HtmlNode node = nod.SelectSingleNode("span[@class='u-textWeightBold ']");
+                            string ingredientString = convertUTF(node.InnerHtml);
+                            ingredientList.Add(new Ingredient(ingredientString));
                         }
-                    }
+              
+                        if (ingredientList.Count != 0)
+                        {
+                            var recipe = new Recipe(title, description, ingredientList, url, ingredientList.Count, image);
 
+                            ListOfRecipes.Add(recipe);
+                            SetRecipeMatches(recipe);
+                        }
+                            
+                    }
                 }
-                catch (RegexMatchTimeoutException)
-                {
-                    Console.WriteLine("The matching operation timed out.");
-                    return new List<Recipe>();
-                }
-                return ListSorter(ListOfRecipes);
+
+                return ListOfRecipes;
             }
             catch(Exception e)
             {
+                Debug.WriteLine(e);
                 return new List<Recipe>();
             }
 
         }
 
-        public async Task<List<Recipe>> GetFirstPageRecipesURLsAsync2(string sokning)
+        public async Task<List<Recipe>> GetRecipesTasteline(string searchword, string currentPage)
         {
+            try
+            {
+                string search = "https://www.tasteline.com/sok/" + searchword + "/sida/" + currentPage;
 
-            // ICA WEB SCRAPER!!!
+                httpclient = new HttpClient();
+                var html = await httpclient.GetStringAsync(search);
 
+                var htmldoc = new HtmlDocument();
+                htmldoc.LoadHtml(html);
 
+                var receptLista = new List<HtmlNode>();
+                receptLista = htmldoc.DocumentNode.Descendants("a")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Equals("list-item__link")).ToList();
+
+                foreach (var item in receptLista)
+                {
+                    string url = item.GetAttributeValue("href", "");
+
+                    using (HttpClient client = new HttpClient())
+                    {
+
+                        var html2 = await client.GetStringAsync(url);
+                        HtmlDocument htmldoc2 = new HtmlDocument();
+                        htmldoc2.LoadHtml(html2);
+
+                        var root = new List<HtmlNode>();
+                        root = htmldoc2.DocumentNode.Descendants("div")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Equals("container page-content clearfix")).ToList();
+
+                        //getImage
+
+                        string image = root[0].SelectSingleNode("div[2]/div[1]/div[1]/div[1]/img").GetAttributeValue("src", "");
+
+                        //getTitle
+
+                        string title = root[0].SelectSingleNode("div[2]/div[1]/div[1]/div[2]/h1").InnerHtml;
+                        title = convertUTF(title);
+
+                        //getDescription
+
+                        string description = root[0].SelectSingleNode("div[2]/div[1]/div[1]/div[2]/div[1]").InnerHtml;
+                        description = convertUTF(description);
+
+                        description = limitDescription(title, description);
+
+                        title = limitTitle(title);
+
+                        //GetIngredienserToList
+
+                        var ingredientRoot = root[0].Descendants("a")
+                                                    .Where(node => node.GetAttributeValue("class", "")
+                                                    .Equals("ingredient")).ToList();
+
+                        var ingredientList = new List<Ingredient>();
+
+                        foreach (HtmlNode nod in ingredientRoot)
+                        {
+                            HtmlNode node = nod.SelectSingleNode("span");
+                            string ingredientString = convertUTF(node.InnerHtml);
+                            ingredientList.Add(new Ingredient(ingredientString));
+                        }
+
+                        if (ingredientList.Count != 0)
+                        {
+                            var recipe = new Recipe(title, description, ingredientList, url, ingredientList.Count, image);
+
+                            ListOfRecipes.Add(recipe);
+                            SetRecipeMatches(recipe);
+                        }
+                            
+                    }
+                }
+
+                return ListOfRecipes;
+            }
+            catch (Exception e)
+            {
+                return new List<Recipe>();
+            }
+        }
+
+        public async Task<List<Recipe>> GetRecipesMittkok(string searchword)
+        {
+            try
+            {
+                string search = "https://mittkok.expressen.se/sok/?q=" + searchword;
+
+                httpclient = new HttpClient();
+                var html = await httpclient.GetStringAsync(search);
+
+                var htmldoc = new HtmlDocument();
+                htmldoc.LoadHtml(html);
+
+                var receptLista = new List<HtmlNode>();
+                receptLista = htmldoc.DocumentNode.Descendants("div")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Equals("tile-item tile-item--recipe")).ToList();
+
+                if (receptLista.Count > 7)
+                {
+                    int limit = receptLista.Count - 7;
+                    receptLista.RemoveRange(6, limit);
+                }
+ 
+                foreach (var item in receptLista)
+                {
+                    string url = item.SelectSingleNode("a").GetAttributeValue("href", "");
+
+                    using (HttpClient client = new HttpClient())
+                    {
+
+                        var html2 = await client.GetStringAsync(url);
+                        HtmlDocument htmldoc2 = new HtmlDocument();
+                        htmldoc2.LoadHtml(html2);
+
+                        var root = new List<HtmlNode>();
+                        root = htmldoc2.DocumentNode.Descendants("div")
+                                        .Where(node => node.GetAttributeValue("class", "")
+                                        .Equals("recipe")).ToList();
+
+                        //getImage
+
+                        string image = root[0].SelectSingleNode("div[2]/div[1]/div[2]/img").GetAttributeValue("src", "");
+
+                        //getTitle
+
+                        string title = root[0].SelectSingleNode("div[1]/div[1]/h1").InnerHtml;
+                        title = convertUTF(title);
+
+                        //getDescription
+
+                        string description = root[0].SelectSingleNode("div[3]/div[1]/div[1]/p[1]").InnerHtml;
+                        description = convertUTF(description);
+
+                        description = limitDescription(title, description);
+
+                        title = limitTitle(title);
+
+                        //GetIngredienserToList
+
+                        var ingredientRoot = root[0].Descendants("span")
+                                                    .Where(node => node.GetAttributeValue("itemprop", "")
+                                                    .Equals("recipeIngredient")).ToList();
+
+                        var ingredientList = new List<Ingredient>();
+
+                        foreach (HtmlNode nod in ingredientRoot)
+                        {
+                            string ingredientString = convertUTF(nod.InnerHtml);
+                            ingredientList.Add(new Ingredient(ingredientString));
+                        }
+
+                        if (ingredientList.Count != 0)
+                        {
+                            var recipe = new Recipe(title, description, ingredientList, url, ingredientList.Count, image);
+
+                            ListOfRecipes.Add(recipe);
+                            SetRecipeMatches(recipe);
+                        }
+
+                           
+                    }
+                }
+
+                return ListOfRecipes;
+            }
+            catch (Exception e)
+            {
+                return new List<Recipe>();
+            }
+        }
+
+        public async Task<List<Recipe>> GetFirstPageRecipesURLsAsyncICA(string sokning)
+        {
             try
             {
 
@@ -234,10 +339,7 @@ namespace CaptoApplication
                     foreach (var item in finalList)
                     {
 
-                        string url = item.SelectSingleNode("/div[2]/header/h2/a").Attributes[1].Value;
-
-                        ListRecipeURLICA.Add(url);
-
+                        string url = item.SelectSingleNode("div[2]/header/h2/a").Attributes[1].Value;
 
                         using (HttpClient client = new HttpClient())
                         {
@@ -255,7 +357,7 @@ namespace CaptoApplication
 
                             //getImage
 
-                            string attributeValue = list[0].SelectSingleNode("/div[1]/div[1]/div[1]").Attributes[1].Value;
+                            string attributeValue = list[0].SelectSingleNode("div[1]/div[1]/div[1]").Attributes[1].Value;
                             string imageURL = attributeValue.Replace("background-image: url('", "").Replace("')", "");
 
                             Debug.WriteLine("Image: " + imageURL);
@@ -267,7 +369,7 @@ namespace CaptoApplication
                                 .Where(node => node.GetAttributeValue("class", "")
                                 .Equals("col-12 col-md-6")).ToList();
 
-                            string title = listForText[0].SelectSingleNode("/div[2]/div[1]/h1[@class='recipepage__headline']").InnerHtml;
+                            string title = listForText[0].SelectSingleNode("div[2]/div[1]/h1[@class='recipepage__headline']").InnerHtml;
                             title = convertUTF(title);
 
                             Debug.WriteLine("Titel: " + title);
@@ -310,8 +412,6 @@ namespace CaptoApplication
 
                         }
                     }
-
-
                 }
                 catch (RegexMatchTimeoutException)
                 {
@@ -378,10 +478,31 @@ namespace CaptoApplication
             {
                 text = text.Replace("&#244;", "ô");
             }
+            if (text.Contains("&amp;"))
+            {
+                text = text.Replace("&amp;", "&");
+            }
+            if (text.Contains("&#038;"))
+            {
+                text = text.Replace("&#038;", "&");
+            }
+            if (text.Contains("&#8211;"))
+            {
+                text = text.Replace("&#8211;", "&");
+            }
+            if (text.Contains("<strong>"))
+            {
+                text = text.Replace("<strong>", "");
+            }
+            if (text.Contains("</strong>"))
+            {
+                text = text.Replace("</strong>", "");
+            }
 
             return text;
         }
-
+        
+        //ÄNDRA MATCHES SENARE
         public void SetRecipeMatches(Recipe recipe)
         {
             int numMatches = 0;
@@ -389,35 +510,109 @@ namespace CaptoApplication
             var list = new List<Ingredient>();
             list = db.GetIngredientsItems();
 
-            
-                foreach (var ingredient in recipe.Ingredients)
+            foreach (var ingredient in recipe.Ingredients)
+            {
+                foreach (var item in list)
                 {
-                    foreach (var item in list)
+                    string ownIngredient = item.Name.ToLower();
+                    string recipeIngredient = ingredient.Name.ToLower();
+
+                    //String[] splitList = recipeIngredient.Split();
+
+                    //foreach (var word in splitList)
+                    //{
+                    //    if (word.Contains(ownIngredient));
+                    //}
+
+                    if(recipeIngredient.Contains(ownIngredient))
                     {
-                        if(item.Name.ToLower().Contains(ingredient.Name.ToLower()))
-                        {
-                            numMatches++;
-                            recipe.NumIngredients = numMatches;
+                        numMatches++;
+                        recipe.NumIngredients = numMatches;
              
+                    }
+                }
+            }
+        } 
+           
+        private string limitDescription(string title, string desc)
+        {
+            int characterLength = (title + desc).Length;
+            int limit = 160;
+
+            if (title.Length > 15)
+            {
+                limit = 140;
+                if (title.Length > 22)
+                {
+                    limit = 127;
+
+                    if (title.Length > 34)
+                    {
+                        limit = 115;
+
+                        if (title.Length > 50)
+                        {
+                            limit = 100;
+
+                            if (title.Length > 60)
+                            {
+                                limit = 87;
+
+                                if (title.Length > 70)
+                                {
+                                    limit = 73;
+
+                                    if (title.Length > 80)
+                                    {
+                                        return "";
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
-           
+
+            if (characterLength > limit)
+            {
+
+                int lengthRemove = characterLength - limit;
+                if (lengthRemove <= desc.Length)
+                {
+                    desc = desc.Substring(0, desc.Length - lengthRemove) + "...";
+                }
+                else
+                {
+                    desc = "...";
+                }
+            }
+
+            return desc;
+        }
+
+        private string limitTitle(string title)
+        {
+            if (title.Length > 80)
+            {
+                title = title.Substring(0, 80) + "...";
+            }
+            return title;
+        }
 
         public List<Recipe> ListSorter(List<Recipe> recipes)
         {
             List<Recipe> list = new List<Recipe>();
             foreach (var item in recipes)
             {
-                item.Percentage = (decimal)item.NumIngredients / (decimal) item.NumInRecipe;
+                item.Percentage = (decimal)item.NumIngredients / (decimal)item.NumInRecipe;
                 list.Add(item);
-
+                
             }
 
             return list.OrderByDescending(x => x.Percentage).ThenBy(i => i.NumInRecipe).ToList();
 
         }
+
         public async void GetNumberOfPages()
         {
             httpclient = new HttpClient();
@@ -431,7 +626,6 @@ namespace CaptoApplication
             listOfPages = htmldoc.DocumentNode.Descendants("div")
                 .Where(node => node.GetAttributeValue("class", "")
                 .Equals("Pagination Pagination--personalization js-pagination u-paddingTxlg")).ToList();
-
 
 
             Match m;
@@ -511,6 +705,5 @@ namespace CaptoApplication
            
         }
 
-        
     }
 }

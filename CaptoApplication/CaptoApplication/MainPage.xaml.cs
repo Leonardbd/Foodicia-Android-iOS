@@ -45,7 +45,6 @@ namespace CaptoApplication
             db = new DataBase();        
             db.createDataBase();
             PersonalIngredientList = db.GetIngredientsItems();
-            //PersonalIngredientList.OrderBy(x => x.Date.Day);
             PersonalIngredientList.Sort((a, b) => a.Date.CompareTo(b.Date));
             Model = new IngredientsViewModel(GreenOrRed(PersonalIngredientList));
 
@@ -54,7 +53,6 @@ namespace CaptoApplication
             BindingContext = Model;
             categoryPicker.SelectedIndex = 0;
 
-            
         }
 
         private List<Ingredient> GreenOrRed(List<Ingredient> ingredients)
@@ -100,7 +98,7 @@ namespace CaptoApplication
 
                 IngredientSearchBar.Placeholder = RandomFunctionality.WhatMeal(selectedCategory);
 
-                var recipeList = await scraper.GetFirstPageRecipesURLsAsync(keyword);
+                var recipeList = await scraper.GetRecipesCoop(keyword);
 
                 if (recipeList.Count == 0)
                 {
@@ -266,10 +264,7 @@ namespace CaptoApplication
                     categoryPicker.IsVisible = false;
                     btnsearch.IsVisible = false;
                 }
-               
             }
-
-                             
         }
 
         private async void btnsearch_Clicked(object sender, EventArgs e)
@@ -314,14 +309,20 @@ namespace CaptoApplication
 
                     RModel.RecipeList.Clear();
 
-
                     RecipeListView.BindingContext = RModel;
                     progbar.ProgressTo(0.65, 2300, Easing.Linear);
+
                     List<string> recipes = new List<string> { };
 
                     var scraper = new RecipesScraper();
 
-                    var recipeList = await scraper.GetFirstPageRecipesURLsAsync(searchword);
+                    await Task.WhenAll(scraper.GetRecipesTasteline(searchword, "1"),
+                                       scraper.GetRecipesTasteline(searchword, "2"),
+                                       scraper.GetRecipesTasteline(searchword, "3"),
+                                       scraper.GetRecipesMittkok(searchword), 
+                                       scraper.GetRecipesCoop(searchword));
+
+                    var recipeList = scraper.ListSorter(scraper.ListOfRecipes);
 
                     if (recipeList.Count == 0)
                     {
