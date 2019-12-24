@@ -73,7 +73,6 @@ namespace CaptoApplication
             return ingredients;
         }
 
-        
         async void IngredientSearchBar_SearchButtonPressed(object sender, EventArgs e)
         {
             if (IngredientSearchBar.Placeholder == "Sök recept" || IngredientSearchBar.Placeholder == "Hittade inga recept")
@@ -87,7 +86,7 @@ namespace CaptoApplication
                 progbar.IsVisible = true;
                 progbar.Progress = 0;
 
-                progbar.ProgressTo(0.65, 2300, Easing.Linear);
+                progbar.ProgressTo(0.65, 7000, Easing.Linear);
 
                 RModel.RecipeList.Clear();
 
@@ -98,10 +97,11 @@ namespace CaptoApplication
                 var scraper = new RecipesScraper();
 
                 await Task.WhenAll(scraper.GetRecipesTasteline(keyword, "1"),
-                                       scraper.GetRecipesTasteline(keyword, "2"),
-                                       scraper.GetRecipesTasteline(keyword, "3"),
-                                       scraper.GetRecipesMittkok(keyword),
-                                       scraper.GetRecipesCoop(keyword));
+                                   scraper.GetRecipesTasteline(keyword, "2"),
+                                   scraper.GetRecipesTasteline(keyword, "3"),
+                                   scraper.GetRecipesKoket(keyword),
+                                   scraper.GetRecipesMittkok(keyword),
+                                   scraper.GetRecipesCoop(keyword));
 
                 var recipeList = scraper.ListSorter(scraper.ListOfRecipes);
 
@@ -143,7 +143,7 @@ namespace CaptoApplication
                     Model = new IngredientsViewModel(PersonalIngredientList);
                     BindingContext = Model;
 
-                    CrossLocalNotifications.Current.Show("Utgående vara", "Din vara '" + ingredient.Name + "' håller på att gå ut. Använd vår sökfunktion för att hitta passande recept!", ingredient.ID, date.AddDays(-2));
+                    CrossLocalNotifications.Current.Show("Utgående vara", "Din vara '" + ingredient.Name + "' håller på att gå ut! Använd vår sökfunktion för att hitta passande recept:)", ingredient.ID, date.AddDays(-2));
                   
                 }
                 else
@@ -284,7 +284,7 @@ namespace CaptoApplication
                 progbar.IsVisible = true;
                 progbar.Progress = 0;
 
-                progbar.ProgressTo(0.65, 2300, Easing.Linear);
+                progbar.ProgressTo(0.65, 7000, Easing.Linear);
 
                 List<string> listan = new List<string>();
 
@@ -297,6 +297,7 @@ namespace CaptoApplication
                 }
 
                 string searchword = selectedCategory;
+
                 if (selectedCategory.Equals("Alla recept"))
                 {
                     searchword = "";
@@ -315,9 +316,16 @@ namespace CaptoApplication
 
                 var scraper = new RecipesScraper();
 
+                //await Task.WhenAll(scraper.GetRecipesTasteline(searchword, "1"),
+                //                   scraper.GetRecipesTasteline(searchword, "2"),
+                //                   scraper.GetRecipesTasteline(searchword, "3"),
+                //                   scraper.GetRecipesMittkok(searchword2),
+                //                   scraper.GetRecipesCoop(searchword));
+
                 await Task.WhenAll(scraper.GetRecipesTasteline(searchword, "1"),
                                    scraper.GetRecipesTasteline(searchword, "2"),
                                    scraper.GetRecipesTasteline(searchword, "3"),
+                                   scraper.GetRecipesKoket(searchword),
                                    scraper.GetRecipesMittkok(searchword),
                                    scraper.GetRecipesCoop(searchword));
 
