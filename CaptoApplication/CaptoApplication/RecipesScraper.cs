@@ -60,10 +60,10 @@ namespace CaptoApplication
                 var finalList = new List<HtmlNode>();
                 finalList = receptLista[0].Descendants("article").ToList();
 
-                if (finalList.Count > 6)
+                if (finalList.Count > 9)
                 {
-                    int limit = finalList.Count - 6;
-                    finalList.RemoveRange(5, limit);
+                    int limit = finalList.Count - 9;
+                    finalList.RemoveRange(8, limit);
                 }
 
                 foreach (var item in finalList)
@@ -129,9 +129,8 @@ namespace CaptoApplication
 
                 return ListOfRecipes;
             }
-            catch(Exception e)
+            catch(Exception)
             {
-                Debug.WriteLine(e);
                 return new List<Recipe>();
             }
 
@@ -216,7 +215,7 @@ namespace CaptoApplication
 
                 return ListOfRecipes;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return new List<Recipe>();
             }
@@ -240,10 +239,10 @@ namespace CaptoApplication
                     .Where(node => node.GetAttributeValue("class", "")
                     .Equals("tile-item tile-item--recipe")).ToList();
 
-                if (receptLista.Count > 6)
+                if (receptLista.Count > 10)
                 {
-                    int limit = receptLista.Count - 6;
-                    receptLista.RemoveRange(5, limit);
+                    int limit = receptLista.Count - 10;
+                    receptLista.RemoveRange(9, limit);
                 }
  
                 foreach (var item in receptLista)
@@ -306,9 +305,13 @@ namespace CaptoApplication
 
                 return ListOfRecipes;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return new List<Recipe>();
+            }
+            finally
+            {
+                
             }
         }
 
@@ -421,7 +424,7 @@ namespace CaptoApplication
 
                 return ListOfRecipes;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return new List<Recipe>();
             }
@@ -534,7 +537,7 @@ namespace CaptoApplication
                 }
                 return ListSorter(ListOfRecipes);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return new List<Recipe>();
             }
@@ -649,13 +652,6 @@ namespace CaptoApplication
                 {
                     string ownIngredient = item.Name.ToLower();
                     string recipeIngredient = ingredient.Name.ToLower();
-
-                    //String[] splitList = recipeIngredient.Split();
-
-                    //foreach (var word in splitList)
-                    //{
-                    //    if (word.Contains(ownIngredient));
-                    //}
 
                     if(recipeIngredient.Contains(ownIngredient))
                     {

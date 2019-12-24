@@ -239,7 +239,6 @@ namespace CaptoApplication
 
         }
 
-
         private void checkBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
 
@@ -315,12 +314,6 @@ namespace CaptoApplication
                 List<string> recipes = new List<string> { };
 
                 var scraper = new RecipesScraper();
-
-                //await Task.WhenAll(scraper.GetRecipesTasteline(searchword, "1"),
-                //                   scraper.GetRecipesTasteline(searchword, "2"),
-                //                   scraper.GetRecipesTasteline(searchword, "3"),
-                //                   scraper.GetRecipesMittkok(searchword2),
-                //                   scraper.GetRecipesCoop(searchword));
 
                 await Task.WhenAll(scraper.GetRecipesTasteline(searchword, "1"),
                                    scraper.GetRecipesTasteline(searchword, "2"),
