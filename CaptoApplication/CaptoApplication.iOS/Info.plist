@@ -13,6 +13,15 @@
         <string>UIInterfaceOrientationLandscapeLeft</string>
         <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
+
+    <key>UIAppFonts</key>
+  <array>
+    <string>SourceSansPro-Bold.otf</string>
+    <string>Quicksand-Regular.otf</string>
+    <string>SourceSansPro-Light.otf</string>
+    <string>SourceSansPro-Regular.otf</string>
+  </array>
+  
     <key>UISupportedInterfaceOrientations~ipad</key>
     <array>
         <string>UIInterfaceOrientationPortrait</string>

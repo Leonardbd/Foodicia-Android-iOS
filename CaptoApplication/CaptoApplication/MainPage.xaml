@@ -42,6 +42,7 @@
                         <Button.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <On Platform="Android" Value="SourceSansPro-Bold.otf#SourceSans"/>
+                                <On Platform="iOS" Value="SourceSansPro-Bold"/>
                             </OnPlatform>
                         </Button.FontFamily>
                         
@@ -54,6 +55,7 @@
                         <Button.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <On Platform="Android" Value="SourceSansPro-Bold.otf#SourceSans"/>
+                                <On Platform="iOS" Value="SourceSansPro-Bold"/>
                             </OnPlatform>
                         </Button.FontFamily>
 
@@ -76,6 +78,7 @@
                         <Picker.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <On Platform="Android" Value="Quicksand-Regular.otf#Quicksand"/>
+                                <On Platform="iOS" Value="Quicksand-Regular"/>
                             </OnPlatform>
                         </Picker.FontFamily>
 
@@ -90,6 +93,7 @@
                         <Button.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <On Platform="Android" Value="Quicksand-Regular.otf#Quicksand"/>
+                                <On Platform="iOS" Value="Quicksand-Regular"/>
                             </OnPlatform>
                         </Button.FontFamily>
 
@@ -145,6 +149,7 @@
                                                 <Label.FontFamily>
                                                     <OnPlatform x:TypeArguments="x:String">
                                                         <On Platform="Android" Value="SourceSansPro-Bold.otf#SourceSans"/>
+                                                        <On Platform="iOS" Value="SourceSansPro-Bold"/>
                                                     </OnPlatform>
                                                 </Label.FontFamily>
 
@@ -162,6 +167,7 @@
                                                 <Label.FontFamily>
                                                     <OnPlatform x:TypeArguments="x:String">
                                                         <On Platform="Android" Value="SourceSansPro-Light.otf#SourceSans"/>
+                                                        <On Platform="iOS" Value="SourceSansPro-Light"/>
                                                     </OnPlatform>
                                                 </Label.FontFamily>
 
@@ -177,6 +183,7 @@
                                                 <Label.FontFamily>
                                                     <OnPlatform x:TypeArguments="x:String">
                                                         <On Platform="Android" Value="SourceSansPro-Light.otf#SourceSans"/>
+                                                        <On Platform="iOS" Value="SourceSansPro-Light"/>
                                                     </OnPlatform>
                                                 </Label.FontFamily>
 
@@ -229,6 +236,7 @@
                     <SearchBar.FontFamily>
                         <OnPlatform x:TypeArguments="x:String">
                             <On Platform="Android" Value="SourceSansPro-Regular.otf#SourceSans"/>
+                            <On Platform="iOS" Value="SourceSansPro-Regular"/>
                         </OnPlatform>
                     </SearchBar.FontFamily>
                 </SearchBar>
@@ -265,7 +273,8 @@
                                                     <Label.FontFamily>
                                                     <OnPlatform x:TypeArguments="x:String">
                                                         <On Platform="Android" Value="SourceSansPro-Bold.otf#SourceSans"/>
-                                                    </OnPlatform>
+                                                        <On Platform="iOS" Value="SourceSansPro-Bold"/>
+                                                        </OnPlatform>
                                                     </Label.FontFamily>
                                                 </Label>
 
@@ -274,6 +283,7 @@
                                                     <Label.FontFamily>
                                                         <OnPlatform x:TypeArguments="x:String">
                                                             <On Platform="Android" Value="SourceSansPro-Regular.otf#SourceSans"/>
+                                                            <On Platform="iOS" Value="SourceSansPro-Regular"/>
                                                         </OnPlatform>
                                                     </Label.FontFamily>
                                                 </Label>

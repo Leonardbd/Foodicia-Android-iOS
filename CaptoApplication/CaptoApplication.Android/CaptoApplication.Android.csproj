@@ -107,7 +107,6 @@
   <ItemGroup>
     <GoogleServicesJson Include="google-services%281%29.json" />
     <AndroidAsset Include="Assets\Quicksand-Regular.otf" />
-    <AndroidAsset Include="Assets\Quicksand-Bold.otf" />
     <AndroidAsset Include="Assets\SourceSansPro-Regular.otf" />
     <AndroidAsset Include="Assets\SourceSansPro-Bold.otf" />
     <AndroidAsset Include="Assets\SourceSansPro-Light.otf" />
