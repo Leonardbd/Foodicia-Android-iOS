@@ -11,7 +11,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>CaptoApplication.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>CaptoApplication.iOS</AssemblyName>
+    <AssemblyName>Foodicia</AssemblyName>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
   </PropertyGroup>
@@ -60,6 +60,9 @@
     <MtouchArch>ARM64</MtouchArch>
     <CodesignKey>iPhone Developer</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+    <AppExtensionDebugBundleId />
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />

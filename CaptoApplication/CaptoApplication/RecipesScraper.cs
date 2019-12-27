@@ -655,6 +655,11 @@ namespace CaptoApplication
             {
                 text = text.Replace("&#248;", "ø");
             }
+            if (text.Contains("&quot;"))
+            {
+                text = text.Replace("&quot;", "'");
+            }
+
 
             return text;
         }
