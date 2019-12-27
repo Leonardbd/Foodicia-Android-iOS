@@ -72,6 +72,8 @@
                             <x:String>Frukost</x:String>
                             <x:String>Lunch</x:String>
                             <x:String>Middag</x:String>
+                            <x:String>Vegetariskt</x:String>
+                            <x:String>Veganskt</x:String>
 
                         </Picker.Items>
 

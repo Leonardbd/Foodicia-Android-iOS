@@ -27,6 +27,14 @@ namespace CaptoApplication
             {
                 message = "Söker efter middag...";
             }
+            else if (meal.Equals("Vegetariskt"))
+            {
+                message = "Söker efter vegetariskt...";
+            }
+            else if (meal.Equals("Veganskt"))
+            {
+                message = "Söker efter veganskt...";
+            }
 
             return message;
         }

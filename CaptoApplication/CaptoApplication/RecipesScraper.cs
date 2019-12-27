@@ -321,6 +321,18 @@ namespace CaptoApplication
             {
                 string search = "https://www.koket.se/search?searchtext=" + searchword;
 
+                if (searchword.Contains("Vegetariskt "))
+                {
+                    searchword = searchword.Replace("Vegetariskt ", "");
+                    search = "https://www.koket.se/search?searchtext=" + searchword + "&category_ids=3854";
+                }
+                else if (searchword.Contains("Veganskt ")) 
+                {
+                    searchword = searchword.Replace("Veganskt ", "");
+                    search = "https://www.koket.se/search?searchtext=" + searchword + "&category_ids=234";
+                }
+
+                
                 httpclient = new HttpClient();
                 var html = await httpclient.GetStringAsync(search);
 
@@ -634,6 +646,10 @@ namespace CaptoApplication
             if (text.Contains("<br>"))
             {
                 text = text.Replace("<br>", "");
+            }
+            if (text.Contains("&#8232;"))
+            {
+                text = text.Replace("&#8232;", "");
             }
 
             return text;
