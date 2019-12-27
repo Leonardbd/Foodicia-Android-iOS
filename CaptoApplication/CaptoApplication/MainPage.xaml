@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
-
+    
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
@@ -10,12 +10,14 @@
              BarBackgroundColor="#a40021"
              x:Name="tp"
              NavigationPage.HasNavigationBar="False">
+
     
     <ContentPage Title="Mina varor">
-       
+
         <ContentPage.Content>
-            
-        <StackLayout BackgroundColor="AntiqueWhite">
+
+            <StackLayout BackgroundColor="AntiqueWhite">
+
                 <Grid>
 
                     <Grid.RowDefinitions>

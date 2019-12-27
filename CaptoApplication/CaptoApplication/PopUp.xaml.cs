@@ -37,10 +37,6 @@ namespace CaptoApplication
         {
             OnDialogClosed?.Invoke(this, new DialogResult { ProductName = productEntry.Text,  ExpirationDate = datePicker.Date });
             App.Current.MainPage.Navigation.PopPopupAsync(true);
-            //string name = productEntry.Text;
-            //string measure = measureEntry.Text;
-            //string date = datePicker.Date.ToString("MM/dd/yyyy");
-            //Ingredient = new Ingredient() { Name = name, Measure = measure, Date = date };
            
         }
 

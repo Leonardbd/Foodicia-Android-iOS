@@ -7,6 +7,10 @@
              x:Class="CaptoApplication.App">
     <Application.Resources>
 
+        <ResourceDictionary>
+            <Color x:Key="Primary">#FAEBD7</Color>
+        </ResourceDictionary>
+
     </Application.Resources>
    
 </Application>
