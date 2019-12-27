@@ -6,22 +6,21 @@
              mc:Ignorable="d"
              x:Class="CaptoApplication.PopUp">
 
-    <Grid HeightRequest="265" VerticalOptions="End">
+    <Grid HeightRequest="315" VerticalOptions="End">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            
-            
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+
         </Grid.RowDefinitions>
 
-        <Image Source="foodicia5.png" WidthRequest="80" HeightRequest="80" Margin="0,-40,0,0" VerticalOptions="Start" HorizontalOptions="Center" Aspect="Fill"></Image>
-        <Frame Grid.RowSpan="2" HeightRequest="240" VerticalOptions="End" CornerRadius="30" Padding="20,0" BackgroundColor="White">
+        <Frame Grid.RowSpan="2" HeightRequest="280" VerticalOptions="End" CornerRadius="30" Padding="20,0" BackgroundColor="AntiqueWhite">
             <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                
-            
+
+                <Image Source="foodicia5.png" WidthRequest="80" HeightRequest="80" Margin="0,10,0,0" VerticalOptions="Start" HorizontalOptions="Center" Aspect="Fill"/>
+               
                 <StackLayout>
                     
-                    <Entry x:Name="productEntry" Placeholder="Namn på vara" Margin="10" MaxLength="27" FontSize="Large">
+                    <Entry x:Name="productEntry" Placeholder="Namn på vara" Margin="0,90,0,0" MaxLength="27" FontSize="Large">
                         <Entry.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <On Platform="Android" Value="SourceSansPro-Regular.otf#SourceSans"/>
@@ -42,12 +41,12 @@
                             </OnPlatform>
                         </DatePicker.FontFamily>
                     </DatePicker>
+                    
                 </StackLayout>
             </Grid>
         </Frame>
-        <Button Grid.Row="1" Text="OK" CornerRadius="5" TextColor="White" BackgroundColor="DarkCyan" Clicked="Button_Clicked"></Button>
-        
-        
-        
+
+        <Button Grid.Row="1" Text="OK" CornerRadius="5" TextColor="White" HeightRequest="45" BackgroundColor="DarkCyan" Clicked="Button_Clicked"/>
+
     </Grid>
 </rg:PopupPage>

@@ -27,6 +27,12 @@ namespace CaptoApplication
             productEntry.Text = EAN;
         }
 
+        public PopUp(string placeHolder, int w)
+        {
+            InitializeComponent();
+            changePlaceholder(placeHolder);
+        }
+
         private void Button_Clicked(object sender, EventArgs e)
         {
             OnDialogClosed?.Invoke(this, new DialogResult { ProductName = productEntry.Text,  ExpirationDate = datePicker.Date });
@@ -40,6 +46,10 @@ namespace CaptoApplication
 
         public EventHandler<DialogResult> OnDialogClosed;
 
+        public void changePlaceholder(string text)
+        {
+            productEntry.Placeholder = text;
+        }
         
     }
 
