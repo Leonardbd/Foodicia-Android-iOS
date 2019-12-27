@@ -8,14 +8,19 @@
 
     <Grid HeightRequest="265" VerticalOptions="End">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            
+            
         </Grid.RowDefinitions>
+
+        <Image Source="foodicia5.png" WidthRequest="80" HeightRequest="80" Margin="0,-40,0,0" VerticalOptions="Start" HorizontalOptions="Center" Aspect="Fill"></Image>
         <Frame Grid.RowSpan="2" HeightRequest="240" VerticalOptions="End" CornerRadius="30" Padding="20,0" BackgroundColor="White">
             <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-
+                
+            
                 <StackLayout>
-
+                    
                     <Entry x:Name="productEntry" Placeholder="Namn på vara" Margin="10" MaxLength="27" FontSize="Large">
                         <Entry.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">

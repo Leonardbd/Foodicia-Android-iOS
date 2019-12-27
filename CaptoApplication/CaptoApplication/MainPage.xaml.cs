@@ -139,8 +139,12 @@ namespace CaptoApplication
             pop.OnDialogClosed += (s, arg) =>
             {
                 string productname = arg.ProductName;
+                
+                
                 if (!string.IsNullOrWhiteSpace(productname) && !productname.Equals(""))
                 {
+
+                    productname = char.ToUpper(productname[0]) + productname.Substring(1);
                     DateTime date = arg.ExpirationDate;
                     var ingredient = new Ingredient(productname, date);
                     db.InsertIntoTable(ingredient);
@@ -178,6 +182,7 @@ namespace CaptoApplication
                     string productname = arg.ProductName;
                     if (!string.IsNullOrWhiteSpace(productname) && !productname.Equals(""))
                     {
+                        productname = char.ToUpper(productname[0]) + productname.Substring(1);
                         DateTime date = arg.ExpirationDate;
                         var ingredient = new Ingredient(productname, date);
                         db.InsertIntoTable(ingredient);
