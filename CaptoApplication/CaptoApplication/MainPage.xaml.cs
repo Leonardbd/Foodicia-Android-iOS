@@ -96,12 +96,14 @@ namespace CaptoApplication
                
                 var scraper = new RecipesScraper();
 
-                await Task.WhenAll(scraper.GetRecipesTasteline(keyword, "1"),
-                                   scraper.GetRecipesTasteline(keyword, "2"),
-                                   scraper.GetRecipesTasteline(keyword, "3"),
-                                   scraper.GetRecipesKoket(keyword),
-                                   scraper.GetRecipesMittkok(keyword),
-                                   scraper.GetRecipesCoop(keyword));
+                await Task.WhenAll(
+                scraper.GetRecipesTasteline(keyword, "1"),
+                scraper.GetRecipesTasteline(keyword, "2"),
+                scraper.GetRecipesTasteline(keyword, "3"),
+                scraper.GetRecipesKoket(keyword),
+                scraper.GetRecipesMittkok(keyword),
+                scraper.GetRecipesCoop(keyword)
+                );
 
                 var recipeList = scraper.ListSorter(scraper.ListOfRecipes);
 
@@ -126,10 +128,14 @@ namespace CaptoApplication
 
         }
 
-        private void btnadd_Clicked(object sender, EventArgs e)
+        private async void btnadd_Clicked(object sender, EventArgs e)
         {
+
+            await btnadd.ScaleTo(1.1, 80);
+            await btnadd.ScaleTo(1, 80, Easing.BounceOut);
+
             var pop = new PopUp();
-            App.Current.MainPage.Navigation.PushPopupAsync(pop, true);
+            await App.Current.MainPage.Navigation.PushPopupAsync(pop, true);
             pop.OnDialogClosed += (s, arg) =>
             {
                 string productname = arg.ProductName;
@@ -156,6 +162,9 @@ namespace CaptoApplication
 
         private async void btnscan_Clicked(object sender, EventArgs e)
         {
+            await btnscan.ScaleTo(1.1, 80);
+            await btnscan.ScaleTo(1, 80, Easing.BounceOut);
+
             scanPage = new ZXingScannerPage();
             scanPage.OnScanResult += (result) => {
                 scanPage.IsScanning = false;
@@ -244,20 +253,21 @@ namespace CaptoApplication
 
             var button = sender as CheckBox;
 
-            var ingredient = button?.BindingContext as Ingredient;
+            var ingredientClicked = button?.BindingContext as Ingredient;
             
-            if (ingredient.selectedItem == true)
+            if (ingredientClicked.selectedItem == true)
             {
-                ingredient.selectedItem = false;
+                ingredientClicked.selectedItem = false;
             }
             else
             {
-                ingredient.selectedItem = true;
+                ingredientClicked.selectedItem = true;
             }
 
-            foreach (Ingredient ingredient1 in PersonalIngredientList)
+
+            foreach (Ingredient ingredientLoop in PersonalIngredientList)
             {
-                if (ingredient1.selectedItem)
+                if (ingredientLoop.selectedItem)
                 {
                     categoryPicker.IsVisible = true;
                     btnsearch.IsVisible = true;
@@ -269,10 +279,35 @@ namespace CaptoApplication
                     btnsearch.IsVisible = false;
                 }
             }
+
+            //categoryPicker.IsVisible = true;
+            //btnsearch.IsVisible = true;
+
+            //await Task.WhenAll(
+            //categoryPicker.TranslateTo(800, 0, 0),
+            //btnsearch.TranslateTo(800, 0, 0)
+            //);
+
+            //await Task.WhenAll(
+            //categoryPicker.TranslateTo(0, 0, 300, Easing.CubicOut),
+            //btnsearch.TranslateTo(0, 0, 300, Easing.CubicOut)
+            //);
+
+
+
+            //await Task.WhenAll(
+            //categoryPicker.TranslateTo(800, 0, 300, Easing.CubicOut),
+            //btnsearch.TranslateTo(800, 0, 300, Easing.CubicOut)
+            //);
+
+            //categoryPicker.IsVisible = false;
+            //btnsearch.IsVisible = false;
         }
 
         private async void btnsearch_Clicked(object sender, EventArgs e)
         {
+            await btnsearch.ScaleTo(1.1, 80);
+            await btnsearch.ScaleTo(1, 80, Easing.BounceOut);
 
             if (IngredientSearchBar.Placeholder == "Sök recept" || IngredientSearchBar.Placeholder == "Hittade inga recept")
             {
@@ -315,12 +350,14 @@ namespace CaptoApplication
 
                 var scraper = new RecipesScraper();
 
-                await Task.WhenAll(scraper.GetRecipesTasteline(searchword, "1"),
-                                   scraper.GetRecipesTasteline(searchword, "2"),
-                                   scraper.GetRecipesTasteline(searchword, "3"),
-                                   scraper.GetRecipesKoket(searchword),
-                                   scraper.GetRecipesMittkok(searchword),
-                                   scraper.GetRecipesCoop(searchword));
+                await Task.WhenAll(
+                scraper.GetRecipesTasteline(searchword, "1"),
+                scraper.GetRecipesTasteline(searchword, "2"),
+                scraper.GetRecipesTasteline(searchword, "3"),
+                scraper.GetRecipesKoket(searchword),
+                scraper.GetRecipesMittkok(searchword),
+                scraper.GetRecipesCoop(searchword)
+                );
 
                 var recipeList = scraper.ListSorter(scraper.ListOfRecipes);
 
