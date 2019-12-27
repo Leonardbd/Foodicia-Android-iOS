@@ -352,6 +352,7 @@ namespace CaptoApplication
             var category = picker.SelectedItem;
             selectedCategory = category.ToString();
         }
+
     }
     
 }
