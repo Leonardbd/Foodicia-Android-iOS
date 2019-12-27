@@ -170,42 +170,56 @@ namespace CaptoApplication
             await btnscan.ScaleTo(1, 80, Easing.BounceOut);
 
             scanPage = new ZXingScannerPage();
-            scanPage.OnScanResult += (result) => {
+            scanPage.OnScanResult += async (result) =>
+            {
                 scanPage.IsScanning = false;
 
-                var pop = new PopUp(BarCodeManager.getBarName(result.Text));
-                
-                App.Current.MainPage.Navigation.PushPopupAsync(pop, true);
 
-                pop.OnDialogClosed += (s, arg) =>
+
+                if (BarCodeManager.getBarName(result.Text) != null)
                 {
-                    string productname = arg.ProductName;
-                    if (!string.IsNullOrWhiteSpace(productname) && !productname.Equals(""))
+                    var pop = new PopUp(BarCodeManager.getBarName(result.Text));
+
+                    await App.Current.MainPage.Navigation.PushPopupAsync(pop, true);
+
+                    pop.OnDialogClosed += (s, arg) =>
                     {
-                        productname = char.ToUpper(productname[0]) + productname.Substring(1);
-                        DateTime date = arg.ExpirationDate;
-                        var ingredient = new Ingredient(productname, date);
-                        db.InsertIntoTable(ingredient);
-                        PersonalIngredientList.Add(ingredient);
-                        Model.IngredientList.Add(ingredient);
-                        PersonalIngredientList.Sort((a, b) => a.Date.CompareTo(b.Date));
-                        Model = new IngredientsViewModel(PersonalIngredientList);
-                        BindingContext = Model;
-                    }
+                        string productname = arg.ProductName;
+                        if (!string.IsNullOrWhiteSpace(productname) && !productname.Equals(""))
+                        {
+                            productname = char.ToUpper(productname[0]) + productname.Substring(1);
+                            DateTime date = arg.ExpirationDate;
+                            var ingredient = new Ingredient(productname, date);
+                            db.InsertIntoTable(ingredient);
+                            PersonalIngredientList.Add(ingredient);
+                            Model.IngredientList.Add(ingredient);
+                            PersonalIngredientList.Sort((a, b) => a.Date.CompareTo(b.Date));
+                            Model = new IngredientsViewModel(PersonalIngredientList);
+                            BindingContext = Model;
+                        }
 
-                };
+                    };
 
-                //Gör något med "result"
-                Device.BeginInvokeOnMainThread(() => {
-                    Navigation.PopModalAsync();
-                    //DisplayAlert("Scanned Barcode", result.Text, "OK");
+                    //Gör något med "result"
+                    //Device.BeginInvokeOnMainThread(() =>
+                    //{
+                    //    Navigation.PopModalAsync();
+                    //    //DisplayAlert("Scanned Barcode", result.Text, "OK");
 
-                    string textresult = BarCodeManager.getBarName(result.Text);
-                                        
-                });
+                    //    string textresult = BarCodeManager.getBarName(result.Text);
+                   //});
+
+
+                    await Navigation.PushModalAsync(scanPage);
+                }
+                else
+                {
+                    await DisplayAlert("", "Kunde inte hitta varan", "OK");
+                }
+
             };
 
-            await Navigation.PushModalAsync(scanPage);
+            
         }
        
         private void removeitembtn_Clicked(object sender, EventArgs e)

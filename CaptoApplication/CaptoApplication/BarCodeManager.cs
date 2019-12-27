@@ -23,7 +23,7 @@ namespace CaptoApplication
             }
             catch (Exception)
             {
-                return "Couldn't read EAN code";
+                return null;
 
             }
         }
