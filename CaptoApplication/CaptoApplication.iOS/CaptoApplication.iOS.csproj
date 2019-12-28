@@ -11,7 +11,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>CaptoApplication.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>Foodicia</AssemblyName>
+    <AssemblyName>CaptoApplication.iOS</AssemblyName>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
   </PropertyGroup>
