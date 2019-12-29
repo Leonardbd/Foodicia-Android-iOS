@@ -15,7 +15,7 @@ Get notifications when ingredients are about to expire.
 Filter and search for recipes that matches the ingredients that you have.
 
 
-Webscrapes recipes from different sites using HtmlAgilityPack.
+Webscrapes recipes from different sites using HtmlAgilityPack(https://github.com/zzzprojects/html-agility-pack)
 
 ![Foodicia1](https://user-images.githubusercontent.com/47029275/71548806-f389ca80-29b3-11ea-98cf-a39ed1f2cc5a.png)
 ![Foodicia5](https://user-images.githubusercontent.com/47029275/71548870-c1c53380-29b4-11ea-9d10-fde0101996c8.png)
