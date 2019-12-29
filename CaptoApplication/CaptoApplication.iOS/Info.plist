@@ -11,6 +11,7 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+  
 	<key>UIAppFonts</key>
 	<array>
 		<string>SourceSansPro-Bold.otf</string>
@@ -18,6 +19,8 @@
 		<string>SourceSansPro-Light.otf</string>
 		<string>SourceSansPro-Regular.otf</string>
 	</array>
+  
+  
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

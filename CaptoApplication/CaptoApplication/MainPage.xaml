@@ -11,8 +11,8 @@
              x:Name="tp"
              NavigationPage.HasNavigationBar="False">
 
-    
-    <ContentPage Title="Mina varor">
+
+    <ContentPage Title="Mina varor" IconImageSource="icon_food">
 
         <ContentPage.Content>
 
@@ -224,7 +224,7 @@
     </ContentPage>
 
 
-    <ContentPage Title="Sök recept">
+    <ContentPage Title="Sök recept" IconImageSource="icon_search5">
         <ContentPage.Content>
 
             <StackLayout Orientation="Vertical" BackgroundColor="AntiqueWhite">
