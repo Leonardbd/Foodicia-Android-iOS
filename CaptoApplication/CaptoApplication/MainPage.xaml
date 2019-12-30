@@ -233,7 +233,7 @@
                 <SearchBar x:Name="IngredientSearchBar"
                            SearchButtonPressed="IngredientSearchBar_SearchButtonPressed"
                            Placeholder="Sök recept"
-                           CancelButtonColor="DarkCyan"
+                           CancelButtonColor="#a40021"
                            PlaceholderColor="Gray"
                            FontSize="Medium">
 

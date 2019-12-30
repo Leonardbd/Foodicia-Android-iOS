@@ -134,34 +134,50 @@ namespace CaptoApplication
             await btnadd.ScaleTo(1.1, 80);
             await btnadd.ScaleTo(1, 80, Easing.BounceOut);
 
-            var pop = new PopUp();
-            await App.Current.MainPage.Navigation.PushPopupAsync(pop, true);
-            pop.OnDialogClosed += (s, arg) =>
+            bool marked = false;
+
+            foreach (var item in PersonalIngredientList)
             {
-                string productname = arg.ProductName;
-                
-                
-                if (!string.IsNullOrWhiteSpace(productname) && !productname.Equals(""))
+                if (item.selectedItem)
                 {
-
-                    productname = char.ToUpper(productname[0]) + productname.Substring(1);
-                    DateTime date = arg.ExpirationDate;
-                    var ingredient = new Ingredient(productname, date);
-                    db.InsertIntoTable(ingredient);
-                    PersonalIngredientList.Add(ingredient);
-                    PersonalIngredientList.Sort((a, b) => a.Date.CompareTo(b.Date));
-                    Model = new IngredientsViewModel(PersonalIngredientList);
-                    BindingContext = Model;
-
-                    CrossLocalNotifications.Current.Show("Utgående vara", "Din vara '" + ingredient.Name + "' går ut snart! Använd vår sökfunktion för att hitta passande recept:)", ingredient.ID, date.AddDays(-2));
-                  
+                    marked = true;
+                    DisplayAlert("", "Du kan inte lägga till varor medan du har något markerat", "OK");
+                    return;
                 }
-                else
+            }
+
+            if (!marked)
+            {
+
+                var pop = new PopUp();
+                await App.Current.MainPage.Navigation.PushPopupAsync(pop, true);
+                pop.OnDialogClosed += (s, arg) =>
                 {
-                    DisplayAlert("", "Du måste skriva in en vara", "OK");
-                }
+                    string productname = arg.ProductName;
 
-            };
+
+                    if (!string.IsNullOrWhiteSpace(productname) && !productname.Equals(""))
+                    {
+
+                        productname = char.ToUpper(productname[0]) + productname.Substring(1);
+                        DateTime date = arg.ExpirationDate;
+                        var ingredient = new Ingredient(productname, date);
+                        db.InsertIntoTable(ingredient);
+                        PersonalIngredientList.Add(ingredient);
+                        PersonalIngredientList.Sort((a, b) => a.Date.CompareTo(b.Date));
+                        Model = new IngredientsViewModel(PersonalIngredientList);
+                        BindingContext = Model;
+
+                        CrossLocalNotifications.Current.Show("Utgående vara", "Din vara '" + ingredient.Name + "' går ut snart! Använd vår sökfunktion för att hitta passande recept:)", ingredient.ID, date.AddDays(-2));
+
+                    }
+                    else
+                    {
+                        DisplayAlert("", "Du måste skriva in en vara", "OK");
+                    }
+
+                };
+            }
         }
 
         private async void btnscan_Clicked(object sender, EventArgs e)
@@ -169,51 +185,66 @@ namespace CaptoApplication
             await btnscan.ScaleTo(1.1, 80);
             await btnscan.ScaleTo(1, 80, Easing.BounceOut);
 
-            scanPage = new ZXingScannerPage();
-            scanPage.OnScanResult += (result) =>
+            bool marked = false;
+
+            foreach (var item in PersonalIngredientList)
             {
-                scanPage.IsScanning = false;
-
-                var pop = new PopUp(BarCodeManager.getBarName(result.Text));
-
-                App.Current.MainPage.Navigation.PushPopupAsync(pop, true);
-
-                pop.OnDialogClosed += (s, arg) =>
+                if (item.selectedItem)
                 {
-                    string productname = arg.ProductName;
-                    if (!string.IsNullOrWhiteSpace(productname) && !productname.Equals(""))
-                    {
-                        productname = char.ToUpper(productname[0]) + productname.Substring(1);
-                        DateTime date = arg.ExpirationDate;
-                        var ingredient = new Ingredient(productname, date);
-                        db.InsertIntoTable(ingredient);
-                        PersonalIngredientList.Add(ingredient);
-                        Model.IngredientList.Add(ingredient);
-                        PersonalIngredientList.Sort((a, b) => a.Date.CompareTo(b.Date));
-                        Model = new IngredientsViewModel(PersonalIngredientList);
-                        BindingContext = Model;
-                    }
-                    else
-                    {
-                        pop.changePlaceholder("Kunde inte hitta varan");
+                    marked = true;
+                    DisplayAlert("", "Du kan inte lägga till varor medan du har något markerat", "OK");
+                    return;
+                }
+            }
 
-                    }
+            if (!marked)
+            {
 
-                };
+                scanPage = new ZXingScannerPage();
+                scanPage.OnScanResult += (result) =>
+                {
+                    scanPage.IsScanning = false;
+
+                    var pop = new PopUp(BarCodeManager.getBarName(result.Text));
+
+                    App.Current.MainPage.Navigation.PushPopupAsync(pop, true);
+
+                    pop.OnDialogClosed += (s, arg) =>
+                    {
+                        string productname = arg.ProductName;
+                        if (!string.IsNullOrWhiteSpace(productname) && !productname.Equals(""))
+                        {
+                            productname = char.ToUpper(productname[0]) + productname.Substring(1);
+                            DateTime date = arg.ExpirationDate;
+                            var ingredient = new Ingredient(productname, date);
+                            db.InsertIntoTable(ingredient);
+                            PersonalIngredientList.Add(ingredient);
+                            Model.IngredientList.Add(ingredient);
+                            PersonalIngredientList.Sort((a, b) => a.Date.CompareTo(b.Date));
+                            Model = new IngredientsViewModel(PersonalIngredientList);
+                            BindingContext = Model;
+                        }
+                        else
+                        {
+                            pop.changePlaceholder("Kunde inte hitta varan");
+
+                        }
+
+                    };
 
                 //Gör något med "result"
                 Device.BeginInvokeOnMainThread(() =>
-                {
-                    Navigation.PopModalAsync();
+                    {
+                        Navigation.PopModalAsync();
                     //DisplayAlert("Scanned Barcode", result.Text, "OK");
 
                     //string textresult = BarCodeManager.getBarName(result.Text);
                 });
 
-            };
+                };
+            }
 
             await Navigation.PushModalAsync(scanPage);
-            //await DisplayAlert("", "Kunde inte hitta varan", "OK");
 
         }
        
