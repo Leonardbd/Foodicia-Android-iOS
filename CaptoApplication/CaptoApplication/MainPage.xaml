@@ -234,7 +234,6 @@
                            Placeholder="Sök recept"
                            CancelButtonColor="DarkCyan"
                            PlaceholderColor="Gray"
-                           TextColor="Black"
                            HorizontalTextAlignment="Center"
                            FontSize="Medium">
 
