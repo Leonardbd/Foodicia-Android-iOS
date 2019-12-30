@@ -4,23 +4,23 @@ Created by https://github.com/jaxvall and https://github.com/Leonardbd
 
 Xamarin app that is Android and iOS compatible.
 
-Add ingredients that you have at home.
-Scan your ingredients EAN-code (https://github.com/Redth/ZXing.Net.Mobile), searching for matches using API from
+• Add ingredients that you have at home.
+
+• Scan your ingredients EAN-code (https://github.com/Redth/ZXing.Net.Mobile), searching for matches using API from
 https://www.ean-search.org/.
 
-Saves ingredients locally using SQLite.
+• Saves ingredients locally using SQLite.
 
-Get notifications when ingredients are about to expire.
+• Get notifications when ingredients are about to expire.
 
-Filter and search for recipes that matches the ingredients that you have.
+• Filter and search for recipes that matches the ingredients that you have.
 
 
-Webscrapes recipes from different sites using HtmlAgilityPack.
+Webscrapes recipes from different sites using HtmlAgilityPack(https://github.com/zzzprojects/html-agility-pack)
 
-![Foodicia1](https://user-images.githubusercontent.com/47029275/71548806-f389ca80-29b3-11ea-98cf-a39ed1f2cc5a.png)
-![Foodicia5](https://user-images.githubusercontent.com/47029275/71548870-c1c53380-29b4-11ea-9d10-fde0101996c8.png)
-![Foodicia2](https://user-images.githubusercontent.com/47029275/71548849-7d399800-29b4-11ea-80bc-e913bba34ceb.png)
-
-![Foodicia3](https://user-images.githubusercontent.com/47029275/71548850-83c80f80-29b4-11ea-9690-6993ceaf3bd4.png)
-![Foodicia4](https://user-images.githubusercontent.com/47029275/71548853-89255a00-29b4-11ea-93e1-28cb0379148f.png)
+![Foodicia](https://user-images.githubusercontent.com/46810092/71559794-b3cdec00-2a62-11ea-90e7-ead849e4df03.png)
+![Foodicia2](https://user-images.githubusercontent.com/46810092/71559795-b3cdec00-2a62-11ea-80b3-36ccd984929e.png)
+![Foodicia3](https://user-images.githubusercontent.com/46810092/71559796-b3cdec00-2a62-11ea-836d-77ec82ca1669.png)
+![Foodicia4](https://user-images.githubusercontent.com/46810092/71559797-b3cdec00-2a62-11ea-8d9b-3f9485c53f55.png)
+![Foodicia5](https://user-images.githubusercontent.com/46810092/71559798-b4668280-2a62-11ea-84e7-775aa6ee5aa5.png)
 
