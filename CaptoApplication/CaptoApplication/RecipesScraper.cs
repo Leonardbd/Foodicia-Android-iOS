@@ -545,6 +545,10 @@ namespace CaptoApplication
             {
                 text = text.Replace("&quot;", "'");
             }
+            if (text.Contains("&#180;"))
+            {
+                text = text.Replace("&#180;", "'");
+            }
 
 
             return text;
