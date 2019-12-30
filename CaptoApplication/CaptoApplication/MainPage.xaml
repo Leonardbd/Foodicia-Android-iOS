@@ -36,7 +36,7 @@
 
                     </Grid.ColumnDefinitions>
 
-                    <Button Text="LÄGG  TILL" FontSize="Body" TextColor="DarkCyan" WidthRequest="80" HeightRequest="42" Margin="10" BackgroundColor="White" BorderColor="DarkCyan" BorderWidth="2" CornerRadius="10" x:Name="btnadd" Clicked="btnadd_Clicked" 
+                    <Button Text="LÄGG  TILL" FontSize="Body" TextColor="DarkCyan" WidthRequest="80" HeightRequest="42" Margin="10" BackgroundColor="AntiqueWhite" BorderColor="DarkCyan" BorderWidth="2" CornerRadius="10" x:Name="btnadd" Clicked="btnadd_Clicked" 
                             Grid.Row="0"
                             Grid.Column="0"
                             Grid.ColumnSpan="4">
@@ -49,7 +49,7 @@
                         </Button.FontFamily>
                         
                     </Button>
-                    <Button Text="SCANNA" FontSize="Body" TextColor="DarkCyan" WidthRequest="80" HeightRequest="42" Margin="10" BackgroundColor="White" BorderColor="DarkCyan" BorderWidth="2" CornerRadius="10" x:Name="btnscan" Clicked="btnscan_Clicked"
+                    <Button Text="SCANNA" FontSize="Body" TextColor="DarkCyan" WidthRequest="80" HeightRequest="42" Margin="10" BackgroundColor="AntiqueWhite" BorderColor="DarkCyan" BorderWidth="2" CornerRadius="10" x:Name="btnscan" Clicked="btnscan_Clicked"
                             Grid.Row="0"
                             Grid.Column="4"
                             Grid.ColumnSpan="4">
@@ -88,7 +88,7 @@
 
                     </Picker>
 
-                    <Button Text="SÖK" TextColor="DarkCyan" WidthRequest="90" HeightRequest="42" Margin="10" BackgroundColor="White" BorderColor="DarkCyan" BorderWidth="2" CornerRadius="10" x:Name="btnsearch" Clicked="btnsearch_Clicked"
+                    <Button Text="SÖK" TextColor="DarkCyan" WidthRequest="90" HeightRequest="42" Margin="10" BackgroundColor="AntiqueWhite" BorderColor="DarkCyan" BorderWidth="2" CornerRadius="10" x:Name="btnsearch" Clicked="btnsearch_Clicked"
                             IsVisible="False"
                             Grid.Row="1"
                             Grid.Column="6"
