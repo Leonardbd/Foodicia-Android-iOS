@@ -7,7 +7,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="CaptoApplication.MainPage"
-             BarBackgroundColor="#a40021"
+             BarBackgroundColor="AntiqueWhite"
              x:Name="tp"
              NavigationPage.HasNavigationBar="False">
 
@@ -111,7 +111,7 @@
                         <DataTemplate>
                             <ViewCell>
 
-                                <Frame Margin = "10,4,10,4" Padding="3" HasShadow="True" CornerRadius="5" BackgroundColor="WhiteSmoke" BorderColor="WhiteSmoke">
+                                <Frame Margin = "10,8,10,0" Padding="3" HasShadow="True" CornerRadius="5" BackgroundColor="WhiteSmoke" BorderColor="WhiteSmoke">
                                     <StackLayout>
                                         <Grid>
 
@@ -235,7 +235,6 @@
                            Placeholder="Sök recept"
                            CancelButtonColor="DarkCyan"
                            PlaceholderColor="Gray"
-                           HorizontalTextAlignment="Center"
                            FontSize="Medium">
 
                     <SearchBar.FontFamily>
