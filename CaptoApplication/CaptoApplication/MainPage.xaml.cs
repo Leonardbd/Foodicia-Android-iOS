@@ -168,7 +168,7 @@ namespace CaptoApplication
                         Model = new IngredientsViewModel(PersonalIngredientList);
                         BindingContext = Model;
 
-                        CrossLocalNotifications.Current.Show("Utgående vara", "Din vara '" + ingredient.Name + "' går ut snart! Använd vår sökfunktion för att hitta passande recept:)", ingredient.ID, date.AddDays(-2));
+                        CrossLocalNotifications.Current.Show("Utgående vara", "Din vara '" + ingredient.Name + "' går ut snart! Använd vår sökfunktion för att hitta passande recept:)", ingredient.ID, date.AddDays(-2).AddHours(15));
 
                     }
                     else
