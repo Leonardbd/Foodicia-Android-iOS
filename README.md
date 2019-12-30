@@ -1,5 +1,5 @@
 # Foodicia
-App Store: https://apps.apple.com/se/app/foodicia/id1493071434
+**App Store:** https://apps.apple.com/se/app/foodicia/id1493071434
 
 Created by https://github.com/jaxvall and https://github.com/Leonardbd
 
