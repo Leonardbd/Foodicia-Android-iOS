@@ -253,7 +253,7 @@
 
                         <DataTemplate>
                             <ViewCell>
-                                <Frame Margin = "10,7,10,7" Padding="5" HasShadow="True" CornerRadius="20" BackgroundColor="WhiteSmoke" BorderColor="WhiteSmoke">
+                                <Frame Margin = "10,6,10,6" Padding="5" HasShadow="True" CornerRadius="20" BackgroundColor="WhiteSmoke" BorderColor="WhiteSmoke">
 
                                     <StackLayout>
                                         <Grid>
