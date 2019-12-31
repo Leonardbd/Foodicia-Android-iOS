@@ -549,6 +549,22 @@ namespace CaptoApplication
             {
                 text = text.Replace("&#180;", "'");
             }
+            if (text.Contains("&#241;"))
+            {
+                text = text.Replace("&#241;", "ñ");
+            }
+            if (text.Contains("&ouml;"))
+            {
+                text = text.Replace("&ouml;", "ö");
+            }
+            if (text.Contains("&auml;"))
+            {
+                text = text.Replace("&auml;", "ä");
+            }
+            if (text.Contains("&auml;"))
+            {
+                text = text.Replace("&auml;", "ä");
+            }
 
 
             return text;

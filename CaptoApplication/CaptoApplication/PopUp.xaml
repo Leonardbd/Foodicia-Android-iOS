@@ -24,6 +24,7 @@
                         <Entry.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <On Platform="Android" Value="SourceSansPro-Regular.otf#SourceSans"/>
+                                <On Platform="iOS" Value="SourceSansPro-Regular"/>
                             </OnPlatform>
                         </Entry.FontFamily>
                     </Entry>
@@ -31,6 +32,7 @@
                         <Label.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <On Platform="Android" Value="SourceSansPro-Regular.otf#SourceSans"/>
+                                <On Platform="iOS" Value="SourceSansPro-Regular"/>
                             </OnPlatform>
                         </Label.FontFamily>
                     </Label>
@@ -38,6 +40,7 @@
                         <DatePicker.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <On Platform="Android" Value="SourceSansPro-Regular.otf#SourceSans"/>
+                                <On Platform="iOS" Value="SourceSansPro-Regular"/>
                             </OnPlatform>
                         </DatePicker.FontFamily>
                     </DatePicker>
@@ -46,7 +49,17 @@
             </Grid>
         </Frame>
 
-        <Button Grid.Row="1" Text="OK" CornerRadius="5" TextColor="White" HeightRequest="45" BackgroundColor="DarkCyan" Clicked="Button_Clicked"/>
+        <Button Grid.Row="1" Text="OK" CornerRadius="5" TextColor="White" HeightRequest="45" BackgroundColor="DarkCyan" Clicked="Button_Clicked">
+
+            <Button.FontFamily>
+                <OnPlatform x:TypeArguments="x:String">
+                    <On Platform="Android" Value="SourceSansPro-Bold.otf#SourceSans"/>
+                    <On Platform="iOS" Value="SourceSansPro-Bold"/>
+                </OnPlatform>
+                
+            </Button.FontFamily>
+
+        </Button>
 
     </Grid>
 </rg:PopupPage>
