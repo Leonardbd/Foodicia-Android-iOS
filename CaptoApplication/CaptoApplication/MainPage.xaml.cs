@@ -252,14 +252,13 @@ namespace CaptoApplication
         private async void checkBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
             
-
             foreach (Ingredient ingredientLoop in PersonalIngredientList)
             {
                 if (ingredientLoop.selectedItem)
                 {
-                    await Task.WhenAll(categoryPicker.FadeTo(1, 400, Easing.Linear), btnsearch.FadeTo(1, 400, Easing.Linear));
                     categoryPicker.IsEnabled = true;
                     btnsearch.IsEnabled = true;
+                    await Task.WhenAll(categoryPicker.FadeTo(1, 400, Easing.Linear), btnsearch.FadeTo(1, 400, Easing.Linear));
                     
                     return;
                 }
