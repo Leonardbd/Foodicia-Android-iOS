@@ -132,6 +132,7 @@
 
                                             <CheckBox x:Name="checkBox"
                                               CheckedChanged="checkBox_CheckedChanged"
+                                              IsChecked="{Binding selectedItem}"
                                               Color="#a40021"
                                               Grid.Row="1"
                                               Grid.Column="0"

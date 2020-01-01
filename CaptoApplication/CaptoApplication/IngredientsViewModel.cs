@@ -10,6 +10,7 @@ namespace CaptoApplication
     {
         
         public ObservableCollection<Ingredient> IngredientList { get; set; }
+
         public Command <Ingredient> RemoveCommand
         {
             get
