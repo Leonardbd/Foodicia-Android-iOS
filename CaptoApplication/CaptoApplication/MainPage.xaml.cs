@@ -173,51 +173,45 @@ namespace CaptoApplication
             {
                 scanPage.IsScanning = false;
 
-                if (result != null)
+                var pop = new PopUp(BarCodeManager.getBarName(result.Text));
+
+                App.Current.MainPage.Navigation.PushPopupAsync(pop, true);
+
+                pop.OnDialogClosed += (s, arg) =>
                 {
-                    var pop = new PopUp(BarCodeManager.getBarName(result.Text));
-
-                    App.Current.MainPage.Navigation.PushPopupAsync(pop, true);
-
-                    pop.OnDialogClosed += (s, arg) =>
+                    string productname = arg.ProductName;
+                    if (!string.IsNullOrWhiteSpace(productname) && !productname.Equals(""))
                     {
-                        string productname = arg.ProductName;
-                        if (!string.IsNullOrWhiteSpace(productname) && !productname.Equals(""))
-                        {
-                            productname = char.ToUpper(productname[0]) + productname.Substring(1);
-                            DateTime date = arg.ExpirationDate;
-                            var ingredient = new Ingredient(productname, date);
-                            db.InsertIntoTable(ingredient);
-                            PersonalIngredientList.Add(ingredient);
-                            Model.IngredientList.Add(ingredient);
-                            PersonalIngredientList.Sort((a, b) => a.Date.CompareTo(b.Date));
-                            Model = new IngredientsViewModel(PersonalIngredientList);
-                            BindingContext = Model;
+                        productname = char.ToUpper(productname[0]) + productname.Substring(1);
+                        DateTime date = arg.ExpirationDate;
+                        var ingredient = new Ingredient(productname, date);
+                        db.InsertIntoTable(ingredient);
+                        PersonalIngredientList.Add(ingredient);
+                        Model.IngredientList.Add(ingredient);
+                        PersonalIngredientList.Sort((a, b) => a.Date.CompareTo(b.Date));
+                        Model = new IngredientsViewModel(PersonalIngredientList);
+                        BindingContext = Model;
 
-                            CrossLocalNotifications.Current.Show("Utgående vara", "Din vara '" + ingredient.Name + "' går ut snart! Använd vår sökfunktion för att hitta passande recept:)", ingredient.ID, date.AddDays(-2).AddHours(16));
-                        }
-                        else
-                        {
-                            pop.changePlaceholder("Kunde inte hitta varan");
+                        CrossLocalNotifications.Current.Show("Utgående vara", "Din vara '" + ingredient.Name + "' går ut snart! Använd vår sökfunktion för att hitta passande recept:)", ingredient.ID, date.AddDays(-2).AddHours(16));
+                    }
+                    else
+                    {
+                        pop.changePlaceholder("Kunde inte hitta varan");
 
-                        }
+                    }
 
-                    };
+                };
 
-                    //Gör något med "result"
-                    Device.BeginInvokeOnMainThread(() =>
-                        {
-                            Navigation.PopModalAsync();
-                            //DisplayAlert("Scanned Barcode", result.Text, "OK");
+                //Gör något med "result"
+                Device.BeginInvokeOnMainThread(() =>
+                    {
+                        Navigation.PopModalAsync();
+                        //DisplayAlert("Scanned Barcode", result.Text, "OK");
 
-                            //string textresult = BarCodeManager.getBarName(result.Text);
-                        });
+                        //string textresult = BarCodeManager.getBarName(result.Text);
+                    });
 
-                }
-                else
-                {
-                    DisplayAlert("", "Kunde inte hitta varan", "OK");
-                }
+        
             };
             
             await Navigation.PushModalAsync(scanPage);
