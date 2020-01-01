@@ -96,8 +96,8 @@
 
                         <Button.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
-                                <On Platform="Android" Value="Quicksand-Regular.otf#Quicksand"/>
-                                <On Platform="iOS" Value="Quicksand-Regular"/>
+                                <On Platform="Android" Value="SourceSansPro-Bold.otf#SourceSans"/>
+                                <On Platform="iOS" Value="SourceSansPro-Bold"/>
                             </OnPlatform>
                         </Button.FontFamily>
 
