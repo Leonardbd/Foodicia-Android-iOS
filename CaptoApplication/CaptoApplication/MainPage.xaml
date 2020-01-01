@@ -63,11 +63,14 @@
 
                     </Button>
 
-                    <Picker x:Name="categoryPicker" SelectedIndex="0" WidthRequest="120" HeightRequest="42" SelectedIndexChanged="categoryPicker_SelectedIndexChanged" IsVisible="False" 
+                    
+                        <Picker x:Name="categoryPicker" SelectedIndex="0" WidthRequest="120" HeightRequest="42" SelectedIndexChanged="categoryPicker_SelectedIndexChanged"  
                             Grid.Row="1"
                             Grid.Column="0"
                             Grid.ColumnSpan="5"
-                            Margin="10,0,0,0">
+                            Margin="10,0,0,0"                                
+                                IsEnabled="False"
+                                Opacity="0">
 
                         <Picker.Items>
                             <x:String>Alla recept</x:String>
@@ -88,11 +91,12 @@
 
                     </Picker>
 
-                    <Button Text="SÖK" TextColor="DarkCyan" WidthRequest="90" HeightRequest="42" Margin="10" BackgroundColor="WhiteSmoke" BorderColor="DarkCyan" BorderWidth="2" CornerRadius="10" x:Name="btnsearch" Clicked="btnsearch_Clicked"
-                            IsVisible="False"
+                    <Button Text="SÖK" TextColor="DarkCyan" WidthRequest="90" HeightRequest="42" Margin="10" BackgroundColor="WhiteSmoke" BorderColor="DarkCyan" BorderWidth="2" CornerRadius="10" x:Name="btnsearch" Clicked="btnsearch_Clicked" IsEnabled="False"                         
                             Grid.Row="1"
                             Grid.Column="6"
-                            Grid.ColumnSpan="2">
+                            Grid.ColumnSpan="2"
+                            Opacity="0"
+                            >
 
                         <Button.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
@@ -102,6 +106,7 @@
                         </Button.FontFamily>
 
                     </Button>
+                    
 
                 </Grid>
                 <ListView ItemsSource="{Binding IngredientList}" HasUnevenRows="True" CachingStrategy="RecycleElement" x:Name="lw" SelectionMode="None" BackgroundColor="AntiqueWhite" SeparatorVisibility="None">

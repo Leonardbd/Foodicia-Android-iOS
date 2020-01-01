@@ -249,23 +249,27 @@ namespace CaptoApplication
 
         }
 
-        private void checkBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        private async void checkBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
+            
 
             foreach (Ingredient ingredientLoop in PersonalIngredientList)
             {
                 if (ingredientLoop.selectedItem)
                 {
-                    categoryPicker.IsVisible = true;
-                    btnsearch.IsVisible = true;
+                    await Task.WhenAll(categoryPicker.FadeTo(1, 400, Easing.Linear), btnsearch.FadeTo(1, 400, Easing.Linear));
+                    categoryPicker.IsEnabled = true;
+                    btnsearch.IsEnabled = true;
+                    
                     return;
                 }
-                else
-                {
-                    categoryPicker.IsVisible = false;
-                    btnsearch.IsVisible = false;
-                }
+                
             }
+            categoryPicker.IsEnabled = false;
+            btnsearch.IsEnabled = false;
+            await Task.WhenAll(categoryPicker.FadeTo(0, 400, Easing.Linear), btnsearch.FadeTo(0, 400, Easing.Linear));
+            
+
         }
 
         private async void btnsearch_Clicked(object sender, EventArgs e)
