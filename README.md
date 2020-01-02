@@ -1,5 +1,6 @@
 # Foodicia
 **App Store:** https://apps.apple.com/se/app/foodicia/id1493071434
+**Google Play:** https://play.google.com/store/apps/details?id=com.fudicia.foodicia
 
 
 Created by https://github.com/jaxvall and https://github.com/Leonardbd
