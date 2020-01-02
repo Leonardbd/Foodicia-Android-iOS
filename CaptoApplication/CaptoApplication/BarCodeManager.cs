@@ -2,12 +2,33 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using System.Linq;
 
 namespace CaptoApplication
 {
     public static class BarCodeManager
     {
+        public static string getBarNameDabas(string ean)
+        {
+            string url = "https://api.dabas.com/DABASService/V2/article/gtin/0" + ean + "/XML?apikey=9ea3b61d-c200-4316-9b29-5764e7b206e7";
+            try
+            {
 
+                XmlDocument document = new XmlDocument();
+                document.Load(url);
+                XmlNode node = document.DocumentElement.SelectSingleNode("/Artikel/Artikelbenamning");
+                string text = node.InnerText;
+                return text;
+
+            }
+            catch (Exception)
+            {
+
+                return getBarName(ean);
+                
+
+            }
+        }
         public static string getBarName(string ean)
          {
             string url = "http://api.ean-search.org/api?token=Medieteknikor2020&op=barcode-lookup&ean="+ean;
@@ -23,7 +44,8 @@ namespace CaptoApplication
             }
             catch (Exception)
             {
-                return null;
+                return getBarName2(ean);
+                
 
             }
         }
@@ -71,7 +93,7 @@ namespace CaptoApplication
 
             {
                 finalname = "";
-                var list = productname.ToLower().Split(" ").ToList();
+                var list = productname.ToLower().Split().ToList();
 
                 for (int i = 0; i < list.Count; i++)
                 {

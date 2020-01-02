@@ -173,7 +173,7 @@ namespace CaptoApplication
             {
                 scanPage.IsScanning = false;
 
-                var pop = new PopUp(BarCodeManager.getCorrectName(BarCodeManager.getBarName(result.Text)));
+                var pop = new PopUp(BarCodeManager.getCorrectName(BarCodeManager.getBarNameDabas(result.Text)));
 
                 App.Current.MainPage.Navigation.PushPopupAsync(pop, true);
 
