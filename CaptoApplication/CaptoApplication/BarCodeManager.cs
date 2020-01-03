@@ -3,32 +3,46 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using System.Linq;
+using System.Xml.Linq;
+using System.Xml.XPath;
 
 namespace CaptoApplication
 {
     public static class BarCodeManager
+
     {
+        private static List<string> bannedWords = new List<string> {"se", "eko", "ekologisk", 
+            "arla", "krav", "strimlad", "skiva", "tärnad", ".", "kryddad", "med", "uht", "/",
+            "msc", "uts", "utz", "riven", "styckad", "färsk", "scan"};
+
         public static string getBarNameDabas(string ean)
         {
             string url = "https://api.dabas.com/DABASService/V2/article/gtin/0" + ean + "/XML?apikey=9ea3b61d-c200-4316-9b29-5764e7b206e7";
             try
             {
+                XNamespace ns = "http://schemas.datacontract.org/2004/07/DABAS.ViewModels.Api";
 
-                XmlDocument document = new XmlDocument();
-                document.Load(url);
-                XmlNode node = document.DocumentElement.SelectSingleNode("/Artikel/Artikelbenamning");
-                string text = node.InnerText;
-                return text;
+                var xml = XDocument.Load(url);
+                var node = xml.Descendants(ns + "Artikelbenamning").ToList();
+                var name = node[0].Value;
 
+                if (!name.Equals(""))
+                {
+                    return name;
+                }
+                else
+                {
+                    return getBarName(ean);
+                }
+                
             }
             catch (Exception)
             {
-
                 return getBarName(ean);
                 
-
             }
         }
+
         public static string getBarName(string ean)
          {
             string url = "http://api.ean-search.org/api?token=Medieteknikor2020&op=barcode-lookup&ean="+ean;
@@ -66,7 +80,7 @@ namespace CaptoApplication
             }
             catch (Exception)
             {
-                return null;
+                return "Sugondese";
 
             }
 
@@ -74,70 +88,47 @@ namespace CaptoApplication
 
         public static string getCorrectName(string productname)
         {
-            string finalname = productname;
+            string finalname = productname.ToLower();
 
-            if (productname.Contains("0") ||
-               productname.Contains("1") ||
-               productname.Contains("2") ||
-               productname.Contains("3") ||
-               productname.Contains("4") ||
-               productname.Contains("5") ||
-               productname.Contains("6") ||
-               productname.Contains("7") ||
-               productname.Contains("8") ||
-               productname.Contains("9") ||
-               productname.ToLower().Contains("se") ||
-               productname.ToLower().Contains("eko") ||
-               productname.ToLower().Contains("ekologisk") ||
-                productname.ToLower().Contains("krav"))
+            var list = finalname.Split().ToList();
 
+            string thisIsFinal = "";
+
+            for (int i = 0; i < list.Count; i++)
             {
-                finalname = "";
-                var list = productname.ToLower().Split().ToList();
-
-                for (int i = 0; i < list.Count; i++)
+                foreach (string word in bannedWords)
                 {
-                    if (list[i].Contains("0") ||
-                       list[i].Contains("1") ||
-                       list[i].Contains("2") ||
-                       list[i].Contains("3") ||
-                       list[i].Contains("4") ||
-                       list[i].Contains("5") ||
-                       list[i].Contains("6") ||
-                       list[i].Contains("7") ||
-                       list[i].Contains("8") ||
-                       list[i].Contains("9") ||
-                       list[i].Contains("se") ||
-                       list[i].Contains("eko") ||
-                       list[i].Contains("ekologisk") ||
-                       list[i].Contains("krav"))
+                    if (list[i].Contains(word))
                     {
-                        bool result = list[i].Any(x => char.IsLetter(x));
-                        bool result2 = list[i].Contains("%");
-                        if (!result && !result2)
+                        if (word.Equals("se") && list[i].Length > 2)
                         {
-                            i++;
+                            continue;
                         }
+                        list[i] = "";
+                    }
+                }
+
+                if (list[i].Any(char.IsDigit))
+                {
+                    break;
+                }
+                else
+                {
+                    if (!thisIsFinal.Equals(""))
+                    {
+                        thisIsFinal += " " + list[i];
                     }
                     else
                     {
-                        if (!finalname.Equals(""))
-                        {
-                            finalname += " " + list[i];
-                        }
-                        else
-                        {
-                            finalname = list[i];
-                        }
+                        thisIsFinal = list[i];
                     }
-
-
                 }
-
             }
 
-            return finalname;
+            thisIsFinal = thisIsFinal.Replace("  ", " ").Replace("  ", " ").Replace(",", "").Replace("-", "").Replace("®️", "").Replace("©", "");
+            thisIsFinal = char.ToUpper(thisIsFinal[0]) + thisIsFinal.Substring(1);
 
+            return thisIsFinal;
         }
     }
 }

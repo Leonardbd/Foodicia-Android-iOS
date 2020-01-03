@@ -24,7 +24,15 @@ namespace CaptoApplication
         {
             InitializeComponent();
             EAN = ean;
-            productEntry.Text = EAN;
+            
+            if (ean.Equals("Sugondese"))
+            {
+                changePlaceholder("Kunde inte hitta varan");
+            }
+            else
+            {
+                productEntry.Text = EAN;
+            }
         }
 
         public PopUp(string placeHolder, int w)

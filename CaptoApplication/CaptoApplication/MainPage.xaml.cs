@@ -194,24 +194,16 @@ namespace CaptoApplication
 
                         CrossLocalNotifications.Current.Show("Utgående vara", "Din vara '" + ingredient.Name + "' går ut snart! Använd vår sökfunktion för att hitta passande recept:)", ingredient.ID, date.AddDays(-2).AddHours(16));
                     }
-                    else
-                    {
-                        pop.changePlaceholder("Kunde inte hitta varan");
-
-                    }
-
+                    
                 };
 
                 //Gör något med "result"
                 Device.BeginInvokeOnMainThread(() =>
                     {
                         Navigation.PopModalAsync();
-                        //DisplayAlert("Scanned Barcode", result.Text, "OK");
 
-                        //string textresult = BarCodeManager.getBarName(result.Text);
                     });
 
-        
             };
             
             await Navigation.PushModalAsync(scanPage);

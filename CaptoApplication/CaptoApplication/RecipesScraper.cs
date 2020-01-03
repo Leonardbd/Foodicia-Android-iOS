@@ -581,51 +581,67 @@ namespace CaptoApplication
             {
                 foreach (var item in list)
                 {
-                    string ownIngredient = item.Name.ToLower();
-                    string recipeIngredient = ingredient.Name.ToLower();
-
-                    if(recipeIngredient.Contains(ownIngredient))
+                    if (ingredient.Name.ToLower().Contains(item.Name.ToLower()))
                     {
                         numMatches++;
                         recipe.NumIngredients = numMatches;
-             
+                    }
+
+                    //var ingredientList = ingredient.Name.Split();
+                    //var itemList = item.Name.Split();
+
+                    //if (setIngredientMatches(ingredientList, itemList))
+                    //{
+                    //    numMatches++;
+                    //    recipe.NumIngredients = numMatches;
+                    //}
+
+                }
+            }
+        }
+
+        private bool setIngredientMatches(String[] ingredientList, String[] itemList)
+        {
+            foreach (var ingredient_word in ingredientList)
+            {
+                foreach (var item_word in itemList)
+                {
+                    if (ingredient_word.ToLower().Contains(item_word.ToLower()))
+                    {
+                        return true;
                     }
                 }
             }
-        } 
-           
+            return false;
+        }
+
         private string limitDescription(string title, string desc)
         {
             int characterLength = (title + desc).Length;
-            int limit = 160;
+            int limit = 150;
 
             if (title.Length > 15)
             {
-                limit = 140;
+                limit = 130;
                 if (title.Length > 22)
                 {
-                    limit = 127;
+                    limit = 117;
 
                     if (title.Length > 34)
                     {
-                        limit = 115;
+                        limit = 105;
 
                         if (title.Length > 50)
                         {
-                            limit = 100;
+                            limit = 90;
 
                             if (title.Length > 60)
                             {
-                                limit = 87;
+                                limit = 77;
 
                                 if (title.Length > 70)
                                 {
-                                    limit = 73;
-
-                                    if (title.Length > 80)
-                                    {
-                                        return "";
-                                    }
+                                    return "";
                                 }
                             }
                         }
@@ -652,9 +668,9 @@ namespace CaptoApplication
 
         private string limitTitle(string title)
         {
-            if (title.Length > 80)
+            if (title.Length > 70)
             {
-                title = title.Substring(0, 80) + "...";
+                title = title.Substring(0, 70) + "...";
             }
             return title;
         }
@@ -673,6 +689,5 @@ namespace CaptoApplication
 
         }
 
-        
     }
 }
