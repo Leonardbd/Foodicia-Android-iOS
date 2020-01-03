@@ -13,7 +13,7 @@ namespace CaptoApplication
     {
         private static List<string> bannedWords = new List<string> {"se", "eko", "ekologisk", 
             "arla", "krav", "strimlad", "skiva", "tärnad", ".", "kryddad", "med", "uht", "/",
-            "msc", "uts", "utz", "riven", "styckad", "färsk", "scan"};
+            "msc", "uts", "utz", "riven", "styckad", "färsk", "scan", "orginal", "original", "&"};
 
         public static string getBarNameDabas(string ean)
         {
@@ -126,6 +126,12 @@ namespace CaptoApplication
             }
 
             thisIsFinal = thisIsFinal.Replace("  ", " ").Replace("  ", " ").Replace(",", "").Replace("-", "").Replace("®️", "").Replace("©", "");
+
+            if (thisIsFinal.Contains("mjölk") && !thisIsFinal.Contains("kokosmjölk") && !thisIsFinal.Contains("chokladmjölk"))
+            {
+                thisIsFinal = "Mjölk";
+            }
+
             thisIsFinal = char.ToUpper(thisIsFinal[0]) + thisIsFinal.Substring(1);
 
             return thisIsFinal;
