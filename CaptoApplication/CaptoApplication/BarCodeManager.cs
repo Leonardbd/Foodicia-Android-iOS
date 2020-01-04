@@ -13,7 +13,8 @@ namespace CaptoApplication
     {
         private static List<string> bannedWords = new List<string> {"se", "eko", "ekologisk", 
             "arla", "krav", "strimlad", "skiva", "tärnad", ".", "kryddad", "med", "uht", "/",
-            "msc", "uts", "utz", "riven", "styckad", "färsk", "scan", "orginal", "original", "&"};
+            "msc", "uts", "utz", "riven", "styckad", "färsk", "scan", "orginal", "original", "&",
+            "rå"};
 
         public static string getBarNameDabas(string ean)
         {

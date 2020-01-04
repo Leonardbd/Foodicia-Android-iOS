@@ -572,47 +572,18 @@ namespace CaptoApplication
         
         public void SetRecipeMatches(Recipe recipe)
         {
-            int numMatches = 0;
             var db = new DataBase();
-            var list = new List<Ingredient>();
-            list = db.GetIngredientsItems();
+            var items = new List<Ingredient>();
 
-            foreach (var ingredient in recipe.Ingredients)
-            {
-                foreach (var item in list)
-                {
-                    if (ingredient.Name.ToLower().Contains(item.Name.ToLower()))
-                    {
-                        numMatches++;
-                        recipe.NumIngredients = numMatches;
-                    }
+            items = db.GetIngredientsItems();
+            var ingredients = recipe.Ingredients;
+           
+            var matches = items
+                    .Where(p => ingredients.Any(r => p.Name.Split().Any(pq => r.Name.ToLower().Contains(pq.ToLower()))))
+                    .ToList();
 
-                    //var ingredientList = ingredient.Name.Split();
-                    //var itemList = item.Name.Split();
+            recipe.NumIngredients = matches.Count;
 
-                    //if (setIngredientMatches(ingredientList, itemList))
-                    //{
-                    //    numMatches++;
-                    //    recipe.NumIngredients = numMatches;
-                    //}
-
-                }
-            }
-        }
-
-        private bool setIngredientMatches(String[] ingredientList, String[] itemList)
-        {
-            foreach (var ingredient_word in ingredientList)
-            {
-                foreach (var item_word in itemList)
-                {
-                    if (ingredient_word.ToLower().Contains(item_word.ToLower()))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
         }
 
         private string limitDescription(string title, string desc)
