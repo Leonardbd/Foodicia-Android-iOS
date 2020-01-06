@@ -5,6 +5,7 @@ using System.Xml;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using System.Text.RegularExpressions;
 
 namespace CaptoApplication
 {
@@ -126,12 +127,14 @@ namespace CaptoApplication
                 }
             }
 
-            thisIsFinal = thisIsFinal.Replace("  ", " ").Replace("  ", " ").Replace(",", "").Replace("-", "").Replace("®️", "").Replace("©", "");
+            thisIsFinal = thisIsFinal.Replace(",", "").Replace("-", "").Replace("®️", "").Replace("©", "");
 
             if (thisIsFinal.Contains("mjölk") && !thisIsFinal.Contains("kokosmjölk") && !thisIsFinal.Contains("chokladmjölk"))
             {
                 thisIsFinal = "Mjölk";
             }
+
+            thisIsFinal = Regex.Replace(thisIsFinal, @"\s+", " ").Trim();
 
             thisIsFinal = char.ToUpper(thisIsFinal[0]) + thisIsFinal.Substring(1);
 

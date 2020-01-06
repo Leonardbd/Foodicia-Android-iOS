@@ -13,6 +13,7 @@ using Rg.Plugins.Popup.Extensions;
 using System.Collections.ObjectModel;
 using Xamarin.Essentials;
 using Plugin.LocalNotifications;
+using System.Text.RegularExpressions;
 
 namespace CaptoApplication
 {
@@ -134,13 +135,11 @@ namespace CaptoApplication
             await btnadd.ScaleTo(1.1, 80);
             await btnadd.ScaleTo(1, 80, Easing.BounceOut);
 
-
             var pop = new PopUp();
             await App.Current.MainPage.Navigation.PushPopupAsync(pop, true);
             pop.OnDialogClosed += (s, arg) =>
             {
-                string productname = arg.ProductName;
-
+                string productname = Regex.Replace(arg.ProductName, @"\s+", " ").Trim();
 
                 if (!string.IsNullOrWhiteSpace(productname) && !productname.Equals(""))
                 {
@@ -179,7 +178,8 @@ namespace CaptoApplication
 
                 pop.OnDialogClosed += (s, arg) =>
                 {
-                    string productname = arg.ProductName;
+                    string productname = Regex.Replace(arg.ProductName, @"\s+", " ").Trim();
+
                     if (!string.IsNullOrWhiteSpace(productname) && !productname.Equals(""))
                     {
                         productname = char.ToUpper(productname[0]) + productname.Substring(1);
